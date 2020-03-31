@@ -4,6 +4,14 @@ torch_mimicry.nets
 .. contents:: Contents
     :local:
 
+Base Classes
+------------
+.. automodule:: torch_mimicry.nets.basemodel
+    :members:
+
+.. automodule:: torch_mimicry.nets.gan
+    :members:
+
 Deep Convolutional GAN
 ----------------------
 .. automodule:: torch_mimicry.nets.dcgan

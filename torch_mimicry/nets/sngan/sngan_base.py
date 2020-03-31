@@ -5,14 +5,14 @@ from torch_mimicry.nets.gan import gan
 
 
 class BaseGenerator(gan.BaseGenerator):
-    """
+    r"""
     ResNet backbone generator for SNGAN.
 
     Attributes:
         - nz (int): Noise dimension for upsampling.
         - ngf (int): Variable controlling generator feature map sizes.
         - bottom_width (int): Starting width for upsampling generator output to an image.
-        - loss_type (str): Name of loss to use for GAN loss.        
+        - loss_type (str): Name of loss to use for GAN loss.
     """
     def __init__(self, nz, ngf, bottom_width, loss_type='hinge', **kwargs):
         super().__init__(nz=nz,
@@ -23,7 +23,7 @@ class BaseGenerator(gan.BaseGenerator):
 
 
 class BaseDiscriminator(gan.BaseDiscriminator):
-    """
+    r"""
     ResNet backbone discriminator for SNGAN.
 
     Attributes:
