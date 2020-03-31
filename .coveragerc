@@ -1,0 +1,8 @@
+[report]
+exclude_lines =
+    if __name__ == .__main__.:
+
+[run]
+omit =
+	*test*
+  torch_mimicry/datasets/imagenet/*
