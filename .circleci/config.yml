@@ -54,7 +54,7 @@ jobs:
 
       - codecov/upload:
           file: ./coverage.xml
-          token: 8caf88d1-28eb-40a3-8a4a-85ad8dc90e88
+          token: e963353d-df2c-4b11-bcc8-c8295b40bd7f
 
       - store_artifacts:
           path: test-reports
