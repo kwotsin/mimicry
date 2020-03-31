@@ -17,7 +17,7 @@ class ResNetGenerator32(sngan_base.BaseGenerator):
         - nz (int): Noise dimension for upsampling.
         - ngf (int): Variable controlling generator feature map sizes.
         - bottom_width (int): Starting width for upsampling generator output to an image.
-        - loss_type (str): Name of loss to use for GAN loss.        
+        - loss_type (str): Name of loss to use for GAN loss.
     """
     def __init__(self, nz=128, ngf=256, bottom_width=4, **kwargs):
         super().__init__(nz=nz, ngf=ngf, bottom_width=bottom_width, **kwargs)
@@ -40,10 +40,10 @@ class ResNetGenerator32(sngan_base.BaseGenerator):
         Feedforwards a batch of noise vectors into a batch of fake images.
 
         Args:
-            - x (Tensor): A batch of noise vectors of shape (N, nz).
+            x (Tensor): A batch of noise vectors of shape (N, nz).
 
         Returns:
-            - h (Tensor): A batch of fake images of shape (N, C, H, W).
+            (Tensor): A batch of fake images of shape (N, C, H, W).
         """
         h = self.l1(x)
         h = h.view(x.shape[0], -1, self.bottom_width, self.bottom_width)
@@ -63,7 +63,7 @@ class ResNetDiscriminator32(sngan_base.BaseDiscriminator):
 
     Attributes:
         - ndf (int): Variable controlling discriminator feature map sizes.
-        - loss_type (str): Name of loss to use for GAN loss.        
+        - loss_type (str): Name of loss to use for GAN loss.
     """
     def __init__(self, ndf=128, **kwargs):
         super().__init__(ndf=ndf, **kwargs)
