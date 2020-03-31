@@ -6,3 +6,4 @@ exclude_lines =
 omit =
 	*test*
   torch_mimicry/datasets/imagenet/*
+  setup.py
