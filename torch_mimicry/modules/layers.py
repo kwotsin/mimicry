@@ -3,7 +3,7 @@ Script for building specific layers needed by GAN architecture.
 """
 import torch.nn as nn
 
-from torch_mimicry.nets.modules import spectral_norm
+from torch_mimicry.modules import spectral_norm
 
 
 def SNConv2d(*args, **kwargs):
