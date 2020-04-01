@@ -20,7 +20,7 @@ author = 'Kwot Sin Lee'
 project = 'torch_mimicry'
 copyright = '{}, {}'.format(datetime.datetime.now().year, author)
 
-version = torch_mimicry.__version__
+version = 'master'
 release = torch_mimicry.__version__
 
 html_theme = 'sphinx_rtd_theme'
