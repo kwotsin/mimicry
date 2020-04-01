@@ -10,7 +10,7 @@
  [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 
 
-[Documentation]() | [Paper]() | [Tutorial]() | [Gallery](https://github.com/kwotsin/mimicry/tree/master/docs/gallery/README.md)
+[Documentation](https://mimicry.readthedocs.io/en/latest/index.html) | [Paper]() | [Tutorial]() | [Gallery](https://github.com/kwotsin/mimicry/tree/master/docs/gallery/README.md)
 
 Mimicry is a lightweight PyTorch library aimed towards the reproducibility of GAN research.
 
