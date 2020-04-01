@@ -6,7 +6,7 @@ import os
 import numpy as np
 import torch
 
-from torch_mimicry.metrics import fid_score, compute_is, kid_score
+from torch_mimicry.metrics import compute_fid, compute_is, compute_kid
 from torch_mimicry.utils import common
 
 
@@ -120,7 +120,7 @@ def evaluate(metric,
 
             # Obtain only the raw score without var
             if metric == "fid":
-                score = fid_score.compute_fid(netG=netG,
+                score = compute_fid.compute_fid(netG=netG,
                                               seed=seed,
                                               device=device,
                                               log_dir=log_dir,
@@ -134,7 +134,7 @@ def evaluate(metric,
                                                       **kwargs)
 
             elif metric == "kid":
-                score, _ = kid_score.compute_kid(netG=netG,
+                score, _ = compute_kid.compute_kid(netG=netG,
                                                  device=device,
                                                  seed=seed,
                                                  log_dir=log_dir,
