@@ -4,11 +4,11 @@ Test for SSGAN specific functions at the discriminator.
 
 import torch
 
-from torch_mimicry.nets.ssgan.ssgan_base import BaseDiscriminator
+from torch_mimicry.nets.ssgan.ssgan_base import SSGANBaseDiscriminator
 from torch_mimicry.utils import common
 
 
-class ExampleDiscriminator(BaseDiscriminator):
+class ExampleDiscriminator(SSGANBaseDiscriminator):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

@@ -13,7 +13,7 @@ from torch_mimicry.nets.dcgan import dcgan_base
 from torch_mimicry.modules.resblocks import DBlockOptimized, DBlock, GBlock
 
 
-class ResNetGeneratorCIFAR(dcgan_base.BaseGenerator):
+class DCGANGeneratorCIFAR(dcgan_base.DCGANBaseGenerator):
     r"""
     ResNet backbone generator for ResNet DCGAN.
 
@@ -61,7 +61,7 @@ class ResNetGeneratorCIFAR(dcgan_base.BaseGenerator):
         return h
 
 
-class ResNetDiscriminatorCIFAR(dcgan_base.BaseDiscriminator):
+class DCGANDiscriminatorCIFAR(dcgan_base.DCGANBaseDiscriminator):
     r"""
     ResNet backbone discriminator for ResNet DCGAN.
 

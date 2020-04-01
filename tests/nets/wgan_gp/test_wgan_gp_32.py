@@ -4,7 +4,7 @@ Test functions for WGAN-GP for image size 32.
 import torch
 import torch.optim as optim
 
-from torch_mimicry.nets.wgan_gp.wgan_gp_32 import ResNetGenerator32, ResNetDiscriminator32
+from torch_mimicry.nets.wgan_gp.wgan_gp_32 import WGANGPGenerator32, WGANGPDiscriminator32
 from torch_mimicry.training import metric_log
 from torch_mimicry.utils import common
 
@@ -16,8 +16,8 @@ class TestWGANGP32:
         self.ngf = 16
         self.ndf = 16
 
-        self.netG = ResNetGenerator32(ngf=self.ngf)
-        self.netD = ResNetDiscriminator32(ndf=self.ndf)
+        self.netG = WGANGPGenerator32(ngf=self.ngf)
+        self.netD = WGANGPDiscriminator32(ndf=self.ndf)
 
     def test_ResNetGenerator32(self):
         noise = torch.ones(self.N, self.nz)

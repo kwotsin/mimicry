@@ -7,7 +7,7 @@ from torch import autograd
 from torch_mimicry.nets.gan import gan
 
 
-class BaseGenerator(gan.BaseGenerator):
+class WGANGPBaseGenerator(gan.BaseGenerator):
     r"""
     ResNet backbone generator for WGAN-GP.
 
@@ -79,7 +79,7 @@ class BaseGenerator(gan.BaseGenerator):
         return log_data
 
 
-class BaseDiscriminator(gan.BaseDiscriminator):
+class WGANGPBaseDiscriminator(gan.BaseDiscriminator):
     r"""
     ResNet backbone discriminator for WGAN-GP.
 

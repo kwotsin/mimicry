@@ -31,7 +31,7 @@ class ExampleGen(gan.BaseGenerator):
         return output
 
 
-class ExampleConditionalGen(cgan.BaseGenerator):
+class ExampleConditionalGen(cgan.BaseConditionalGenerator):
     def __init__(self,
                  bottom_width=4,
                  nz=4,

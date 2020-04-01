@@ -10,7 +10,7 @@ from torch_mimicry.modules import SNLinear, SNEmbedding
 from torch_mimicry.modules.resblocks import DBlockOptimized, DBlock, GBlock
 
 
-class ResNetGenerator32(cgan_pd_base.BaseGenerator):
+class CGANPDGenerator32(cgan_pd_base.CGANPDBaseGenerator):
     r"""
     ResNet backbone generator for cGAN-PD,
 
@@ -80,7 +80,7 @@ class ResNetGenerator32(cgan_pd_base.BaseGenerator):
         return h
 
 
-class ResNetDiscriminator32(cgan_pd_base.BaseDiscriminator):
+class CGANPDDiscriminator32(cgan_pd_base.CGANPDBaseDiscriminator):
     r"""
     ResNet backbone discriminator for cGAN-PD.
 

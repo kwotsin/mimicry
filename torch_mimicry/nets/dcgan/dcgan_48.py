@@ -8,7 +8,7 @@ from torch_mimicry.nets.dcgan import dcgan_base
 from torch_mimicry.modules.resblocks import DBlockOptimized, DBlock, GBlock
 
 
-class ResNetGenerator48(dcgan_base.BaseGenerator):
+class DCGANGenerator48(dcgan_base.DCGANBaseGenerator):
     r"""
     ResNet backbone generator for ResNet DCGAN.
 
@@ -56,7 +56,7 @@ class ResNetGenerator48(dcgan_base.BaseGenerator):
         return h
 
 
-class ResNetDiscriminator48(dcgan_base.BaseDiscriminator):
+class DCGANDiscriminator48(dcgan_base.DCGANBaseDiscriminator):
     r"""
     ResNet backbone discriminator for ResNet DCGAN.
 

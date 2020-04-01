@@ -10,8 +10,8 @@ if __name__ == "__main__":
         dataset, batch_size=64, shuffle=True, num_workers=4)
 
     # Define models and optimizers
-    netG = sngan.ResNetGenerator32()
-    netD = sngan.ResNetDiscriminator32()
+    netG = sngan.SNGANGenerator32()
+    netD = sngan.SNGANDiscriminator32()
     optD = optim.Adam(netD.parameters(), 2e-4, betas=(0.0, 0.9))
     optG = optim.Adam(netG.parameters(), 2e-4, betas=(0.0, 0.9))
 

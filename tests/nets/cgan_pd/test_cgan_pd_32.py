@@ -4,7 +4,7 @@ Test functions for cGAN-PD for image size 32.
 import torch
 import torch.optim as optim
 
-from torch_mimicry.nets.cgan_pd.cgan_pd_32 import ResNetGenerator32, ResNetDiscriminator32
+from torch_mimicry.nets.cgan_pd.cgan_pd_32 import CGANPDGenerator32, CGANPDDiscriminator32
 from torch_mimicry.training import metric_log
 from torch_mimicry.utils import common
 
@@ -22,9 +22,9 @@ class TestCGANPD32:
         self.ngf = 16
         self.ndf = 16
 
-        self.netG = ResNetGenerator32(num_classes=self.num_classes,
+        self.netG = CGANPDGenerator32(num_classes=self.num_classes,
                                       ngf=self.ngf)
-        self.netD = ResNetDiscriminator32(num_classes=self.num_classes,
+        self.netD = CGANPDDiscriminator32(num_classes=self.num_classes,
                                           ndf=self.ndf)
 
     def test_ResNetGenerator32(self):

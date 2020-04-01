@@ -5,7 +5,7 @@ Base class definition of cGAN-PD.
 from torch_mimicry.nets.gan import cgan
 
 
-class BaseGenerator(cgan.BaseGenerator):
+class CGANPDBaseGenerator(cgan.BaseConditionalGenerator):
     r"""
     ResNet backbone generator for cGAN-PD,
 
@@ -31,7 +31,7 @@ class BaseGenerator(cgan.BaseGenerator):
                          **kwargs)
 
 
-class BaseDiscriminator(cgan.BaseDiscriminator):
+class CGANPDBaseDiscriminator(cgan.BaseConditionalDiscriminator):
     r"""
     ResNet backbone discriminator for cGAN-PD.
 

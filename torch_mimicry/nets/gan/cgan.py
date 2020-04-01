@@ -6,7 +6,7 @@ import torch
 from torch_mimicry.nets.gan import gan
 
 
-class BaseGenerator(gan.BaseGenerator):
+class BaseConditionalGenerator(gan.BaseGenerator):
     r"""
     Base class for a generic conditional generator model.
 
@@ -113,7 +113,7 @@ class BaseGenerator(gan.BaseGenerator):
         return log_data
 
 
-class BaseDiscriminator(gan.BaseDiscriminator):
+class BaseConditionalDiscriminator(gan.BaseDiscriminator):
     r"""
     Base class for a generic conditional discriminator model.
 

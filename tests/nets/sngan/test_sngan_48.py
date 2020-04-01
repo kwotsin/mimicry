@@ -4,7 +4,7 @@ Test functions for SNGAN for image size 48.
 import torch
 import torch.optim as optim
 
-from torch_mimicry.nets.sngan.sngan_48 import ResNetGenerator48, ResNetDiscriminator48
+from torch_mimicry.nets.sngan.sngan_48 import SNGANGenerator48, SNGANDiscriminator48
 from torch_mimicry.training import metric_log
 from torch_mimicry.utils import common
 
@@ -16,8 +16,8 @@ class TestSNGAN48:
         self.ngf = 16
         self.ndf = 16
 
-        self.netG = ResNetGenerator48(ngf=self.ngf)
-        self.netD = ResNetDiscriminator48(ndf=self.ndf)
+        self.netG = SNGANGenerator48(ngf=self.ngf)
+        self.netD = SNGANDiscriminator48(ndf=self.ndf)
 
     def test_ResNetGenerator48(self):
         noise = torch.ones(self.N, self.nz)

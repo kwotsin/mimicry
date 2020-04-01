@@ -4,7 +4,7 @@ Test functions for InfoMaxGAN for image size 128.
 import torch
 import torch.optim as optim
 
-from torch_mimicry.nets.infomax_gan.infomax_gan_128 import ResNetGenerator128, ResNetDiscriminator128
+from torch_mimicry.nets.infomax_gan.infomax_gan_128 import InfoMaxGANGenerator128, InfoMaxGANDiscriminator128
 from torch_mimicry.training import metric_log
 from torch_mimicry.utils import common
 
@@ -16,8 +16,8 @@ class TestInfoMaxGAN128:
         self.ngf = 16
         self.ndf = 16
 
-        self.netG = ResNetGenerator128(ngf=self.ngf)
-        self.netD = ResNetDiscriminator128(ndf=self.ndf)
+        self.netG = InfoMaxGANGenerator128(ngf=self.ngf)
+        self.netD = InfoMaxGANDiscriminator128(ndf=self.ndf)
 
     def test_ResNetGenerator128(self):
         noise = torch.ones(self.N, self.nz)

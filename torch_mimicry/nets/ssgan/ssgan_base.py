@@ -8,7 +8,7 @@ import torch.nn.functional as F
 from torch_mimicry.nets.gan import gan
 
 
-class BaseGenerator(gan.BaseGenerator):
+class SSGANBaseGenerator(gan.BaseGenerator):
     r"""
     ResNet backbone generator for SSGAN.
 
@@ -87,7 +87,7 @@ class BaseGenerator(gan.BaseGenerator):
         return log_data
 
 
-class BaseDiscriminator(gan.BaseDiscriminator):
+class SSGANBaseDiscriminator(gan.BaseDiscriminator):
     r"""
     ResNet backbone discriminator for SSGAN.
 

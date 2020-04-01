@@ -9,7 +9,7 @@ from torch_mimicry.modules.layers import SNConv2d, SNLinear
 from torch_mimicry.modules.resblocks import DBlockOptimized, DBlock, GBlock
 
 
-class ResNetGenerator128(infomax_gan_base.BaseGenerator):
+class InfoMaxGANGenerator128(infomax_gan_base.InfoMaxGANBaseGenerator):
     r"""
     ResNet backbone generator for InfoMax-GAN.
 
@@ -62,7 +62,7 @@ class ResNetGenerator128(infomax_gan_base.BaseGenerator):
         return h
 
 
-class ResNetDiscriminator128(infomax_gan_base.BaseDiscriminator):
+class InfoMaxGANDiscriminator128(infomax_gan_base.BaseDiscriminator):
     r"""
     ResNet backbone discriminator for SNGAN-InfoMax.
 

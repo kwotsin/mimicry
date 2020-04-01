@@ -4,7 +4,7 @@ Base implementation of SNGAN with default variables.
 from torch_mimicry.nets.gan import gan
 
 
-class BaseGenerator(gan.BaseGenerator):
+class SNGANBaseGenerator(gan.BaseGenerator):
     r"""
     ResNet backbone generator for SNGAN.
 
@@ -22,7 +22,7 @@ class BaseGenerator(gan.BaseGenerator):
                          **kwargs)
 
 
-class BaseDiscriminator(gan.BaseDiscriminator):
+class SNGANBaseDiscriminator(gan.BaseDiscriminator):
     r"""
     ResNet backbone discriminator for SNGAN.
 

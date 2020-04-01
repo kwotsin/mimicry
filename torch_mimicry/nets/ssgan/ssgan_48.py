@@ -10,7 +10,7 @@ from torch_mimicry.modules.resblocks import DBlockOptimized, DBlock, GBlock
 from torch_mimicry.nets.ssgan import ssgan_base
 
 
-class ResNetGenerator48(ssgan_base.BaseGenerator):
+class SSGANGenerator48(ssgan_base.SSGANBaseGenerator):
     r"""
     ResNet backbone generator for SSGAN.
 
@@ -59,7 +59,7 @@ class ResNetGenerator48(ssgan_base.BaseGenerator):
         return h
 
 
-class ResNetDiscriminator48(ssgan_base.BaseDiscriminator):
+class SSGANDiscriminator48(ssgan_base.SSGANBaseDiscriminator):
     r"""
     ResNet backbone discriminator for SSGAN.
 

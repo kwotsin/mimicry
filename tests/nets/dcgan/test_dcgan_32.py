@@ -4,7 +4,7 @@ Test functions for DCGAN for image size 32.
 import torch
 import torch.optim as optim
 
-from torch_mimicry.nets.dcgan.dcgan_32 import ResNetGenerator32, ResNetDiscriminator32
+from torch_mimicry.nets.dcgan.dcgan_32 import DCGANGenerator32, DCGANDiscriminator32
 from torch_mimicry.training import metric_log
 from torch_mimicry.utils import common
 
@@ -16,8 +16,8 @@ class TestDCGAN32:
         self.ngf = 16
         self.ndf = 16
 
-        self.netG = ResNetGenerator32(ngf=self.ngf)
-        self.netD = ResNetDiscriminator32(ndf=self.ndf)
+        self.netG = DCGANGenerator32(ngf=self.ngf)
+        self.netD = DCGANDiscriminator32(ndf=self.ndf)
 
     def test_ResNetGenerator32(self):
         noise = torch.ones(self.N, self.nz)

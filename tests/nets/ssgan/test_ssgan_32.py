@@ -4,7 +4,7 @@ Test functions for SSGAN for image size 32.
 import torch
 import torch.optim as optim
 
-from torch_mimicry.nets.ssgan.ssgan_32 import ResNetGenerator32, ResNetDiscriminator32
+from torch_mimicry.nets.ssgan.ssgan_32 import SSGANGenerator32, SSGANDiscriminator32
 from torch_mimicry.training import metric_log
 from torch_mimicry.utils import common
 
@@ -16,8 +16,8 @@ class TestSSGAN32:
         self.ngf = 16
         self.ndf = 16
 
-        self.netG = ResNetGenerator32(ngf=self.ngf)
-        self.netD = ResNetDiscriminator32(ndf=self.ndf)
+        self.netG = SSGANGenerator32(ngf=self.ngf)
+        self.netD = SSGANDiscriminator32(ndf=self.ndf)
 
     def test_ResNetGenerator32(self):
         noise = torch.ones(self.N, self.nz)

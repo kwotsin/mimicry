@@ -7,7 +7,7 @@ import torch.nn.functional as F
 from torch_mimicry.nets.gan import gan
 
 
-class BaseGenerator(gan.BaseGenerator):
+class InfoMaxGANBaseGenerator(gan.BaseGenerator):
     r"""
     ResNet backbone generator for InfoMax-GAN.
 

@@ -4,7 +4,7 @@ Test functions for SSGAN for image size 128.
 import torch
 import torch.optim as optim
 
-from torch_mimicry.nets.ssgan.ssgan_128 import ResNetGenerator128, ResNetDiscriminator128
+from torch_mimicry.nets.ssgan.ssgan_128 import SSGANGenerator128, SSGANDiscriminator128
 from torch_mimicry.training import metric_log
 from torch_mimicry.utils import common
 
@@ -17,8 +17,8 @@ class TestSSGAN128:
         self.ndf = 16
         self.device = 'cpu'
 
-        self.netG = ResNetGenerator128(ngf=self.ngf)
-        self.netD = ResNetDiscriminator128(ndf=self.ndf)
+        self.netG = SSGANGenerator128(ngf=self.ngf)
+        self.netD = SSGANDiscriminator128(ndf=self.ndf)
 
     def test_ResNetGenerator128(self):
         noise = torch.ones(self.N, self.nz)

@@ -4,7 +4,7 @@ Base class definition of DCGAN.
 from torch_mimicry.nets.gan import gan
 
 
-class BaseGenerator(gan.BaseGenerator):
+class DCGANBaseGenerator(gan.BaseGenerator):
     r"""
     ResNet backbone generator for ResNet DCGAN.
 
@@ -22,7 +22,7 @@ class BaseGenerator(gan.BaseGenerator):
                          **kwargs)
 
 
-class BaseDiscriminator(gan.BaseDiscriminator):
+class DCGANBaseDiscriminator(gan.BaseDiscriminator):
     r"""
     ResNet backbone discriminator for ResNet DCGAN.
 

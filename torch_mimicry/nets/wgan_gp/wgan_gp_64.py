@@ -8,7 +8,7 @@ from torch_mimicry.nets.wgan_gp import wgan_gp_base
 from torch_mimicry.nets.wgan_gp.wgan_gp_resblocks import DBlockOptimized, DBlock, GBlock
 
 
-class ResNetGenerator64(wgan_gp_base.BaseGenerator):
+class WGANGPGenerator64(wgan_gp_base.WGANGPBaseGenerator):
     r"""
     ResNet backbone generator for WGAN-GP.
 
@@ -57,7 +57,7 @@ class ResNetGenerator64(wgan_gp_base.BaseGenerator):
         return h
 
 
-class ResNetDiscriminator64(wgan_gp_base.BaseDiscriminator):
+class WGANGPDiscriminator64(wgan_gp_base.WGANGPBaseDiscriminator):
     r"""
     ResNet backbone discriminator for WGAN-GP.
 

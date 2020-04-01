@@ -1,10 +1,10 @@
 import torch
 import torch.nn as nn
 
-from torch_mimicry.nets.gan.cgan import BaseGenerator, BaseDiscriminator
+from torch_mimicry.nets.gan.cgan import BaseConditionalGenerator, BaseConditionalDiscriminator
 
 
-class ExampleGenerator(BaseGenerator):
+class ExampleGenerator(BaseConditionalGenerator):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.l1 = nn.Linear(1, 1)
@@ -13,7 +13,7 @@ class ExampleGenerator(BaseGenerator):
         return torch.ones(x.shape[0], 3, 32, 32)
 
 
-class ExampleDiscriminator(BaseDiscriminator):
+class ExampleDiscriminator(BaseConditionalDiscriminator):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.l1 = nn.Linear(1, 1)
