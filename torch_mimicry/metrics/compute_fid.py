@@ -19,9 +19,9 @@ def compute_real_dist_stats(num_samples,
                             dataset_name,
                             batch_size,
                             stats_file=None,
-                            stats_dir='./log/metrics/fid/statistics',
                             seed=0,
-                            verbose=True):
+                            verbose=True,
+                            log_dir='./log'):
     """
     Reads the image data and compute the FID mean and cov statistics
     for real images.
@@ -33,6 +33,7 @@ def compute_real_dist_stats(num_samples,
         batch_size (int): The batch size to feedforward for inference.
         stats_file (str): The statistics file to load from if there is already one.
         verbose (bool): If True, prints progress of computation.
+        log_dir (str): Directory where feature statistics can be stored.
 
     Returns:
         ndarray: Mean features stored as np array.
@@ -40,6 +41,7 @@ def compute_real_dist_stats(num_samples,
     """
     # Create custom stats file name
     if stats_file is None:
+        stats_dir = os.path.join(log_dir, 'metrics', 'fid', 'statistics')
         if not os.path.exists(stats_dir):
             os.makedirs(stats_dir)
 
@@ -187,6 +189,8 @@ def fid_score(num_real_samples,
         batch_size (int): The batch size to feedforward for inference.
         verbose (bool): If True, prints progress.
         stats_file (str): The statistics file to load from if there is already one.
+        log_dir (str): Directory where feature statistics can be stored.
+
     Returns:
         float: Scalar FID score.
     """
@@ -199,7 +203,6 @@ def fid_score(num_real_samples,
 
     # Setup directories
     inception_path = os.path.join(log_dir, 'metrics', 'inception_model')
-    stats_dir = os.path.join(log_dir, 'fid', 'statistics')
 
     # Setup the inception graph
     inception_utils.create_inception_graph(inception_path)
@@ -224,7 +227,7 @@ def fid_score(num_real_samples,
                                                  batch_size=batch_size,
                                                  verbose=verbose,
                                                  stats_file=stats_file,
-                                                 stats_dir=stats_dir,
+                                                 log_dir=log_dir,
                                                  seed=seed)
 
         m_fake, s_fake = compute_gen_dist_stats(netG=netG,

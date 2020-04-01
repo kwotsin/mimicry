@@ -21,7 +21,7 @@ def compute_real_dist_feat(num_samples,
                            seed=0,
                            verbose=True,
                            feat_file=None,
-                           feat_dir='./log/metrics/kid/features'):
+                           log_dir='./log'):
     """
     Reads the image data and compute the real image features.
 
@@ -32,12 +32,14 @@ def compute_real_dist_feat(num_samples,
         batch_size (int): The batch size to feedforward for inference.
         feat_file (str): The features file to load from if there is already one.
         verbose (bool): If True, prints progress of computation.
+        log_dir (str): Directory where features can be stored.
 
     Returns:
         ndarray: Inception features of real images.
-    """
+    """    
     # Create custom feat file name
     if feat_file is None:
+        feat_dir = os.path.join(log_dir, 'metrics', 'kid', 'features')      
         if not os.path.exists(feat_dir):
             os.makedirs(feat_dir)
 
@@ -199,7 +201,6 @@ def kid_score(num_subsets,
 
     # Directories
     inception_path = os.path.join(log_dir, 'metrics', 'inception_model')
-    feat_dir = os.path.join(log_dir, 'metrics', 'kid', 'features')
 
     # Setup the inception graph
     inception_utils.create_inception_graph(inception_path)
@@ -227,7 +228,7 @@ def kid_score(num_subsets,
                                            batch_size=batch_size,
                                            verbose=verbose,
                                            feat_file=feat_file,
-                                           feat_dir=feat_dir,
+                                           log_dir=log_dir,
                                            seed=seed)
 
         fake_feat = compute_gen_dist_feat(netG=netG,
