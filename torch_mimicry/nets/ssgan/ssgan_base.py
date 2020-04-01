@@ -38,7 +38,7 @@ class SSGANBaseGenerator(gan.BaseGenerator):
                    netD,
                    optG,
                    log_data,
-                   device,
+                   device=None,
                    global_step=None,
                    **kwargs):
         r"""
@@ -181,8 +181,8 @@ class SSGANBaseDiscriminator(gan.BaseDiscriminator):
                    real_batch,
                    netG,
                    optD,
-                   device,
                    log_data,
+                   device=None,                   
                    global_step=None,
                    **kwargs):
         r"""

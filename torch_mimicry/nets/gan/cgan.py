@@ -68,7 +68,7 @@ class BaseConditionalGenerator(gan.BaseGenerator):
                    netD,
                    optG,
                    log_data,
-                   device,
+                   device=None,
                    global_step=None,
                    **kwargs):
         r"""
@@ -79,7 +79,7 @@ class BaseConditionalGenerator(gan.BaseGenerator):
                 Used for obtaining current batch size.
             netD (nn.Module): Discriminator model for obtaining losses.
             optG (Optimizer): Optimizer for updating generator's parameters.
-            log_data (dict): A dict mapping name to values for logging uses.
+            log_data (MetricLog): A dict mapping name to values for logging uses.
             device (torch.device): Device to use for running the model.
             global_step (int): Variable to sync training, logging and checkpointing.
                 Useful for dynamic changes to model amidst training.
@@ -130,8 +130,8 @@ class BaseConditionalDiscriminator(gan.BaseDiscriminator):
                    real_batch,
                    netG,
                    optD,
-                   device,
                    log_data,
+                   device=None,         
                    global_step=None,
                    **kwargs):
         r"""
@@ -143,7 +143,7 @@ class BaseConditionalDiscriminator(gan.BaseDiscriminator):
             netG (nn.Module): Generator model for obtaining fake images.
             optD (Optimizer): Optimizer for updating discriminator's parameters.
             device (torch.device): Device to use for running the model.
-            log_data (dict): A dict mapping name to values for logging uses.
+            log_data (MetricLog): A dict mapping name to values for logging uses.
             global_step (int): Variable to sync training, logging and checkpointing.
                 Useful for dynamic changes to model amidst training.
 

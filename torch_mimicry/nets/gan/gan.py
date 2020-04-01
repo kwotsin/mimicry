@@ -77,7 +77,7 @@ class BaseGenerator(basemodel.BaseModel):
                    netD,
                    optG,
                    log_data,
-                   device,
+                   device=None,
                    global_step=None,
                    **kwargs):
         r"""
@@ -184,8 +184,8 @@ class BaseDiscriminator(basemodel.BaseModel):
                    real_batch,
                    netG,
                    optD,
-                   device,
                    log_data,
+                   device=None,                   
                    global_step=None,
                    **kwargs):
         r"""

@@ -34,7 +34,7 @@ class WGANGPBaseGenerator(gan.BaseGenerator):
                    netD,
                    optG,
                    log_data,
-                   device,
+                   device=None,
                    global_step=None,
                    **kwargs):
         r"""
@@ -96,8 +96,8 @@ class WGANGPBaseDiscriminator(gan.BaseDiscriminator):
                    real_batch,
                    netG,
                    optD,
-                   device,
                    log_data,
+                   device=None,
                    global_step=None,
                    **kwargs):
         r"""

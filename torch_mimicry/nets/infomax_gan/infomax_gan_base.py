@@ -37,7 +37,7 @@ class InfoMaxGANBaseGenerator(gan.BaseGenerator):
                    netD,
                    optG,
                    log_data,
-                   device,
+                   device=None,
                    global_step=None,
                    **kwargs):
         r"""
@@ -233,8 +233,8 @@ class BaseDiscriminator(gan.BaseDiscriminator):
                    real_batch,
                    netG,
                    optD,
-                   device,
                    log_data,
+                   device=None,                   
                    global_step=None,
                    **kwargs):
         r"""
