@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-from torch_mimicry.nets.modules import spectral_norm
+from torch_mimicry.modules import spectral_norm
 
 
 class TestSpectralNorm:

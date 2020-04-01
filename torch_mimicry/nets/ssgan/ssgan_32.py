@@ -4,8 +4,8 @@ Implementation of SSGAN for image size 32.
 import torch
 import torch.nn as nn
 
-from torch_mimicry.nets.modules.layers import SNLinear
-from torch_mimicry.nets.modules.resblocks import DBlockOptimized, DBlock, GBlock
+from torch_mimicry.modules import SNLinear
+from torch_mimicry.modules.resblocks import DBlockOptimized, DBlock, GBlock
 from torch_mimicry.nets.ssgan import ssgan_base
 
 
@@ -17,7 +17,7 @@ class ResNetGenerator32(ssgan_base.BaseGenerator):
         nz (int): Noise dimension for upsampling.
         ngf (int): Variable controlling generator feature map sizes.
         bottom_width (int): Starting width for upsampling generator output to an image.
-        loss_type (str): Name of loss to use for GAN loss.        
+        loss_type (str): Name of loss to use for GAN loss.
         ss_loss_scale (float): Self-supervised loss scale for generator.
     """
     def __init__(self, nz=128, ngf=256, bottom_width=4, **kwargs):
@@ -64,8 +64,8 @@ class ResNetDiscriminator32(ssgan_base.BaseDiscriminator):
 
     Attributes:
         ndf (int): Variable controlling discriminator feature map sizes.
-        loss_type (str): Name of loss to use for GAN loss.        
-        ss_loss_scale (float): Self-supervised loss scale for discriminator.        
+        loss_type (str): Name of loss to use for GAN loss.
+        ss_loss_scale (float): Self-supervised loss scale for discriminator.
     """
     def __init__(self, ndf=128, **kwargs):
         super().__init__(ndf=ndf, **kwargs)

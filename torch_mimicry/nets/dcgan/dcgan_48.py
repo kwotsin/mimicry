@@ -5,7 +5,7 @@ import torch
 import torch.nn as nn
 
 from torch_mimicry.nets.dcgan import dcgan_base
-from torch_mimicry.nets.modules.resblocks import DBlockOptimized, DBlock, GBlock
+from torch_mimicry.modules.resblocks import DBlockOptimized, DBlock, GBlock
 
 
 class ResNetGenerator48(dcgan_base.BaseGenerator):
@@ -16,7 +16,7 @@ class ResNetGenerator48(dcgan_base.BaseGenerator):
         nz (int): Noise dimension for upsampling.
         ngf (int): Variable controlling generator feature map sizes.
         bottom_width (int): Starting width for upsampling generator output to an image.
-        loss_type (str): Name of loss to use for GAN loss.        
+        loss_type (str): Name of loss to use for GAN loss.
     """
     def __init__(self, nz=128, ngf=512, bottom_width=6, **kwargs):
         super().__init__(nz=nz, ngf=ngf, bottom_width=bottom_width, **kwargs)
@@ -62,7 +62,7 @@ class ResNetDiscriminator48(dcgan_base.BaseDiscriminator):
 
     Attributes:
         ndf (int): Variable controlling discriminator feature map sizes.
-        loss_type (str): Name of loss to use for GAN loss.        
+        loss_type (str): Name of loss to use for GAN loss.
     """
     def __init__(self, ndf=1024, **kwargs):
         super().__init__(ndf=ndf, **kwargs)

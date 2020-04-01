@@ -1,6 +1,6 @@
 import torch
 
-from torch_mimicry.nets.modules import losses
+from torch_mimicry.modules import losses
 
 
 class TestLosses:

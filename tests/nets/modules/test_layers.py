@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-from torch_mimicry.nets.modules import layers
+from torch_mimicry.modules import layers
 
 
 class TestLayers:

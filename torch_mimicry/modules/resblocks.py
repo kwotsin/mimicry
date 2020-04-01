@@ -8,11 +8,11 @@ import math
 import torch.nn as nn
 import torch.nn.functional as F
 
-from torch_mimicry.nets.modules.layers import SNConv2d, ConditionalBatchNorm2d
+from torch_mimicry.modules import SNConv2d, ConditionalBatchNorm2d
 
 
 class GBlock(nn.Module):
-    r"""
+    """
     Residual block for generator.
 
     Uses bilinear (rather than nearest) interpolation, and align_corners
@@ -20,12 +20,12 @@ class GBlock(nn.Module):
     https://github.com/pytorch/vision/blob/master/torchvision/models/segmentation/_utils.py
 
     Attributes:
-        in_channels (int): The channel size of input feature map.
-        out_channels (int): The channel size of output feature map.
-        hidden_channels (int): The channel size of intermediate feature maps.
-        upsample (bool): If True, upsamples the input feature map.
-        num_classes (int): If more than 0, uses conditional batch norm instead.
-        spectral_norm (bool): If True, uses spectral norm for convolutional layers.
+        - in_channels (int): The channel size of input feature map.
+        - out_channels (int): The channel size of output feature map.
+        - hidden_channels (int): The channel size of intermediate feature maps.
+        - upsample (bool): If True, upsamples the input feature map.
+        - num_classes (int): If more than 0, uses conditional batch norm instead.
+        - spectral_norm (bool): If True, uses spectral norm for convolutional layers.
     """
     def __init__(self,
                  in_channels,
@@ -102,7 +102,7 @@ class GBlock(nn.Module):
             nn.init.xavier_uniform_(self.c_sc.weight.data, 1.0)
 
     def _upsample_conv(self, x, conv):
-        r"""
+        """
         Helper function for performing convolution after upsampling.
         """
         return conv(
@@ -112,7 +112,7 @@ class GBlock(nn.Module):
                           align_corners=False))
 
     def _residual(self, x):
-        r"""
+        """
         Helper function for feedforwarding through main layers.
         """
         h = x
@@ -126,7 +126,7 @@ class GBlock(nn.Module):
         return h
 
     def _residual_conditional(self, x, y):
-        r"""
+        """
         Helper function for feedforwarding through main layers, including conditional BN.
         """
         h = x
@@ -140,7 +140,7 @@ class GBlock(nn.Module):
         return h
 
     def _shortcut(self, x):
-        r"""
+        """
         Helper function for feedforwarding through shortcut layers.
         """
         if self.learnable_sc:
@@ -151,15 +151,8 @@ class GBlock(nn.Module):
             return x
 
     def forward(self, x, y=None):
-        r"""
+        """
         Residual block feedforward function.
-
-        Args:
-            x (Tensor): Batch of features.
-            y (Tensor): Batch of labels.
-
-        Returns:
-            Tensor: Output batch of features.
         """
         if y is None:
             return self._residual(x) + self._shortcut(x)
@@ -169,15 +162,15 @@ class GBlock(nn.Module):
 
 
 class DBlock(nn.Module):
-    r"""
+    """
     Residual block for discriminator.
 
     Attributes:
-        in_channels (int): The channel size of input feature map.
-        out_channels (int): The channel size of output feature map.
-        hidden_channels (int): The channel size of intermediate feature maps.
-        downsample (bool): If True, downsamples the input feature map.
-        spectral_norm (bool): If True, uses spectral norm for convolutional layers.        
+        - in_channels (int): The channel size of input feature map.
+        - out_channels (int): The channel size of output feature map.
+        - hidden_channels (int): The channel size of intermediate feature maps.
+        - downsample (bool): If True, downsamples the input feature map.
+        - spectral_norm (bool): If True, uses spectral norm for convolutional layers.        
     """
     def __init__(self,
                  in_channels,
@@ -219,7 +212,7 @@ class DBlock(nn.Module):
             nn.init.xavier_uniform_(self.c_sc.weight.data, 1.0)
 
     def _residual(self, x):
-        r"""
+        """
         Helper function for feedforwarding through main layers.
         """
         h = x
@@ -233,7 +226,7 @@ class DBlock(nn.Module):
         return h
 
     def _shortcut(self, x):
-        r"""
+        """
         Helper function for feedforwarding through shortcut layers.
         """
         if self.learnable_sc:
@@ -244,29 +237,22 @@ class DBlock(nn.Module):
             return x
 
     def forward(self, x):
-        r"""
+        """
         Residual block feedforward function.
-
-        Args:
-            x (Tensor): Batch of features.
-
-        Returns:
-            Tensor: Output batch of features.
-        """        
-
+        """
         return self._residual(x) + self._shortcut(x)
 
 
 class DBlockOptimized(nn.Module):
-    r"""
+    """
     Optimized residual block for discriminator. This is used as the first residual block,
     where there is a definite downsampling involved. Follows the official SNGAN reference implementation
     in chainer.
 
     Attributes:
-        in_channels (int): The channel size of input feature map.
-        out_channels (int): The channel size of output feature map.
-        spectral_norm (bool): If True, uses spectral norm for convolutional layers.        
+        - in_channels (int): The channel size of input feature map.
+        - out_channels (int): The channel size of output feature map.
+        - spectral_norm (bool): If True, uses spectral norm for convolutional layers.        
     """
     def __init__(self, in_channels, out_channels, spectral_norm=True):
         super().__init__()
@@ -291,7 +277,7 @@ class DBlockOptimized(nn.Module):
         nn.init.xavier_uniform_(self.c_sc.weight.data, 1.0)
 
     def _residual(self, x):
-        r"""
+        """
         Helper function for feedforwarding through main layers.
         """
         h = x
@@ -303,19 +289,13 @@ class DBlockOptimized(nn.Module):
         return h
 
     def _shortcut(self, x):
-        r"""
+        """
         Helper function for feedforwarding through shortcut layers.
         """
         return self.c_sc(F.avg_pool2d(x, 2))
 
     def forward(self, x):
-        r"""
+        """
         Residual block feedforward function.
-
-        Args:
-            x (Tensor): Batch of features.
-
-        Returns:
-            Tensor: Output batch of features.
         """
         return self._residual(x) + self._shortcut(x)

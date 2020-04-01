@@ -2,7 +2,7 @@ from itertools import product
 
 import torch
 
-from torch_mimicry.nets.modules import resblocks
+from torch_mimicry.modules import resblocks
 
 
 class TestResBlocks:
