@@ -124,6 +124,8 @@ def compute_gen_dist_feat(netG,
     Returns:
         ndarray: Inception features of generated images.
     """
+    batch_size = min(num_samples, batch_size)
+
     with torch.no_grad():
         # Set model to evaluation mode
         netG.eval()
