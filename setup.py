@@ -1,13 +1,13 @@
 from setuptools import setup, find_packages
 
-__version__ = '0.1.5'
+__version__ = '0.1.6'
 url = 'https://github.com/kwotsin/mimicry'
 
 install_requires = [
     'numpy>=1.15.4',
     'scipy>=1.0.1',
     'requests>=2.22.0',
-    'tensorflow>=1.14.0',
+    'tensorflow==1.15.2',
     'torchvision>=0.4.0',
     'six>=1.12.0',
     'matplotlib>=3.1.1',
