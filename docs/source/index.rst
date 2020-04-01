@@ -17,6 +17,11 @@ Comparing GANs is often difficult - mild differences in implementations and eval
 
 .. toctree::
    :caption: API Reference
-   :maxdepth: 2
+   :maxdepth: 1
 
    modules/nets
+   modules/modules
+   modules/training
+   modules/metrics
+   modules/datasets
+   modules/utils
