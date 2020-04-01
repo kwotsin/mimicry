@@ -35,7 +35,7 @@ def evaluate(metric,
         start_seed (int): Starting random seed to use.
         write_to_json (bool): If True, writes to an output json file in log_dir.
         overwrite (bool): If True, then overwrites previous metric score.
-        
+
     Returns:
         None
     """
@@ -120,7 +120,7 @@ def evaluate(metric,
 
             # Obtain only the raw score without var
             if metric == "fid":
-                score = compute_fid.compute_fid(netG=netG,
+                score = compute_fid.fid_score(netG=netG,
                                               seed=seed,
                                               device=device,
                                               log_dir=log_dir,
@@ -134,7 +134,7 @@ def evaluate(metric,
                                                       **kwargs)
 
             elif metric == "kid":
-                score, _ = compute_kid.compute_kid(netG=netG,
+                score, _ = compute_kid.kid_score(netG=netG,
                                                  device=device,
                                                  seed=seed,
                                                  log_dir=log_dir,
