@@ -73,7 +73,7 @@ Tensorboard visualizations:
 ```
 tensorboard --logdir=./log/example
 ```
-See detailed [tutorial]() for implementing a state-of-the-art GAN with the library.
+See further details in [example script](https://github.com/kwotsin/mimicry/blob/master/examples/sngan_example.py). 
 
 <div id="baselines"></div>
 
