@@ -4,8 +4,8 @@ Implementation of SNGAN for image size 48.
 import torch
 import torch.nn as nn
 
-from torch_mimicry.nets.modules.layers import SNLinear
-from torch_mimicry.nets.modules.resblocks import DBlockOptimized, DBlock, GBlock
+from torch_mimicry.modules.layers import SNLinear
+from torch_mimicry.modules.resblocks import DBlockOptimized, DBlock, GBlock
 from torch_mimicry.nets.sngan import sngan_base
 
 

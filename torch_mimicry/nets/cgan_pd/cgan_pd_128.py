@@ -6,8 +6,8 @@ import torch
 import torch.nn as nn
 
 from torch_mimicry.nets.cgan_pd import cgan_pd_base
-from torch_mimicry.nets.modules.layers import SNLinear, SNEmbedding
-from torch_mimicry.nets.modules.resblocks import DBlockOptimized, DBlock, GBlock
+from torch_mimicry.modules.layers import SNLinear, SNEmbedding
+from torch_mimicry.modules.resblocks import DBlockOptimized, DBlock, GBlock
 
 
 class ResNetGenerator128(cgan_pd_base.BaseGenerator):

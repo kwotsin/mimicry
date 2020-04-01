@@ -4,8 +4,8 @@ Implementation of SSGAN for image size 128.
 import torch
 import torch.nn as nn
 
-from torch_mimicry.nets.modules.layers import SNLinear
-from torch_mimicry.nets.modules.resblocks import DBlockOptimized, DBlock, GBlock
+from torch_mimicry.modules.layers import SNLinear
+from torch_mimicry.modules.resblocks import DBlockOptimized, DBlock, GBlock
 from torch_mimicry.nets.ssgan import ssgan_base
 
 

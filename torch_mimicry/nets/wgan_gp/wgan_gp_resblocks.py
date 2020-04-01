@@ -4,7 +4,7 @@ ResBlocks for WGAN-GP.
 import torch.nn as nn
 import torch.functional as F
 
-from torch_mimicry.nets.modules import resblocks
+from torch_mimicry.modules import resblocks
 
 
 class GBlock(resblocks.GBlock):

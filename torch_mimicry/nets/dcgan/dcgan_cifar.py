@@ -10,7 +10,7 @@ import torch
 import torch.nn as nn
 
 from torch_mimicry.nets.dcgan import dcgan_base
-from torch_mimicry.nets.modules.resblocks import DBlockOptimized, DBlock, GBlock
+from torch_mimicry.modules.resblocks import DBlockOptimized, DBlock, GBlock
 
 
 class ResNetGeneratorCIFAR(dcgan_base.BaseGenerator):
