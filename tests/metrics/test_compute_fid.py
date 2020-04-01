@@ -99,7 +99,7 @@ class TestComputeFID:
                 dataset_name='fake_data',
                 batch_size=self.batch_size,
                 stats_file=None,
-                stats_dir=os.path.join(self.log_dir, 'statistics'),
+                log_dir=self.log_dir,
                 seed=0,
                 verbose=True)
 

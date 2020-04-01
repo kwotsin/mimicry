@@ -97,7 +97,7 @@ class TestComputeKID:
                 sess=sess,
                 dataset_name='fake_data',
                 batch_size=10,
-                feat_dir=os.path.join(self.log_dir, 'features'))
+                log_dir=self.log_dir)
 
             print(real_feat.shape)
 
