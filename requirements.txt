@@ -15,4 +15,4 @@ pytest-cov>=2.8.1
 pandas>=0.25.3
 psutil>=5.7.0
 yapf>=0.29.0
--e git+https://github.com/kwotsin/mimicry.git#egg=torch_mimicry
+-e git+https://github.com/kwotsin/mimicry.git
