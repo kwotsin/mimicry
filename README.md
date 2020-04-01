@@ -16,7 +16,7 @@ Mimicry is a lightweight PyTorch library aimed towards the reproducibility of GA
 
 Comparing GANs is often difficult - mild differences in implementations and evaluation methodologies can result in huge performance differences. Mimicry aims to resolve this by providing: (a) Standardized implementations of popular GANs that closely reproduce reported scores; (b) Baseline scores of GANs trained and evaluated under the *same conditions*; (c\) A framework for researchers to focus on *implementation* of GANs without rewriting most of GAN training boilerplate code, with support for multiple GAN evaluation metrics.
 
-We provide a model zoo and set of [baselines](#baselines) to benchmark different GANs of the same model size trained under the same conditions, using multiple metrics. To ensure [reproducibility](#reproducibility),  we verify scores of our implemented models against reported scores in literature. 
+We provide a model zoo and set of [baselines](#baselines) to benchmark different GANs of the same model size trained under the same conditions, using multiple metrics. To ensure [reproducibility](#reproducibility),  we verify scores of our implemented models against reported scores in literature.
 
 -----
 ## Installation
@@ -37,8 +37,8 @@ dataset = mmc.datasets.load_dataset(root='./datasets', name='cifar10')
 dataloader = torch.utils.data.DataLoader(dataset, batch_size=64, shuffle=True)
 
 # Define models and optimizers
-netG = sngan.ResNetGenerator32()
-netD = sngan.ResNetDiscriminator32()
+netG = sngan.SNGANGenerator32()
+netD = sngan.SNGANDiscriminator32()
 optD = optim.Adam(netD.parameters(), 2e-4, betas=(0.0, 0.9))
 optG = optim.Adam(netG.parameters(), 2e-4, betas=(0.0, 0.9))
 
