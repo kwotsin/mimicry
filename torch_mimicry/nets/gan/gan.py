@@ -4,7 +4,7 @@ Implementation of Base GAN models.
 import torch
 
 from torch_mimicry.nets.basemodel import basemodel
-from torch_mimicry.nets.modules import losses
+from torch_mimicry.modules import losses
 
 
 class BaseGenerator(basemodel.BaseModel):
@@ -15,7 +15,7 @@ class BaseGenerator(basemodel.BaseModel):
         nz (int): Noise dimension for upsampling.
         ngf (int): Variable controlling generator feature map sizes.
         bottom_width (int): Starting width for upsampling generator output to an image.
-        loss_type (str): Name of loss to use for GAN loss.        
+        loss_type (str): Name of loss to use for GAN loss.
     """
     def __init__(self, nz, ngf, bottom_width, loss_type, **kwargs):
         super().__init__(**kwargs)
@@ -128,7 +128,7 @@ class BaseDiscriminator(basemodel.BaseModel):
 
     Attributes:
         ndf (int): Variable controlling discriminator feature map sizes.
-        loss_type (str): Name of loss to use for GAN loss.        
+        loss_type (str): Name of loss to use for GAN loss.
     """
     def __init__(self, ndf, loss_type, **kwargs):
         super().__init__(**kwargs)
