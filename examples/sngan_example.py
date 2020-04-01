@@ -3,6 +3,7 @@ import torch.optim as optim
 import torch_mimicry as mmc
 from torch_mimicry.nets import sngan
 
+
 if __name__ == "__main__":
     # Data handling objects
     dataset = mmc.datasets.load_dataset(root='./datasets', name='cifar10')
@@ -26,5 +27,14 @@ if __name__ == "__main__":
         lr_decay='linear',
         dataloader=dataloader,
         log_dir='./log/example')
-
     trainer.train()
+
+    # Evaluate fid
+    mmc.metrics.evaluate(
+        metric='fid',
+        log_dir='./log/example',
+        netG=netG,
+        dataset_name='cifar10',
+        num_real_samples=50000,
+        num_fake_samples=50000,
+        evaluate_step=100000)
