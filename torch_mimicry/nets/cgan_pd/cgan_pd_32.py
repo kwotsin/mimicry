@@ -11,15 +11,15 @@ from torch_mimicry.nets.modules.resblocks import DBlockOptimized, DBlock, GBlock
 
 
 class ResNetGenerator32(cgan_pd_base.BaseGenerator):
-    """
+    r"""
     ResNet backbone generator for cGAN-PD,
 
     Attributes:
-        - num_classes (int): Number of classes, more than 0 for conditional GANs.    
-        - nz (int): Noise dimension for upsampling.
-        - ngf (int): Variable controlling generator feature map sizes.
-        - bottom_width (int): Starting width for upsampling generator output to an image.
-        - loss_type (str): Name of loss to use for GAN loss.        
+        num_classes (int): Number of classes, more than 0 for conditional GANs.    
+        nz (int): Noise dimension for upsampling.
+        ngf (int): Variable controlling generator feature map sizes.
+        bottom_width (int): Starting width for upsampling generator output to an image.
+        loss_type (str): Name of loss to use for GAN loss.        
     """
     def __init__(self, num_classes, bottom_width=4, nz=128, ngf=256, **kwargs):
         super().__init__(nz=nz,
@@ -51,16 +51,16 @@ class ResNetGenerator32(cgan_pd_base.BaseGenerator):
         nn.init.xavier_uniform_(self.c5.weight.data, 1.0)
 
     def forward(self, x, y=None):
-        """
+        r"""
         Feedforwards a batch of noise vectors into a batch of fake images, also
         conditioning the batch norm with labels of the images to be produced.
 
         Args:
-            - x (Tensor): A batch of noise vectors of shape (N, nz).
-            - y (Tensor): A batch of labels of shape (N,) for conditional batch norm.
+            x (Tensor): A batch of noise vectors of shape (N, nz).
+            y (Tensor): A batch of labels of shape (N,) for conditional batch norm.
 
         Returns:
-            - h (Tensor): A batch of fake images of shape (N, C, H, W).
+            Tensor: A batch of fake images of shape (N, C, H, W).
         """
         if y is None:
             y = torch.randint(low=0,
@@ -81,13 +81,13 @@ class ResNetGenerator32(cgan_pd_base.BaseGenerator):
 
 
 class ResNetDiscriminator32(cgan_pd_base.BaseDiscriminator):
-    """
+    r"""
     ResNet backbone discriminator for cGAN-PD.
 
     Attributes:
-        - num_classes (int): Number of classes, more than 0 for conditional GANs.        
-        - ndf (int): Variable controlling discriminator feature map sizes.
-        - loss_type (str): Name of loss to use for GAN loss.                
+        num_classes (int): Number of classes, more than 0 for conditional GANs.        
+        ndf (int): Variable controlling discriminator feature map sizes.
+        loss_type (str): Name of loss to use for GAN loss.                
     """
     def __init__(self, num_classes, ndf=128, **kwargs):
         super().__init__(ndf=ndf, num_classes=num_classes, **kwargs)
@@ -110,16 +110,16 @@ class ResNetDiscriminator32(cgan_pd_base.BaseDiscriminator):
         self.activation = nn.ReLU(True)
 
     def forward(self, x, y=None):
-        """
+        r"""
         Feedforwards a batch of real/fake images and produces a batch of GAN logits.
         Further projects labels to condition on the output logit score.
 
         Args:
-            - x (Tensor): A batch of images of shape (N, C, H, W).
-            - y (Tensor): A batch of labels of shape (N,).
+            x (Tensor): A batch of images of shape (N, C, H, W).
+            y (Tensor): A batch of labels of shape (N,).
 
         Returns:
-            - output (Tensor): A batch of GAN logits of shape (N, 1).
+            output (Tensor): A batch of GAN logits of shape (N, 1).
         """
         if y is None:
             y = self.generate_labels(x.shape[0], device=x.device)

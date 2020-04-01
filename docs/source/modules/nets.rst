@@ -24,7 +24,19 @@ Wasserstein GAN with Gradient Penalty
 
 Spectral Normalization GAN
 --------------------------
-.. automodule:: torch_mimicry.nets.sngan
+.. automodule:: torch_mimicry.nets.sngan.sngan_32
+    :members:
+
+.. automodule:: torch_mimicry.nets.sngan.sngan_48
+    :members:
+
+.. automodule:: torch_mimicry.nets.sngan.sngan_64
+    :members:
+
+.. automodule:: torch_mimicry.nets.sngan.sngan_64
+    :members:
+
+.. automodule:: torch_mimicry.nets.sngan.sngan_base
     :members:
 
 Conditional GAN with Projection Discriminator

@@ -8,15 +8,15 @@ from torch_mimicry.nets.gan import gan
 
 
 class BaseGenerator(gan.BaseGenerator):
-    """
+    r"""
     ResNet backbone generator for InfoMax-GAN.
 
     Attributes:
-        - nz (int): Noise dimension for upsampling.
-        - ngf (int): Variable controlling generator feature map sizes.
-        - bottom_width (int): Starting width for upsampling generator output to an image.
-        - loss_type (str): Name of loss to use for GAN loss.        
-        - infomax_loss_scale (float): The alpha parameter used for scaling the generator infomax loss.
+        nz (int): Noise dimension for upsampling.
+        ngf (int): Variable controlling generator feature map sizes.
+        bottom_width (int): Starting width for upsampling generator output to an image.
+        loss_type (str): Name of loss to use for GAN loss.        
+        infomax_loss_scale (float): The alpha parameter used for scaling the generator infomax loss.
     """
     def __init__(self,
                  nz,
@@ -40,21 +40,21 @@ class BaseGenerator(gan.BaseGenerator):
                    device,
                    global_step=None,
                    **kwargs):
-        """
+        r"""
         Takes one training step for G.
 
         Args:
-            - real_batch (Tensor): A batch of real images of shape (N, C, H, W).
+            real_batch (Tensor): A batch of real images of shape (N, C, H, W).
                 Used for obtaining current batch size.
-            - netD (nn.Module): Discriminator model for obtaining losses.
-            - optG (Optimizer): Optimizer for updating generator's parameters.
-            - log_data (MetricLog): An object to add custom metrics for visualisations.
-            - device (torch.device): Device to use for running the model.
-            - global_step (int): Variable to sync training, logging and checkpointing.
+            netD (nn.Module): Discriminator model for obtaining losses.
+            optG (Optimizer): Optimizer for updating generator's parameters.
+            log_data (MetricLog): An object to add custom metrics for visualisations.
+            device (torch.device): Device to use for running the model.
+            global_step (int): Variable to sync training, logging and checkpointing.
                 Useful for dynamic changes to model amidst training.
 
         Returns:
-            - Returns MetricLog object containing updated logging variables after 1 training step.
+            MetricLog: Returns MetricLog object containing updated logging variables after 1 training step.
 
         """
         # Zero gradient every step.
@@ -95,14 +95,14 @@ class BaseGenerator(gan.BaseGenerator):
 
 
 class BaseDiscriminator(gan.BaseDiscriminator):
-    """
+    r"""
     ResNet backbone discriminator for SNGAN-Infomax.
 
     Attributes:
-        - nrkhs (int): The RKHS dimension R to project the local and global features to.
-        - ndf (int): Variable controlling discriminator feature map sizes.
-        - loss_type (str): Name of loss to use for GAN loss.
-        - infomax_loss_scale (float): The beta parameter used for scaling the discriminator infomax loss.
+        nrkhs (int): The RKHS dimension R to project the local and global features to.
+        ndf (int): Variable controlling discriminator feature map sizes.
+        loss_type (str): Name of loss to use for GAN loss.
+        infomax_loss_scale (float): The beta parameter used for scaling the discriminator infomax loss.
     """
     def __init__(self,
                  nrkhs,
@@ -115,7 +115,7 @@ class BaseDiscriminator(gan.BaseDiscriminator):
         self.infomax_loss_scale = infomax_loss_scale
 
     def _project_local(self, local_feat):
-        """
+        r"""
         Helper function for projecting local features to RKHS.
         """
         local_feat_sc = self.local_nrkhs_sc(local_feat)
@@ -128,7 +128,7 @@ class BaseDiscriminator(gan.BaseDiscriminator):
         return local_feat
 
     def _project_global(self, global_feat):
-        """
+        r"""
         Helper function for projecting global features to RKHS.
         """
         global_feat_sc = self.global_nrkhs_sc(global_feat)
@@ -141,6 +141,9 @@ class BaseDiscriminator(gan.BaseDiscriminator):
         return global_feat
 
     def project_features(self, local_feat, global_feat):
+        r"""
+        Projects local and global features.
+        """
         local_feat = self._project_local(
             local_feat)  # (N, C, H, W) --> (N, nrkhs, H, W)
         global_feat = self._project_global(
@@ -149,15 +152,15 @@ class BaseDiscriminator(gan.BaseDiscriminator):
         return local_feat, global_feat
 
     def infonce_loss(self, l, m):
-        """
+        r"""
         InfoNCE loss for local and global feature maps as used in DIM: 
         https://github.com/rdevon/DIM/blob/master/cortex_DIM/functions/dim_losses.py
 
         Args:
-            - l (Tensor): Local feature map of shape (N, ndf, H*W).
-            - m (Tensor): Global feature vector of shape (N, ndf, 1).
+            l (Tensor): Local feature map of shape (N, ndf, H*W).
+            m (Tensor): Global feature vector of shape (N, ndf, 1).
         Returns:
-            - Scalar loss Tensor.
+            Tensor: Scalar loss Tensor.
         """
         N, units, n_locals = l.size()
         _, _, n_multis = m.size()
@@ -196,18 +199,18 @@ class BaseDiscriminator(gan.BaseDiscriminator):
         return loss
 
     def compute_infomax_loss(self, local_feat, global_feat, scale):
-        """
+        r"""
         Given local and global features of a real or fake image, produce the average
         dot product score between each local and global features, which is then used
         to obtain infoNCE loss.
 
         Args
-            - local_feat (Tensor): A batch of local features.
-            - global_feat (Tensor): A batch of global features.
-            - scale (float): The scaling hyperparameter for the infomax loss.
+            local_feat (Tensor): A batch of local features.
+            global_feat (Tensor): A batch of global features.
+            scale (float): The scaling hyperparameter for the infomax loss.
 
         Returns:
-            - A scalar Tensor representing the scaled infomax loss.
+            Tensor: Scalar Tensor representing the scaled infomax loss.
         """
         if local_feat.shape[1] != self.nrkhs:
             raise ValueError(
@@ -234,20 +237,20 @@ class BaseDiscriminator(gan.BaseDiscriminator):
                    log_data,
                    global_step=None,
                    **kwargs):
-        """
+        r"""
         Takes one training step for D.
 
         Args:
-            - real_batch (Tensor): A batch of real images of shape (N, C, H, W).
-            - netG (nn.Module): Generator model for obtaining fake images.
-            - optD (Optimizer): Optimizer for updating discriminator's parameters.
-            - device (torch.device): Device to use for running the model.
-            - log_data (MetricLog): An object to add custom metrics for visualisations.
-            - global_step (int): Variable to sync training, logging and checkpointing.
+            real_batch (Tensor): A batch of real images of shape (N, C, H, W).
+            netG (nn.Module): Generator model for obtaining fake images.
+            optD (Optimizer): Optimizer for updating discriminator's parameters.
+            device (torch.device): Device to use for running the model.
+            log_data (MetricLog): An object to add custom metrics for visualisations.
+            global_step (int): Variable to sync training, logging and checkpointing.
                 Useful for dynamic changes to model amidst training.
 
         Returns:
-            - Returns MetricLog object containing updated logging variables after 1 training step.
+            MetricLog: Returns MetricLog object containing updated logging variables after 1 training step.
 
         """
         self.zero_grad()

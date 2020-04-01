@@ -7,7 +7,7 @@ from torch_mimicry.nets.modules import spectral_norm
 
 
 def SNConv2d(*args, **kwargs):
-    """
+    r"""
     Wrapper for applying spectral norm on conv2d layer.
     """
     if kwargs.get('default', True):
@@ -18,7 +18,7 @@ def SNConv2d(*args, **kwargs):
 
 
 def SNLinear(*args, **kwargs):
-    """
+    r"""
     Wrapper for applying spectral norm on linear layer.
     """
     if kwargs.get('default', True):
@@ -29,7 +29,7 @@ def SNLinear(*args, **kwargs):
 
 
 def SNEmbedding(*args, **kwargs):
-    """
+    r"""
     Wrapper for applying spectral norm on embedding layer.
     """
     if kwargs.get('default', True):
@@ -40,13 +40,13 @@ def SNEmbedding(*args, **kwargs):
 
 
 class ConditionalBatchNorm2d(nn.Module):
-    """
+    r"""
     Conditional Batch Norm as implemented in
     https://github.com/pytorch/pytorch/issues/8985
 
     Attributes:
-        - num_features (int): Size of feature map for batch norm.
-        - num_classes (int): Determines size of embedding layer to condition BN.
+        num_features (int): Size of feature map for batch norm.
+        num_classes (int): Determines size of embedding layer to condition BN.
     """
     def __init__(self, num_features, num_classes):
         super().__init__()
@@ -59,15 +59,15 @@ class ConditionalBatchNorm2d(nn.Module):
                                num_features:].zero_()  # Initialise bias at 0
 
     def forward(self, x, y):
-        """
+        r"""
         Feedforwards for conditional batch norm.
 
         Args:
-            - x (Tensor): Input feature map.
-            - y (Tensor): Input class labels for embedding.
+            x (Tensor): Input feature map.
+            y (Tensor): Input class labels for embedding.
 
         Returns:
-            - out (Tensor): Output feature map.
+            Tensor: Output feature map.
         """
         out = self.bn(x)
         gamma, beta = self.embed(y).chunk(

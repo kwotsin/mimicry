@@ -10,15 +10,15 @@ from torch_mimicry.nets.modules.resblocks import DBlockOptimized, DBlock, GBlock
 
 
 class ResNetGenerator32(infomax_gan_base.BaseGenerator):
-    """
+    r"""
     ResNet backbone generator for InfoMax-GAN.
 
     Attributes:
-        - nz (int): Noise dimension for upsampling.
-        - ngf (int): Variable controlling generator feature map sizes.
-        - bottom_width (int): Starting width for upsampling generator output to an image.
-        - loss_type (str): Name of loss to use for GAN loss.        
-        - infomax_loss_scale (float): The alpha parameter used for scaling the generator infomax loss.
+        nz (int): Noise dimension for upsampling.
+        ngf (int): Variable controlling generator feature map sizes.
+        bottom_width (int): Starting width for upsampling generator output to an image.
+        loss_type (str): Name of loss to use for GAN loss.        
+        infomax_loss_scale (float): The alpha parameter used for scaling the generator infomax loss.
     """
     def __init__(self, nz=128, ngf=256, bottom_width=4, **kwargs):
         super().__init__(nz=nz, ngf=ngf, bottom_width=bottom_width, **kwargs)
@@ -37,14 +37,14 @@ class ResNetGenerator32(infomax_gan_base.BaseGenerator):
         nn.init.xavier_uniform_(self.c5.weight.data, 1.0)
 
     def forward(self, x):
-        """
+        r"""
         Feedforwards a batch of noise vectors into a batch of fake images.
 
         Args:
-            - x (Tensor): A batch of noise vectors of shape (N, nz).
+            x (Tensor): A batch of noise vectors of shape (N, nz).
 
         Returns:
-            - h (Tensor): A batch of fake images of shape (N, C, H, W).
+            Tensor: A batch of fake images of shape (N, C, H, W).
         """
         h = self.l1(x)
         h = h.view(x.shape[0], -1, self.bottom_width, self.bottom_width)
@@ -59,14 +59,14 @@ class ResNetGenerator32(infomax_gan_base.BaseGenerator):
 
 
 class ResNetDiscriminator32(infomax_gan_base.BaseDiscriminator):
-    """
+    r"""
     ResNet backbone discriminator for InfoMax-GAN.
 
     Attributes:
-        - nrkhs (int): The RKHS dimension R to project the local and global features to.
-        - ndf (int): Variable controlling discriminator feature map sizes.
-        - loss_type (str): Name of loss to use for GAN loss.
-        - infomax_loss_scale (float): The beta parameter used for scaling the discriminator infomax loss.
+        nrkhs (int): The RKHS dimension R to project the local and global features to.
+        ndf (int): Variable controlling discriminator feature map sizes.
+        loss_type (str): Name of loss to use for GAN loss.
+        infomax_loss_scale (float): The beta parameter used for scaling the discriminator infomax loss.
     """
     def __init__(self, nrkhs=1024, ndf=128, **kwargs):
         super().__init__(nrkhs=nrkhs, ndf=ndf, **kwargs)
@@ -110,17 +110,17 @@ class ResNetDiscriminator32(infomax_gan_base.BaseDiscriminator):
         nn.init.xavier_uniform_(self.global_nrkhs_sc.weight.data, 1.0)
 
     def forward(self, x):
-        """
+        r"""
         Feedforwards a batch of real/fake images and produces a batch of GAN logits,
         local features of the images, and global features of the images.
 
         Args:
-            - x (Tensor): A batch of images of shape (N, C, H, W).
+            x (Tensor): A batch of images of shape (N, C, H, W).
 
         Returns:
-            - output (Tensor): A batch of GAN logits of shape (N, 1).
-            - local_feat (Tensor): A batch of local features of shape (N, ndf, H>>2, W>>2).
-            - global_feat (Tensor): A batch of global features of shape (N, ndf)
+            Tensor: A batch of GAN logits of shape (N, 1).
+            Tensor: A batch of local features of shape (N, ndf, H>>2, W>>2).
+            Tensor: A batch of global features of shape (N, ndf)
         """
         h = x
 

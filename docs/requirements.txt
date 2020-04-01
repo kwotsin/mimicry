@@ -1,4 +1,4 @@
 sphinx
 sphinx_rtd_theme
-torch_mimicry
+-e git+https://github.com/kwotsin/mimicry.git
 torch

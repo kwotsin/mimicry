@@ -10,7 +10,7 @@ from torch_mimicry.nets.sngan import sngan_base
 
 
 class ResNetGenerator32(sngan_base.BaseGenerator):
-    """
+    r"""
     ResNet backbone generator for SNGAN.
 
     Attributes:
@@ -36,14 +36,14 @@ class ResNetGenerator32(sngan_base.BaseGenerator):
         nn.init.xavier_uniform_(self.c5.weight.data, 1.0)
 
     def forward(self, x):
-        """
+        r"""
         Feedforwards a batch of noise vectors into a batch of fake images.
 
         Args:
             x (Tensor): A batch of noise vectors of shape (N, nz).
 
         Returns:
-            torch.Tensor: A batch of fake images of shape (N, C, H, W).
+            Tensor: A batch of fake images of shape (N, C, H, W).
         """
         h = self.l1(x)
         h = h.view(x.shape[0], -1, self.bottom_width, self.bottom_width)
@@ -58,7 +58,7 @@ class ResNetGenerator32(sngan_base.BaseGenerator):
 
 
 class ResNetDiscriminator32(sngan_base.BaseDiscriminator):
-    """
+    r"""
     ResNet backbone discriminator for SNGAN.
 
     Attributes:
@@ -80,14 +80,14 @@ class ResNetDiscriminator32(sngan_base.BaseDiscriminator):
         nn.init.xavier_uniform_(self.l5.weight.data, 1.0)
 
     def forward(self, x):
-        """
+        r"""
         Feedforwards a batch of real/fake images and produces a batch of GAN logits.
 
         Args:
             x (Tensor): A batch of images of shape (N, C, H, W).
 
         Returns:
-            torch.Tensor: A batch of GAN logits of shape (N, 1).
+            Tensor: A batch of GAN logits of shape (N, 1).
         """
         h = x
         h = self.block1(h)

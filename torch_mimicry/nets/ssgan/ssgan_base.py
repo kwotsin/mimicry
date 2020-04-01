@@ -9,15 +9,15 @@ from torch_mimicry.nets.gan import gan
 
 
 class BaseGenerator(gan.BaseGenerator):
-    """
+    r"""
     ResNet backbone generator for SSGAN.
 
     Attributes:
-        - nz (int): Noise dimension for upsampling.
-        - ngf (int): Variable controlling generator feature map sizes.
-        - bottom_width (int): Starting width for upsampling generator output to an image.
-        - loss_type (str): Name of loss to use for GAN loss.        
-        - ss_loss_scale (float): Self-supervised loss scale for generator.
+        nz (int): Noise dimension for upsampling.
+        ngf (int): Variable controlling generator feature map sizes.
+        bottom_width (int): Starting width for upsampling generator output to an image.
+        loss_type (str): Name of loss to use for GAN loss.        
+        ss_loss_scale (float): Self-supervised loss scale for generator.
     """
     def __init__(self,
                  nz,
@@ -41,21 +41,21 @@ class BaseGenerator(gan.BaseGenerator):
                    device,
                    global_step=None,
                    **kwargs):
-        """
+        r"""
         Takes one training step for G.
 
         Args:
-            - real_batch (Tensor): A batch of real images of shape (N, C, H, W).
+            real_batch (Tensor): A batch of real images of shape (N, C, H, W).
                 Used for obtaining current batch size.
-            - netD (nn.Module): Discriminator model for obtaining losses.
-            - optG (Optimizer): Optimizer for updating generator's parameters.
-            - log_data (MetricLog): An object to add custom metrics for visualisations.
-            - device (torch.device): Device to use for running the model.
-            - global_step (int): Variable to sync training, logging and checkpointing.
+            netD (nn.Module): Discriminator model for obtaining losses.
+            optG (Optimizer): Optimizer for updating generator's parameters.
+            log_data (MetricLog): An object to add custom metrics for visualisations.
+            device (torch.device): Device to use for running the model.
+            global_step (int): Variable to sync training, logging and checkpointing.
                 Useful for dynamic changes to model amidst training.
 
         Returns:
-            - Returns MetricLog object containing updated logging variables after 1 training step.
+            MetricLog: Returns MetricLog object containing updated logging variables after 1 training step.
 
         """
         self.zero_grad()
@@ -88,13 +88,13 @@ class BaseGenerator(gan.BaseGenerator):
 
 
 class BaseDiscriminator(gan.BaseDiscriminator):
-    """
+    r"""
     ResNet backbone discriminator for SSGAN.
 
     Attributes:
-        - ndf (int): Variable controlling discriminator feature map sizes.
-        - loss_type (str): Name of loss to use for GAN loss.        
-        - ss_loss_scale (float): Self-supervised loss scale for discriminator.        
+        ndf (int): Variable controlling discriminator feature map sizes.
+        loss_type (str): Name of loss to use for GAN loss.        
+        ss_loss_scale (float): Self-supervised loss scale for discriminator.        
     """
     def __init__(self, ndf, loss_type='hinge', ss_loss_scale=1.0, **kwargs):
         super().__init__(ndf=ndf, loss_type=loss_type, **kwargs)
@@ -102,7 +102,7 @@ class BaseDiscriminator(gan.BaseDiscriminator):
         self.ss_loss_scale = ss_loss_scale
 
     def _rot_tensor(self, image, deg):
-        """
+        r"""
         Rotation for pytorch tensors using rotation matrix. Takes in a tensor of (C, H, W shape).
         """
         if deg == 90:
@@ -122,7 +122,7 @@ class BaseDiscriminator(gan.BaseDiscriminator):
                 "Function only supports 90,180,270,0 degree rotation.")
 
     def _rotate_batch(self, images):
-        """
+        r"""
         Rotate a quarter batch of images in each of 4 directions.
         """
         N, C, H, W = images.shape
@@ -154,15 +154,15 @@ class BaseDiscriminator(gan.BaseDiscriminator):
         return ret, ret_labels
 
     def compute_ss_loss(self, images, scale):
-        """
+        r"""
         Function to compute SS loss.
 
         Args:
-            - images (Tensor): A batch of non-rotated, upright images.
-            - scale (float): The parameter to scale SS loss by.
+            images (Tensor): A batch of non-rotated, upright images.
+            scale (float): The parameter to scale SS loss by.
 
         Returns:
-            - A scalar tensor representing the SS loss.
+            Tensor: Scalar tensor representing the SS loss.
         """
         # Rotate images and produce labels here.
         images_rot, class_labels = self._rotate_batch(images=images)
@@ -185,20 +185,20 @@ class BaseDiscriminator(gan.BaseDiscriminator):
                    log_data,
                    global_step=None,
                    **kwargs):
-        """
+        r"""
         Takes one training step for D.
 
         Args:
-            - real_batch (Tensor): A batch of real images of shape (N, C, H, W).
-            - netG (nn.Module): Generator model for obtaining fake images.
-            - optD (Optimizer): Optimizer for updating discriminator's parameters.
-            - device (torch.device): Device to use for running the model.
-            - log_data (MetricLog): An object to add custom metrics for visualisations.
-            - global_step (int): Variable to sync training, logging and checkpointing.
+            real_batch (Tensor): A batch of real images of shape (N, C, H, W).
+            netG (nn.Module): Generator model for obtaining fake images.
+            optD (Optimizer): Optimizer for updating discriminator's parameters.
+            device (torch.device): Device to use for running the model.
+            log_data (MetricLog): An object to add custom metrics for visualisations.
+            global_step (int): Variable to sync training, logging and checkpointing.
                 Useful for dynamic changes to model amidst training.
 
         Returns:
-            - Returns MetricLog object containing updated logging variables after 1 training step.
+            MetricLog: Returns MetricLog object containing updated logging variables after 1 training step.
 
         """
         self.zero_grad()

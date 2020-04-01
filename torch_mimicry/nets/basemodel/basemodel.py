@@ -9,11 +9,11 @@ import torch.nn as nn
 
 
 class BaseModel(nn.Module, ABC):
-    """
+    r"""
     BaseModel with basic functionalities for checkpointing and restoration.
     """
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self):
+        super().__init__()
 
     @abstractmethod
     def forward(self, x):
@@ -24,15 +24,15 @@ class BaseModel(nn.Module, ABC):
         return next(self.parameters()).device
 
     def restore_checkpoint(self, ckpt_file, optimizer=None):
-        """
+        r"""
         Restores checkpoint from a pth file and restores optimizer state.
 
         Args:
-            - ckpt_file(str): A PyTorch pth file containing model weights.
-            - optimizer(Optimizer): A vanilla optimizer to have its state restored from.
+            ckpt_file (str): A PyTorch pth file containing model weights.
+            optimizer (Optimizer): A vanilla optimizer to have its state restored from.
 
         Returns:
-            - global_step (int): Global step variable where the model was last checkpointed.
+            int: Global step variable where the model was last checkpointed.
         """
         if not ckpt_file:
             raise ValueError("No checkpoint file to be restored.")
@@ -57,15 +57,15 @@ class BaseModel(nn.Module, ABC):
                         global_step,
                         optimizer=None,
                         name=None):
-        """
+        r"""
         Saves checkpoint at a certain global step during training. Optimizer state
         is also saved together.
 
         Args:
-            - directory (str): Path to save checkpoint to.
-            - global_step (int): The global step variable during training.
-            - optimizer (Optimizer): Optimizer state to be saved concurrently.
-            - name (str): The name to save the checkpoint file as.
+            directory (str): Path to save checkpoint to.
+            global_step (int): The global step variable during training.
+            optimizer (Optimizer): Optimizer state to be saved concurrently.
+            name (str): The name to save the checkpoint file as.
 
         Returns:
             None
@@ -93,14 +93,14 @@ class BaseModel(nn.Module, ABC):
         torch.save(ckpt_dict, os.path.join(directory, name))
 
     def count_params(self):
-        """
+        r"""
         Computes the number of parameters in this model.
 
         Args: None
 
         Returns:
-            - num_total_params (int): Total number of weight parameters for this model.
-            - num_trainable_params (int): Total number of trainable parameters for this model.
+            int: Total number of weight parameters for this model.
+            int: Total number of trainable parameters for this model.
 
         """
         num_total_params = sum(p.numel() for p in self.parameters())

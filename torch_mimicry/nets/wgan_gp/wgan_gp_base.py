@@ -8,14 +8,14 @@ from torch_mimicry.nets.gan import gan
 
 
 class BaseGenerator(gan.BaseGenerator):
-    """
+    r"""
     ResNet backbone generator for WGAN-GP.
 
     Attributes:
-        - nz (int): Noise dimension for upsampling.
-        - ngf (int): Variable controlling generator feature map sizes.
-        - bottom_width (int): Starting width for upsampling generator output to an image.
-        - loss_type (str): Name of loss to use for GAN loss.        
+        nz (int): Noise dimension for upsampling.
+        ngf (int): Variable controlling generator feature map sizes.
+        bottom_width (int): Starting width for upsampling generator output to an image.
+        loss_type (str): Name of loss to use for GAN loss.        
     """
     def __init__(self,
                  nz,
@@ -37,21 +37,21 @@ class BaseGenerator(gan.BaseGenerator):
                    device,
                    global_step=None,
                    **kwargs):
-        """
+        r"""
         Takes one training step for G.
 
         Args:
-            - real_batch (Tensor): A batch of real images of shape (N, C, H, W).
+            real_batch (Tensor): A batch of real images of shape (N, C, H, W).
                 Used for obtaining current batch size.
-            - netD (nn.Module): Discriminator model for obtaining losses.
-            - optG (Optimizer): Optimizer for updating generator's parameters.
-            - log_data (MetricLog): An object to add custom metrics for visualisations.
-            - device (torch.device): Device to use for running the model.
-            - global_step (int): Variable to sync training, logging and checkpointing.
+            netD (nn.Module): Discriminator model for obtaining losses.
+            optG (Optimizer): Optimizer for updating generator's parameters.
+            log_data (MetricLog): An object to add custom metrics for visualisations.
+            device (torch.device): Device to use for running the model.
+            global_step (int): Variable to sync training, logging and checkpointing.
                 Useful for dynamic changes to model amidst training.
 
         Returns:
-            - Returns MetricLog object containing updated logging variables after 1 training step.
+            MetricLog: Returns MetricLog object containing updated logging variables after 1 training step.
 
         """
         self.zero_grad()
@@ -80,13 +80,13 @@ class BaseGenerator(gan.BaseGenerator):
 
 
 class BaseDiscriminator(gan.BaseDiscriminator):
-    """
+    r"""
     ResNet backbone discriminator for WGAN-GP.
 
     Attributes:
-        - ndf (int): Variable controlling discriminator feature map sizes.
-        - loss_type (str): Name of loss to use for GAN loss.
-        - gp_scale (float): Lamda parameter for gradient penalty.        
+        ndf (int): Variable controlling discriminator feature map sizes.
+        loss_type (str): Name of loss to use for GAN loss.
+        gp_scale (float): Lamda parameter for gradient penalty.        
     """
     def __init__(self, ndf, loss_type='wasserstein', gp_scale=10.0, **kwargs):
         super().__init__(ndf=ndf, loss_type=loss_type, **kwargs)
@@ -100,20 +100,20 @@ class BaseDiscriminator(gan.BaseDiscriminator):
                    log_data,
                    global_step=None,
                    **kwargs):
-        """
+        r"""
         Takes one training step for D.
 
         Args:
-            - real_batch (Tensor): A batch of real images of shape (N, C, H, W).
-            - netG (nn.Module): Generator model for obtaining fake images.
-            - optD (Optimizer): Optimizer for updating discriminator's parameters.
-            - device (torch.device): Device to use for running the model.
-            - log_data (MetricLog): An object to add custom metrics for visualisations.
-            - global_step (int): Variable to sync training, logging and checkpointing.
+            real_batch (Tensor): A batch of real images of shape (N, C, H, W).
+            netG (nn.Module): Generator model for obtaining fake images.
+            optD (Optimizer): Optimizer for updating discriminator's parameters.
+            device (torch.device): Device to use for running the model.
+            log_data (MetricLog): An object to add custom metrics for visualisations.
+            global_step (int): Variable to sync training, logging and checkpointing.
                 Useful for dynamic changes to model amidst training.
 
         Returns:
-            - Returns MetricLog object containing updated logging variables after 1 training step.
+            MetricLog: Returns MetricLog object containing updated logging variables after 1 training step.
 
         """
         self.zero_grad()
@@ -157,17 +157,17 @@ class BaseDiscriminator(gan.BaseDiscriminator):
                                       real_images,
                                       fake_images,
                                       gp_scale=10.0):
-        """
+        r"""
         Computes gradient penalty loss, as based on:
         https://github.com/jalola/improved-wgan-pytorch/blob/master/gan_train.py
         
         Args:
-            - real_images (Tensor): A batch of real images of shape (N, 3, H, W).
-            - fake_images (Tensor): A batch of fake images of shape (N, 3, H, W).
-            - gp_scale (float): Gradient penalty lamda parameter.
+            real_images (Tensor): A batch of real images of shape (N, 3, H, W).
+            fake_images (Tensor): A batch of fake images of shape (N, 3, H, W).
+            gp_scale (float): Gradient penalty lamda parameter.
 
         Returns:
-            - Scalar gradient penalty loss.
+            Tensor: Scalar gradient penalty loss.
         """
         # Obtain parameters
         N, _, H, W = real_images.shape

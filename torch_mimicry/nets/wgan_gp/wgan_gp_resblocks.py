@@ -8,7 +8,7 @@ from torch_mimicry.nets.modules import resblocks
 
 
 class GBlock(resblocks.GBlock):
-    """
+    r"""
     Residual block for generator. 
     Modifies original resblock definitions with small changes.
 
@@ -17,12 +17,12 @@ class GBlock(resblocks.GBlock):
     https://github.com/pytorch/vision/blob/master/torchvision/models/segmentation/_utils.py
 
     Attributes:
-        - in_channels (int): The channel size of input feature map.
-        - out_channels (int): The channel size of output feature map.
-        - hidden_channels (int): The channel size of intermediate feature maps.
-        - upsample (bool): If True, upsamples the input feature map.
-        - num_classes (int): If more than 0, uses conditional batch norm instead.
-        - spectral_norm (bool): If True, uses spectral norm for convolutional layers.
+        in_channels (int): The channel size of input feature map.
+        out_channels (int): The channel size of output feature map.
+        hidden_channels (int): The channel size of intermediate feature maps.
+        upsample (bool): If True, upsamples the input feature map.
+        num_classes (int): If more than 0, uses conditional batch norm instead.
+        spectral_norm (bool): If True, uses spectral norm for convolutional layers.
     """
     def __init__(self,
                  in_channels,
@@ -50,7 +50,7 @@ class GBlock(resblocks.GBlock):
 
 
 class DBlock(resblocks.DBlock):
-    """
+    r"""
     Residual block for discriminator.
 
     Modifies original resblock definition by including layer norm and removing
@@ -58,11 +58,11 @@ class DBlock(resblocks.DBlock):
     https://github.com/igul222/improved_wgan_training/blob/master/gan_cifar_resnet.py#L105
 
     Attributes:
-        - in_channels (int): The channel size of input feature map.
-        - out_channels (int): The channel size of output feature map.
-        - hidden_channels (int): The channel size of intermediate feature maps.
-        - downsample (bool): If True, downsamples the input feature map.
-        - spectral_norm (bool): If True, uses spectral norm for convolutional layers.        
+        in_channels (int): The channel size of input feature map.
+        out_channels (int): The channel size of output feature map.
+        hidden_channels (int): The channel size of intermediate feature maps.
+        downsample (bool): If True, downsamples the input feature map.
+        spectral_norm (bool): If True, uses spectral norm for convolutional layers.        
     """
     def __init__(self,
                  in_channels,
@@ -88,6 +88,9 @@ class DBlock(resblocks.DBlock):
         self.norm2 = None
 
     def residual(self, x):
+        r"""
+        Helper function for feedforwarding through main layers.
+        """        
         if self.norm1 is None:
             self.norm1 = nn.LayerNorm(
                 [self.in_channels, x.shape[2], x.shape[3]])
@@ -111,16 +114,16 @@ class DBlock(resblocks.DBlock):
 
 
 class DBlockOptimized(resblocks.DBlockOptimized):
-    """
+    r"""
     Optimized residual block for discriminator.
 
     Does not have any normalisation. See official TF Code:
     https://github.com/igul222/improved_wgan_training/blob/master/gan_cifar_resnet.py#L139
 
     Attributes:
-        - in_channels (int): The channel size of input feature map.
-        - out_channels (int): The channel size of output feature map.
-        - spectral_norm (bool): If True, uses spectral norm for convolutional layers.        
+        in_channels (int): The channel size of input feature map.
+        out_channels (int): The channel size of output feature map.
+        spectral_norm (bool): If True, uses spectral norm for convolutional layers.        
     """
     def __init__(self,
                  in_channels,

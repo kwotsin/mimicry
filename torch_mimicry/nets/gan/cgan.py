@@ -7,15 +7,15 @@ from torch_mimicry.nets.gan import gan
 
 
 class BaseGenerator(gan.BaseGenerator):
-    """
+    r"""
     Base class for a generic conditional generator model.
 
     Attributes:
-        - num_classes (int): Number of classes, more than 0 for conditional GANs.    
-        - nz (int): Noise dimension for upsampling.
-        - ngf (int): Variable controlling generator feature map sizes.
-        - bottom_width (int): Starting width for upsampling generator output to an image.
-        - loss_type (str): Name of loss to use for GAN loss.        
+        num_classes (int): Number of classes, more than 0 for conditional GANs.    
+        nz (int): Noise dimension for upsampling.
+        ngf (int): Variable controlling generator feature map sizes.
+        bottom_width (int): Starting width for upsampling generator output to an image.
+        loss_type (str): Name of loss to use for GAN loss.        
     """
     def __init__(self, num_classes, nz, ngf, bottom_width, loss_type,
                  **kwargs):
@@ -27,16 +27,16 @@ class BaseGenerator(gan.BaseGenerator):
         self.num_classes = num_classes
 
     def generate_images(self, num_images, c=None, device=None):
-        """
+        r"""
         Generate images with possibility for conditioning on a fixed class.
 
         Args:
-            - num_images (int): The number of images to generate.
-            - c (int): The class of images to generate. If None, generates random images.
-            - device (int): The device to send the generated images to.
+            num_images (int): The number of images to generate.
+            c (int): The class of images to generate. If None, generates random images.
+            device (int): The device to send the generated images to.
 
         Returns:
-            - Batch of generated images and their corresponding labels.
+            tuple: Batch of generated images and their corresponding labels.
         """
         if device is None:
             device = self.device
@@ -71,21 +71,21 @@ class BaseGenerator(gan.BaseGenerator):
                    device,
                    global_step=None,
                    **kwargs):
-        """
+        r"""
         Takes one training step for G.
 
         Args:
-            - real_batch (Tensor): A batch of real images of shape (N, C, H, W).
+            real_batch (Tensor): A batch of real images of shape (N, C, H, W).
                 Used for obtaining current batch size.
-            - netD (nn.Module): Discriminator model for obtaining losses.
-            - optG (Optimizer): Optimizer for updating generator's parameters.
-            - log_data (dict): A dict mapping name to values for logging uses.
-            - device (torch.device): Device to use for running the model.
-            - global_step (int): Variable to sync training, logging and checkpointing.
+            netD (nn.Module): Discriminator model for obtaining losses.
+            optG (Optimizer): Optimizer for updating generator's parameters.
+            log_data (dict): A dict mapping name to values for logging uses.
+            device (torch.device): Device to use for running the model.
+            global_step (int): Variable to sync training, logging and checkpointing.
                 Useful for dynamic changes to model amidst training.
 
         Returns:
-            - Returns MetricLog object containing updated logging variables after 1 training step.
+            MetricLog: Returns MetricLog object containing updated logging variables after 1 training step.
 
         """
         self.zero_grad()
@@ -114,13 +114,13 @@ class BaseGenerator(gan.BaseGenerator):
 
 
 class BaseDiscriminator(gan.BaseDiscriminator):
-    """
+    r"""
     Base class for a generic conditional discriminator model.
 
     Attributes:
-        - num_classes (int): Number of classes, more than 0 for conditional GANs.        
-        - ndf (int): Variable controlling discriminator feature map sizes.
-        - loss_type (str): Name of loss to use for GAN loss.                
+        num_classes (int): Number of classes, more than 0 for conditional GANs.        
+        ndf (int): Variable controlling discriminator feature map sizes.
+        loss_type (str): Name of loss to use for GAN loss.                
     """
     def __init__(self, num_classes, ndf, loss_type, **kwargs):
         super().__init__(ndf=ndf, loss_type=loss_type, **kwargs)
@@ -134,21 +134,21 @@ class BaseDiscriminator(gan.BaseDiscriminator):
                    log_data,
                    global_step=None,
                    **kwargs):
-        """
+        r"""
         Takes one training step for D.
 
         Args:
-            - real_batch (Tensor): A batch of real images of shape (N, C, H, W).
-            - loss_type (str): Name of loss to use for GAN loss.
-            - netG (nn.Module): Generator model for obtaining fake images.
-            - optD (Optimizer): Optimizer for updating discriminator's parameters.
-            - device (torch.device): Device to use for running the model.
-            - log_data (dict): A dict mapping name to values for logging uses.
-            - global_step (int): Variable to sync training, logging and checkpointing.
+            real_batch (Tensor): A batch of real images of shape (N, C, H, W).
+            loss_type (str): Name of loss to use for GAN loss.
+            netG (nn.Module): Generator model for obtaining fake images.
+            optD (Optimizer): Optimizer for updating discriminator's parameters.
+            device (torch.device): Device to use for running the model.
+            log_data (dict): A dict mapping name to values for logging uses.
+            global_step (int): Variable to sync training, logging and checkpointing.
                 Useful for dynamic changes to model amidst training.
 
         Returns:
-            - Returns MetricLog object containing updated logging variables after 1 training step.
+            MetricLog: Returns MetricLog object containing updated logging variables after 1 training step.
         """
         self.zero_grad()
 
