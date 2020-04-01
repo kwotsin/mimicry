@@ -12,7 +12,7 @@ from torch_mimicry.modules import SNConv2d, ConditionalBatchNorm2d
 
 
 class GBlock(nn.Module):
-    """
+    r"""
     Residual block for generator.
 
     Uses bilinear (rather than nearest) interpolation, and align_corners
@@ -20,12 +20,12 @@ class GBlock(nn.Module):
     https://github.com/pytorch/vision/blob/master/torchvision/models/segmentation/_utils.py
 
     Attributes:
-        - in_channels (int): The channel size of input feature map.
-        - out_channels (int): The channel size of output feature map.
-        - hidden_channels (int): The channel size of intermediate feature maps.
-        - upsample (bool): If True, upsamples the input feature map.
-        - num_classes (int): If more than 0, uses conditional batch norm instead.
-        - spectral_norm (bool): If True, uses spectral norm for convolutional layers.
+        in_channels (int): The channel size of input feature map.
+        out_channels (int): The channel size of output feature map.
+        hidden_channels (int): The channel size of intermediate feature maps.
+        upsample (bool): If True, upsamples the input feature map.
+        num_classes (int): If more than 0, uses conditional batch norm instead.
+        spectral_norm (bool): If True, uses spectral norm for convolutional layers.
     """
     def __init__(self,
                  in_channels,
@@ -102,7 +102,7 @@ class GBlock(nn.Module):
             nn.init.xavier_uniform_(self.c_sc.weight.data, 1.0)
 
     def _upsample_conv(self, x, conv):
-        """
+        r"""
         Helper function for performing convolution after upsampling.
         """
         return conv(
@@ -112,7 +112,7 @@ class GBlock(nn.Module):
                           align_corners=False))
 
     def _residual(self, x):
-        """
+        r"""
         Helper function for feedforwarding through main layers.
         """
         h = x
@@ -126,7 +126,7 @@ class GBlock(nn.Module):
         return h
 
     def _residual_conditional(self, x, y):
-        """
+        r"""
         Helper function for feedforwarding through main layers, including conditional BN.
         """
         h = x
@@ -140,7 +140,7 @@ class GBlock(nn.Module):
         return h
 
     def _shortcut(self, x):
-        """
+        r"""
         Helper function for feedforwarding through shortcut layers.
         """
         if self.learnable_sc:
@@ -151,7 +151,7 @@ class GBlock(nn.Module):
             return x
 
     def forward(self, x, y=None):
-        """
+        r"""
         Residual block feedforward function.
         """
         if y is None:
@@ -166,11 +166,11 @@ class DBlock(nn.Module):
     Residual block for discriminator.
 
     Attributes:
-        - in_channels (int): The channel size of input feature map.
-        - out_channels (int): The channel size of output feature map.
-        - hidden_channels (int): The channel size of intermediate feature maps.
-        - downsample (bool): If True, downsamples the input feature map.
-        - spectral_norm (bool): If True, uses spectral norm for convolutional layers.        
+        in_channels (int): The channel size of input feature map.
+        out_channels (int): The channel size of output feature map.
+        hidden_channels (int): The channel size of intermediate feature maps.
+        downsample (bool): If True, downsamples the input feature map.
+        spectral_norm (bool): If True, uses spectral norm for convolutional layers.        
     """
     def __init__(self,
                  in_channels,
@@ -250,9 +250,9 @@ class DBlockOptimized(nn.Module):
     in chainer.
 
     Attributes:
-        - in_channels (int): The channel size of input feature map.
-        - out_channels (int): The channel size of output feature map.
-        - spectral_norm (bool): If True, uses spectral norm for convolutional layers.        
+        in_channels (int): The channel size of input feature map.
+        out_channels (int): The channel size of output feature map.
+        spectral_norm (bool): If True, uses spectral norm for convolutional layers.        
     """
     def __init__(self, in_channels, out_channels, spectral_norm=True):
         super().__init__()

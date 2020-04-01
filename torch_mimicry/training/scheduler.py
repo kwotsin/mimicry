@@ -12,12 +12,12 @@ class LRScheduler:
     for other scheduling policies.
 
     Attributes:
-        - lr_decay (str): The learning rate decay policy to use.
-        - optD (Optimizer): Torch optimizer object for discriminator.
-        - optG (Optimizer): Torch optimizer object for generator.
-        - num_steps (int): The number of training iterations.
-        - lr_D (float): The initial learning rate of optD.
-        - lr_G (float): The initial learning rate of optG.
+        lr_decay (str): The learning rate decay policy to use.
+        optD (Optimizer): Torch optimizer object for discriminator.
+        optG (Optimizer): Torch optimizer object for generator.
+        num_steps (int): The number of training iterations.
+        lr_D (float): The initial learning rate of optD.
+        lr_G (float): The initial learning rate of optG.
     """
     def __init__(self, lr_decay, optD, optG, num_steps, **kwargs):
         if lr_decay not in [None, 'None', 'linear']:
@@ -45,14 +45,14 @@ class LRScheduler:
         Note: assumes that the optimizer has only one parameter group to update!
 
         Args:
-            - optimizer (Optimizer): Torch optimizer object to update learning rate.
-            - global_step (int): The current global step of the training.
-            - lr_value_range (tuple): A tuple of floats (x,y) to decrease from x to y.
-            - lr_step_range (tuple): A tuple of ints (i, j) to start decreasing 
+            optimizer (Optimizer): Torch optimizer object to update learning rate.
+            global_step (int): The current global step of the training.
+            lr_value_range (tuple): A tuple of floats (x,y) to decrease from x to y.
+            lr_step_range (tuple): A tuple of ints (i, j) to start decreasing 
                 when global_step > i, and until j.
 
         Returns:
-            - Float representing the new updated learning rate.
+            float: Float representing the new updated learning rate.
         """
         # Compute the new learning rate
         v1, v2 = lr_value_range
@@ -79,11 +79,11 @@ class LRScheduler:
         with the current status.
 
         Args:
-            - log_data (MetricLog): Object for logging the updated learning rate metric.
-            - global_step (int): The current global step of the training.
+            log_data (MetricLog): Object for logging the updated learning rate metric.
+            global_step (int): The current global step of the training.
 
         Returns:
-            - MetricLog object containing the updated learning rate at the current global step.
+            MetricLog: MetricLog object containing the updated learning rate at the current global step.
         """
         if self.lr_decay == "linear":
             lr_D = self.linear_decay(optimizer=self.optD,

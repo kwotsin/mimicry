@@ -5,11 +5,11 @@ MetricLog object for intelligently logging data to display them more intuitively
 
 class MetricLog:
     """
-    A dictionary that logs data, and includes an extra dict to map the metrics
+    A dictionary-like object that logs data, and includes an extra dict to map the metrics
     to its group name, if any, and the corresponding precision to print out.
 
     Attributes:
-        - metrics_dict (dict): A dictionary mapping to another dict containing
+        metrics_dict (dict): A dictionary mapping to another dict containing
             the corresponding value, precision, and the group this metric belongs to.
     """
     def __init__(self, **kwargs):
@@ -21,13 +21,13 @@ class MetricLog:
         of grouping certain metrics together.
 
         Args:
-            - name (str): Name of metric to log.
-            - value (Tensor/Float): Value of the metric to log.
-            - group (str): Name of the group to classify different metrics together.
-            - precision (int): The number of floating point precision to represent the value.
+            name (str): Name of metric to log.
+            value (Tensor/Float): Value of the metric to log.
+            group (str): Name of the group to classify different metrics together.
+            precision (int): The number of floating point precision to represent the value.
 
         Returns:
-            - None.
+            None
         """
         # Grab tensor values only
         try:
@@ -50,10 +50,10 @@ class MetricLog:
         group name called "loss".
 
         Args:
-            - name (str): The name of the metric to retrieve group name.
+            name (str): The name of the metric to retrieve group name.
 
         Returns:
-            - A string representing the group name of the metric.
+            str: A string representing the group name of the metric.
         """
         return self.metrics_dict[name]['group']
 

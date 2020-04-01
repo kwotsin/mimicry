@@ -14,13 +14,13 @@ class Logger:
     Writes summaries and visualises training progress.
     
     Attributes:
-        - log_dir (str): The path to store logging information.
-        - num_steps (int): Total number of training iterations.
-        - dataset_size (int): The number of examples in the dataset.
-        - device (Device): Torch device object to send data to.
-        - flush_secs (int): Number of seconds before flushing summaries to disk.
-        - writers (dict): A dictionary of tensorboard writers with keys as metric names.
-        - num_epochs (int): The number of epochs, for extra information.
+        log_dir (str): The path to store logging information.
+        num_steps (int): Total number of training iterations.
+        dataset_size (int): The number of examples in the dataset.
+        device (Device): Torch device object to send data to.
+        flush_secs (int): Number of seconds before flushing summaries to disk.
+        writers (dict): A dictionary of tensorboard writers with keys as metric names.
+        num_epochs (int): The number of epochs, for extra information.
     """
     def __init__(self,
                  log_dir,
@@ -60,11 +60,11 @@ class Logger:
         writers for summary writing if there are new scalars to log in log_data.
 
         Args:
-            - log_data (MetricLog): Dict-like object to collect log data for TB writing.
-            - global_step (int): Global step variable for syncing logs.
+            log_data (MetricLog): Dict-like object to collect log data for TB writing.
+            global_step (int): Global step variable for syncing logs.
 
         Returns:
-            - None
+            None
         """
         for metric, data in log_data.items():
             if metric not in self.writers:
@@ -88,12 +88,12 @@ class Logger:
         Formats the string to print to stdout based on training information.
 
         Args:
-            - log_data (MetricLog): Dict-like object to collect log data for TB writing.
-            - global_step (int): Global step variable for syncing logs.
-            - time_taken (float): Time taken for one training iteration.
+            log_data (MetricLog): Dict-like object to collect log data for TB writing.
+            global_step (int): Global step variable for syncing logs.
+            time_taken (float): Time taken for one training iteration.
 
         Returns:
-            - String to be printed to stdout.
+            str: String to be printed to stdout.
         """
         # Basic information
         log_to_show = [
@@ -157,12 +157,12 @@ class Logger:
         Produce visualisations of the G(z), one fixed and one random.
 
         Args:
-            - netG (Module): Generator model object for producing images.
-            - global_step (int): Global step variable for syncing logs.
-            - num_images (int): The number of images to visualise.
+            netG (Module): Generator model object for producing images.
+            global_step (int): Global step variable for syncing logs.
+            num_images (int): The number of images to visualise.
 
         Returns:
-            - None
+            None
         """
         img_dir = os.path.join(self.log_dir, 'images')
         if not os.path.exists(img_dir):

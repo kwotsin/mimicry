@@ -16,27 +16,27 @@ class Trainer:
     Trainer object for constructing the GAN training pipeline.
 
     Attributes:
-        - netD (Module): Torch discriminator model.
-        - netG (Module): Torch generator model.
-        - optD (Optimizer): Torch optimizer object for discriminator.
-        - optG (Optimizer): Torch optimizer object for generator.
-        - dataloader (DataLoader): Torch object for loading data from a dataset object.
-        - num_steps (int): The number of training iterations.
-        - n_dis (int): Number of discriminator update steps per generator training step.
-        - lr_decay (str): The learning rate decay policy to use.
-        - log_dir (str): The path to storing logging information and checkpoints.
-        - device (Device): Torch device object to send model/data to.
-        - logger (Logger): Logger object for visualising training information.
-        - scheduler (LRScheduler): GAN training specific learning rate scheduler object.
-        - params (dict): Dictionary of training hyperparameters.
-        - netD_ckpt_file (str): Custom checkpoint file to restore discriminator from.
-        - netG_ckpt_file (str): Custom checkpoint file to restore generator from.
-        - print_steps (int): Number of training steps before printing training info to stdout.
-        - vis_steps (int): Number of training steps before visualising images with TensorBoard.
-        - flush_secs (int): Number of seconds before flushing summaries to disk.
-        - log_steps (int): Number of training steps before writing summaries to TensorBoard.
-        - save_steps (int): Number of training steps bfeore checkpointing.
-        - save_when_end (bool): If True, saves final checkpoint when training concludes.
+        netD (Module): Torch discriminator model.
+        netG (Module): Torch generator model.
+        optD (Optimizer): Torch optimizer object for discriminator.
+        optG (Optimizer): Torch optimizer object for generator.
+        dataloader (DataLoader): Torch object for loading data from a dataset object.
+        num_steps (int): The number of training iterations.
+        n_dis (int): Number of discriminator update steps per generator training step.
+        lr_decay (str): The learning rate decay policy to use.
+        log_dir (str): The path to storing logging information and checkpoints.
+        device (Device): Torch device object to send model/data to.
+        logger (Logger): Logger object for visualising training information.
+        scheduler (LRScheduler): GAN training specific learning rate scheduler object.
+        params (dict): Dictionary of training hyperparameters.
+        netD_ckpt_file (str): Custom checkpoint file to restore discriminator from.
+        netG_ckpt_file (str): Custom checkpoint file to restore generator from.
+        print_steps (int): Number of training steps before printing training info to stdout.
+        vis_steps (int): Number of training steps before visualising images with TensorBoard.
+        flush_secs (int): Number of seconds before flushing summaries to disk.
+        log_steps (int): Number of training steps before writing summaries to TensorBoard.
+        save_steps (int): Number of training steps bfeore checkpointing.
+        save_when_end (bool): If True, saves final checkpoint when training concludes.
     """
     def __init__(self,
                  netD,
