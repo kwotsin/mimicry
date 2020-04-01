@@ -6,7 +6,7 @@
 ![alt text](https://github.com/kwotsin/mimicry/blob/master/docs/images/mimicry_logo.png)
 
 -----
-[![CircleCI](https://circleci.com/gh/kwotsin/mimicry.svg?style=shield)](https://circleci.com/gh/kwotsin/mimicry) [![codecov](https://codecov.io/gh/kwotsin/mimicry/branch/master/graph/badge.svg)](https://codecov.io/gh/kwotsin/mimicry) [![PyPI version](https://badge.fury.io/py/torch-mimicry.svg)](https://badge.fury.io/py/torch-mimicry) [![Documentation Status](https://readthedocs.org/projects/pip/badge/?version=stable)](http://pip.pypa.io/en/stable/?badge=stable)
+[![CircleCI](https://circleci.com/gh/kwotsin/mimicry.svg?style=shield)](https://circleci.com/gh/kwotsin/mimicry) [![codecov](https://codecov.io/gh/kwotsin/mimicry/branch/master/graph/badge.svg)](https://codecov.io/gh/kwotsin/mimicry) [![PyPI version](https://badge.fury.io/py/torch-mimicry.svg)](https://badge.fury.io/py/torch-mimicry) [![Documentation Status](https://readthedocs.org/projects/mimicry/badge/?version=latest)](https://mimicry.readthedocs.io/en/latest/?badge=latest)
  [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 
 
