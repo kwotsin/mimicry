@@ -27,16 +27,16 @@ def compute_real_dist_stats(num_samples,
     for real images.
 
     Args:
-        - num_samples (int): Number of real images to compute statistics.
-        - sess (Session): TensorFlow session to use.
-        - dataset_name (str): The name of the dataset to load.
-        - batch_size (int): The batch size to feedforward for inference.
-        - stats_file (str): The statistics file to load from if there is already one.
-        - verbose (bool): If True, prints progress of computation.
+        num_samples (int): Number of real images to compute statistics.
+        sess (Session): TensorFlow session to use.
+        dataset_name (str): The name of the dataset to load.
+        batch_size (int): The batch size to feedforward for inference.
+        stats_file (str): The statistics file to load from if there is already one.
+        verbose (bool): If True, prints progress of computation.
 
     Returns:
-        - m_real (ndarray): Mean features stored as np array.
-        - s_real (ndarray): Covariance of features stored as np array.
+        ndarray: Mean features stored as np array.
+        ndarray: Covariance of features stored as np array.
     """
     # Create custom stats file name
     if stats_file is None:
@@ -80,10 +80,10 @@ def _normalize_images(images):
     The function uses the normalization from make_grid and save_image functions.
 
     Args:
-        - images (Tensor): Batch of images of shape (N, 3, H, W).
+        images (Tensor): Batch of images of shape (N, 3, H, W).
 
     Returns:
-        - images (ndarray): Batch of normalized images of shape (N, H, W, 3).
+        ndarray: Batch of normalized images of shape (N, H, W, 3).
     """
     # Shift the image from [-1, 1] range to [0, 1] range.
     min_val = float(images.min())
@@ -111,18 +111,18 @@ def compute_gen_dist_stats(netG,
     saving the images on disk.
 
     Args:
-        - netG (Module): Torch Module object representing the generator model.
-        - num_samples (int): The number of fake images for computing statistics.
-        - sess (Session): TensorFlow session to use.
-        - device (str): Device identifier to use for computation.
-        - seed (int): The random seed to use.
-        - batch_size (int): The number of samples per batch for inference.
-        - print_every (int): Interval for printing log.
-        - verbose (bool): If True, prints progress.
+        netG (Module): Torch Module object representing the generator model.
+        num_samples (int): The number of fake images for computing statistics.
+        sess (Session): TensorFlow session to use.
+        device (str): Device identifier to use for computation.
+        seed (int): The random seed to use.
+        batch_size (int): The number of samples per batch for inference.
+        print_every (int): Interval for printing log.
+        verbose (bool): If True, prints progress.
 
     Returns:
-        - m_fake (ndarray): Mean features stored as np array.
-        - s_fake (ndarray): Covariance of features stored as np array.
+        ndarray: Mean features stored as np array.
+        ndarray: Covariance of features stored as np array.
     """
     with torch.no_grad():
         # Set model to evaluation mode
@@ -178,17 +178,17 @@ def fid_score(num_real_samples,
     implementations of imaging libraries.
 
     Args:
-        - num_real_samples (int): The number of real images to use for FID.
-        - num_fake_samples (int): The number of fake images to use for FID.
-        - netG (Module): Torch Module object representing the generator model.
-        - device (str): Device identifier to use for computation.
-        - seed (int): The random seed to use.
-        - dataset_name (str): The name of the dataset to load.
-        - batch_size (int): The batch size to feedforward for inference.
-        - verbose (bool): If True, prints progress.
-        - stats_file (str): The statistics file to load from if there is already one.
+        num_real_samples (int): The number of real images to use for FID.
+        num_fake_samples (int): The number of fake images to use for FID.
+        netG (Module): Torch Module object representing the generator model.
+        device (str): Device identifier to use for computation.
+        seed (int): The random seed to use.
+        dataset_name (str): The name of the dataset to load.
+        batch_size (int): The batch size to feedforward for inference.
+        verbose (bool): If True, prints progress.
+        stats_file (str): The statistics file to load from if there is already one.
     Returns:
-        - Scalar fid score.
+        float: Scalar FID score.
     """
     start_time = time.time()
 

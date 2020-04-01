@@ -15,13 +15,13 @@ def get_predictions(images, device=None, batch_size=50, print_every=20):
     Get the output probabilities of images.
 
     Args:
-        - images (ndarray): Batch of images of shape (N, H, W, 3).
-        - device (Device): Torch device object.
-        - batch_size (int): Batch size for inference using inception model.
-        - print_every (int): Prints logging variable every n batch inferences.
+        images (ndarray): Batch of images of shape (N, H, W, 3).
+        device (Device): Torch device object.
+        batch_size (int): Batch size for inference using inception model.
+        print_every (int): Prints logging variable every n batch inferences.
 
     Returns:
-        - Batch of probabilities of equal size as number of images input.
+        ndarray: Batch of probabilities of equal size as number of images input.
     """
     if device and device.index is not None:
         # Avoid unbounded memory usage
@@ -76,13 +76,13 @@ def get_inception_score(images, splits=10, device=None):
     Computes inception score according to official OpenAI implementation.
 
     Args:
-        - images (ndarray): Batch of images of shape (N, H, W, 3), which should have values
+        images (ndarray): Batch of images of shape (N, H, W, 3), which should have values
             in the range [0, 255].
-        - splits (int): Number of splits to use for computing IS.
-        - device (Device): Torch device object to decide which GPU to use for TF session.
+        splits (int): Number of splits to use for computing IS.
+        device (Device): Torch device object to decide which GPU to use for TF session.
 
     Returns:
-        - Mean and standard deviation of the inception score computed.
+        tuple: Tuple of mean and standard deviation of the inception score computed.
     """
     if np.max(images[0] < 10) and np.max(images[0] < 0):
         raise ValueError("Images should have value ranging from 0 to 255.")

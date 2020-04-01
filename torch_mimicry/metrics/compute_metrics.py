@@ -25,16 +25,16 @@ def evaluate(metric,
     Evaluates a generator over several runs.
 
     Args:
-        - metric (str): The name of the metric for evaluation.
-        - netG (Module): Torch generator model to evaluate.
-        - log_dir (str): The path to the log directory.
-        - evaluate_range (tuple): The 3 valued tuple for defining a for loop.
-        - evaluate_step (int): The specific checkpoint to load. Used in place of evaluate_range.
-        - device (str): Device identifier to use for computation.
-        - num_runs (int): The number of runs to compute FID for each checkpoint.
-        - start_seed (int): Starting random seed to use.
-        - write_to_json (bool): If True, writes to an output json file in log_dir.
-        - overwrite (bool): If True, then overwrites previous metric score.
+        metric (str): The name of the metric for evaluation.
+        netG (Module): Torch generator model to evaluate.
+        log_dir (str): The path to the log directory.
+        evaluate_range (tuple): The 3 valued tuple for defining a for loop.
+        evaluate_step (int): The specific checkpoint to load. Used in place of evaluate_range.
+        device (str): Device identifier to use for computation.
+        num_runs (int): The number of runs to compute FID for each checkpoint.
+        start_seed (int): Starting random seed to use.
+        write_to_json (bool): If True, writes to an output json file in log_dir.
+        overwrite (bool): If True, then overwrites previous metric score.
         
     Returns:
         None

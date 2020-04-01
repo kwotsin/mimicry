@@ -14,14 +14,14 @@ def polynomial_mmd(codes_g, codes_r, degree=3, gamma=None, coef0=1):
     K(X, Y) = (gamma <X, Y> + coef0)^degree
 
     Args:
-        - codes_g (ndarray): Set of features from 1st distribution.
-        - codes_r (ndarray): Set of features from 2nd distribution.
-        - degree (int): Power of the kernel.
-        - gamma (float): Scaling factor of dot product.
-        - coeff0 (float): Constant factor of kernel.
+        codes_g (ndarray): Set of features from 1st distribution.
+        codes_r (ndarray): Set of features from 2nd distribution.
+        degree (int): Power of the kernel.
+        gamma (float): Scaling factor of dot product.
+        coeff0 (float): Constant factor of kernel.
 
     Returns:
-        - Scalar MMD score between features of 2 distributions.
+        np.float64: Scalar MMD score between features of 2 distributions.
     """
     X = codes_g
     Y = codes_r
@@ -30,7 +30,7 @@ def polynomial_mmd(codes_g, codes_r, degree=3, gamma=None, coef0=1):
     K_YY = polynomial_kernel(Y, degree=degree, gamma=gamma, coef0=coef0)
     K_XY = polynomial_kernel(X, Y, degree=degree, gamma=gamma, coef0=coef0)
 
-    return compute_mmd2(K_XX, K_XY, K_YY)
+    return _compute_mmd2(K_XX, K_XY, K_YY)
 
 
 def polynomial_mmd_averages(codes_g,
@@ -43,13 +43,13 @@ def polynomial_mmd_averages(codes_g,
     each of which is of subset_size.
 
     Args:
-        - codes_g (ndarray): Set of features from 1st distribution.
-        - codes_r (ndarray): Set of features from 2nd distribution.
-        - n_subsets (int): Number of subsets to compute averages.
-        - subset_size (int): Size of each subset of features to choose.
+        codes_g (ndarray): Set of features from 1st distribution.
+        codes_r (ndarray): Set of features from 2nd distribution.
+        n_subsets (int): Number of subsets to compute averages.
+        subset_size (int): Size of each subset of features to choose.
 
     Returns:
-        - List of MMD scores of length n_subsets.
+        list: List of n_subsets MMD scores.
     """
     m = min(codes_g.shape[0], codes_r.shape[0])
     mmds = np.zeros(n_subsets)
@@ -72,7 +72,7 @@ def _sqn(arr):
     return flat.dot(flat)
 
 
-def compute_mmd2(K_XX,
+def _compute_mmd2(K_XX,
                  K_XY,
                  K_YY,
                  unit_diagonal=False,

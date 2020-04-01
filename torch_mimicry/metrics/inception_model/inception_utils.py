@@ -18,10 +18,10 @@ def _check_or_download_inception(inception_path):
     the file if it is not present.
 
     Args:
-        - inception_path (str): Directory for storing the inception model.
+        inception_path (str): Directory for storing the inception model.
 
     Returns:
-        - File path of the inception protobuf model.
+        str: File path of the inception protobuf model.
 
     """
     # Build file path of model
@@ -47,10 +47,10 @@ def _get_inception_layer(sess):
     Prepares inception net for batched usage and returns pool_3 layer.
 
     Args:
-        - sess (Session): TensorFlow Session object.
+        sess (Session): TensorFlow Session object.
 
     Returns:
-        - TensorFlow graph node representing inception model pool3 layer output.
+        TensorFlow graph node representing inception model pool3 layer output.
 
     """
     # Get the output node
@@ -80,14 +80,14 @@ def get_activations(images, sess, batch_size=50, verbose=True):
     Calculates the activations of the pool_3 layer for all images.
 
     Args:
-        - images (ndarray): Numpy array of shape (N, C, H, W) with values ranging
+        images (ndarray): Numpy array of shape (N, C, H, W) with values ranging
             in the range [0, 255].
-        - sess (Session): TensorFlow Session object.
-        - batch_size (int): The batch size to use for inference.
-        - verbose (bool): If True, prints out logging data for batch inference.
+        sess (Session): TensorFlow Session object.
+        batch_size (int): The batch size to use for inference.
+        verbose (bool): If True, prints out logging data for batch inference.
 
     Returns:
-        - Numpy array of shape (N, 2048) representing the pool3 features from the
+        ndarray: Numpy array of shape (N, 2048) representing the pool3 features from the
         inception model.
 
     """
@@ -122,7 +122,7 @@ def create_inception_graph(inception_path):
     Creates a graph from saved GraphDef file.
 
     Args:
-        - inception_path (str): Directory for storing the inception model.
+        inception_path (str): Directory for storing the inception model.
 
     Returns:
         None

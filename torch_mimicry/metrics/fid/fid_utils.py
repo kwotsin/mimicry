@@ -18,18 +18,18 @@ def calculate_frechet_distance(mu1, sigma1, mu2, sigma2, eps=1e-6):
     Stable version by Dougal J. Sutherland.
 
     Args:
-        - mu1 : Numpy array containing the activations of the pool_3 layer of the
+        mu1 : Numpy array containing the activations of the pool_3 layer of the
             inception net ( like returned by the function 'get_predictions')
             for generated samples.
-        - mu2: The sample mean over activations of the pool_3 layer, precalcualted
+        mu2: The sample mean over activations of the pool_3 layer, precalcualted
             on an representive data set.
-        - sigma1 (ndarray): The covariance matrix over activations of the pool_3 layer for
+        sigma1 (ndarray): The covariance matrix over activations of the pool_3 layer for
             generated samples.
-        - sigma2: The covariance matrix over activations of the pool_3 layer,
+        sigma2: The covariance matrix over activations of the pool_3 layer,
             precalcualted on an representive data set.
 
     Returns:
-        - The Frechet Distance.
+        np.float64: The Frechet Distance.
     """
     if mu1.shape != mu2.shape or sigma1.shape != sigma2.shape:
         raise ValueError(
@@ -72,15 +72,15 @@ def calculate_activation_statistics(images, sess, batch_size=50, verbose=True):
     Calculation of the statistics used by the FID.
 
     Args:
-        - images (ndarray): Numpy array of shape (N, H, W, 3) and values in
+        images (ndarray): Numpy array of shape (N, H, W, 3) and values in
             the range [0, 255].
-        - sess (Session): TensorFlow session object.
-        - batch_size (int): Batch size for inference.
-        - verbose (bool): If True, prints out logging information.
+        sess (Session): TensorFlow session object.
+        batch_size (int): Batch size for inference.
+        verbose (bool): If True, prints out logging information.
 
     Returns:
-        - The mean vector and covariance matrix of samples from
-        the activations of the pool_3 layer of the inception model.
+        ndarray: Mean of inception features from samples.
+        ndarray: Covariance of inception features from samples.
     """
     act = inception_utils.get_activations(images, sess, batch_size, verbose)
     mu = np.mean(act, axis=0)

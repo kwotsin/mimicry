@@ -15,11 +15,11 @@ def load_dataset(root, name, **kwargs):
     By default, all images are normalized to values in the range [-1, 1].
 
     Args:
-        - root (str): Path to where datasets are stored.
-        - name (str): Name of dataset to load.
+        root (str): Path to where datasets are stored.
+        name (str): Name of dataset to load.
 
     Returns:
-        - Torch Dataset object for a specific dataset.
+        Dataset: Torch Dataset object for a specific dataset.
     """
     if name == "cifar10":
         return load_cifar10_dataset(root, **kwargs)
@@ -60,13 +60,13 @@ def load_fake_dataset(root,
     Loads fake dataset for testing.
 
     Args:
-        - root (str): Path to where datasets are stored.
-        - transform_data (bool): If True, preprocesses data.
-        - convert_tensor (bool): If True, converts image to tensor and preprocess 
+        root (str): Path to where datasets are stored.
+        transform_data (bool): If True, preprocesses data.
+        convert_tensor (bool): If True, converts image to tensor and preprocess 
             to range [-1, 1].
 
     Returns:
-        - Torch Dataset object.
+        Dataset: Torch Dataset object.
     """
     dataset_dir = os.path.join(root, 'fake_data')
     if not os.path.exists(dataset_dir):
@@ -99,14 +99,14 @@ def load_lsun_bedroom_dataset(root,
     Loads LSUN-Bedroom dataset.
 
     Args:
-        - root (str): Path to where datasets are stored.
-        - size (int): Size to resize images to.
-        - transform_data (bool): If True, preprocesses data.
-        - convert_tensor (bool): If True, converts image to tensor and preprocess 
+        root (str): Path to where datasets are stored.
+        size (int): Size to resize images to.
+        transform_data (bool): If True, preprocesses data.
+        convert_tensor (bool): If True, converts image to tensor and preprocess 
             to range [-1, 1].
 
     Returns:
-        - Torch Dataset object.   
+        Dataset: Torch Dataset object.   
     """
     dataset_dir = os.path.join(root, 'lsun')
     if not os.path.exists(dataset_dir):
@@ -146,16 +146,16 @@ def load_celeba_dataset(root,
     Loads the CelebA dataset.
 
     Args:
-        - root (str): Path to where datasets are stored.
-        - size (int): Size to resize images to.
-        - transform_data (bool): If True, preprocesses data.
-        - split (str): The split of data to use.
-        - download (bool): If True, downloads the dataset.
-        - convert_tensor (bool): If True, converts image to tensor and preprocess 
+        root (str): Path to where datasets are stored.
+        size (int): Size to resize images to.
+        transform_data (bool): If True, preprocesses data.
+        split (str): The split of data to use.
+        download (bool): If True, downloads the dataset.
+        convert_tensor (bool): If True, converts image to tensor and preprocess 
             to range [-1, 1].
 
     Returns:
-        - Torch Dataset object.   
+        Dataset: Torch Dataset object.   
     """
     dataset_dir = os.path.join(root, 'celeba')
     if not os.path.exists(dataset_dir):
@@ -202,16 +202,16 @@ def load_stl10_dataset(root,
     Loads the STL10 dataset.
 
     Args:
-        - root (str): Path to where datasets are stored.
-        - size (int): Size to resize images to.
-        - transform_data (bool): If True, preprocesses data.
-        - split (str): The split of data to use.
-        - download (bool): If True, downloads the dataset.
-        - convert_tensor (bool): If True, converts image to tensor and preprocess 
+        root (str): Path to where datasets are stored.
+        size (int): Size to resize images to.
+        transform_data (bool): If True, preprocesses data.
+        split (str): The split of data to use.
+        download (bool): If True, downloads the dataset.
+        convert_tensor (bool): If True, converts image to tensor and preprocess 
             to range [-1, 1].
 
     Returns:
-        - Torch Dataset object.   
+        Dataset: Torch Dataset object.   
     """
     dataset_dir = os.path.join(root, 'stl10')
     if not os.path.exists(dataset_dir):
@@ -250,16 +250,16 @@ def load_imagenet_dataset(root,
     Loads the ImageNet dataset.
 
     Args:
-        - root (str): Path to where datasets are stored.
-        - size (int): Size to resize images to.
-        - transform_data (bool): If True, preprocesses data.
-        - split (str): The split of data to use.
-        - download (bool): If True, downloads the dataset.
-        - convert_tensor (bool): If True, converts image to tensor and preprocess 
+        root (str): Path to where datasets are stored.
+        size (int): Size to resize images to.
+        transform_data (bool): If True, preprocesses data.
+        split (str): The split of data to use.
+        download (bool): If True, downloads the dataset.
+        convert_tensor (bool): If True, converts image to tensor and preprocess 
             to range [-1, 1].
 
     Returns:
-        - Torch Dataset object.   
+        Dataset: Torch Dataset object.   
     """
     dataset_dir = os.path.join(root, 'imagenet')
     if not os.path.exists(dataset_dir):
@@ -297,15 +297,15 @@ def load_cifar100_dataset(root,
     Loads the CIFAR-100 dataset.
 
     Args:
-        - root (str): Path to where datasets are stored.
-        - transform_data (bool): If True, preprocesses data.
-        - split (str): The split of data to use.
-        - download (bool): If True, downloads the dataset.
-        - convert_tensor (bool): If True, converts image to tensor and preprocess 
+        root (str): Path to where datasets are stored.
+        transform_data (bool): If True, preprocesses data.
+        split (str): The split of data to use.
+        download (bool): If True, downloads the dataset.
+        convert_tensor (bool): If True, converts image to tensor and preprocess 
             to range [-1, 1].
 
     Returns:
-        - Torch Dataset object.   
+        Dataset: Torch Dataset object.   
     """
     dataset_dir = os.path.join(root, 'cifar100')
     if not os.path.exists(dataset_dir):
@@ -369,15 +369,15 @@ def load_cifar10_dataset(root,
     Loads the CIFAR-10 dataset.
     
     Args:
-        - root (str): Path to where datasets are stored.
-        - transform_data (bool): If True, preprocesses data.
-        - split (str): The split of data to use.
-        - download (bool): If True, downloads the dataset.
-        - convert_tensor (bool): If True, converts image to tensor and preprocess 
+        root (str): Path to where datasets are stored.
+        transform_data (bool): If True, preprocesses data.
+        split (str): The split of data to use.
+        download (bool): If True, downloads the dataset.
+        convert_tensor (bool): If True, converts image to tensor and preprocess 
             to range [-1, 1].
 
     Returns:
-        - Torch Dataset object.   
+        Dataset: Torch Dataset object.   
     """
     dataset_dir = os.path.join(root, 'cifar10')
     if not os.path.exists(dataset_dir):

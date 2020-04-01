@@ -37,7 +37,7 @@ class TestKID:
 
         for mmd_est in mmd_est_args:
             for unit_diagonal in [True, False]:
-                mmd2_score = kid_utils.compute_mmd2(
+                mmd2_score = kid_utils._compute_mmd2(
                     K_XX=K_XX,
                     K_YY=K_YY,
                     K_XY=K_XY,

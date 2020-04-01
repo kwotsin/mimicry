@@ -21,10 +21,10 @@ def _normalize_images(images):
     The function uses the normalization from make_grid and save_image functions.
 
     Args:
-        - images (Tensor): Batch of images of shape (N, 3, H, W).
+        images (Tensor): Batch of images of shape (N, 3, H, W).
 
     Returns:
-        - images (ndarray): Batch of normalized images of shape (N, H, W, 3).
+        ndarray: Batch of normalized images of shape (N, H, W, 3).
     """
     # Shift the image from [-1, 1] range to [0, 1] range.
     min_val = float(images.min())
@@ -51,15 +51,15 @@ def inception_score(netG,
     Computes the inception score of generated images.
 
     Args:
-        - netG (Module): The generator model to use for generating images.
-        - device (Device): Torch device object to send model and data to.
-        - num_samples (int): The number of samples to generate.
-        - batch_size (int): Batch size per feedforward step for inception model.
-        - splits (int): The number of splits to use for computing IS.
-        - log_dir (str): Path to store metric computation objects.
-        - seed (int): Random seed for generation.
+        netG (Module): The generator model to use for generating images.
+        device (Device): Torch device object to send model and data to.
+        num_samples (int): The number of samples to generate.
+        batch_size (int): Batch size per feedforward step for inception model.
+        splits (int): The number of splits to use for computing IS.
+        log_dir (str): Path to store metric computation objects.
+        seed (int): Random seed for generation.
     Returns:
-        - Mean and standard deviation of the inception score computed from using
+        Mean and standard deviation of the inception score computed from using
         num_samples generated images.
     """
     # Make sure the random seeds are fixed

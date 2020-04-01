@@ -15,11 +15,11 @@ def get_random_images(dataset, num_samples):
     Randomly sample without replacement num_samples images.
 
     Args:
-        - dataset (Dataset): Torch Dataset object for indexing elements.
-        - num_samples (int): The number of images to randomly sample.
+        dataset (Dataset): Torch Dataset object for indexing elements.
+        num_samples (int): The number of images to randomly sample.
 
     Returns:
-        - Batch of num_samples images in np array form.
+        Tensor: Batch of num_samples images in np array form.
     """
     choices = np.random.choice(range(len(dataset)),
                                size=num_samples,
@@ -41,12 +41,12 @@ def get_imagenet_images(num_samples, root='./datasets', size=32):
     for each class.
 
     Args:
-        - num_samples (int): The number of images to randomly sample.
-        - root (str): The root directory where all datasets are stored.
-        - size (int): Size of image to resize to.
+        num_samples (int): The number of images to randomly sample.
+        root (str): The root directory where all datasets are stored.
+        size (int): Size of image to resize to.
 
     Returns:
-        - Batch of num_samples images in np array form.
+        Tensor: Batch of num_samples images in np array form.
     """
     if num_samples < 1000:
         raise ValueError(
@@ -94,12 +94,12 @@ def get_fake_data_images(num_samples, root='./datasets', size=32, **kwargs):
     Loads fake images, especially for testing.
 
     Args:
-        - num_samples (int): The number of images to randomly sample.
-        - root (str): The root directory where all datasets are stored.
-        - size (int): Size of image to resize to.
+        num_samples (int): The number of images to randomly sample.
+        root (str): The root directory where all datasets are stored.
+        size (int): Size of image to resize to.
 
     Returns:
-        - Batch of num_samples images in np array form.
+        Tensor: Batch of num_samples images in np array form.
     """
     dataset = data_utils.load_fake_dataset(
         root=root,
@@ -121,12 +121,12 @@ def get_lsun_bedroom_images(num_samples,
     Loads randomly sampled LSUN-Bedroom training images.
 
     Args:
-        - num_samples (int): The number of images to randomly sample.
-        - root (str): The root directory where all datasets are stored.
-        - size (int): Size of image to resize to.
+        num_samples (int): The number of images to randomly sample.
+        root (str): The root directory where all datasets are stored.
+        size (int): Size of image to resize to.
 
     Returns:
-        - Batch of num_samples images in np array form.
+        Tensor: Batch of num_samples images in np array form.
     """
     dataset = data_utils.load_lsun_bedroom_dataset(
         root=root,
@@ -145,12 +145,12 @@ def get_celeba_images(num_samples, root='./datasets', size=128, **kwargs):
     Loads randomly sampled CelebA images.
 
     Args:
-        - num_samples (int): The number of images to randomly sample.
-        - root (str): The root directory where all datasets are stored.
-        - size (int): Size of image to resize to.
+        num_samples (int): The number of images to randomly sample.
+        root (str): The root directory where all datasets are stored.
+        size (int): Size of image to resize to.
 
     Returns:
-        - Batch of num_samples images in np array form.
+        Tensor: Batch of num_samples images in np array form.
     """
     dataset = data_utils.load_celeba_dataset(
         root=root,
@@ -169,12 +169,12 @@ def get_stl10_images(num_samples, root='./datasets', size=48, **kwargs):
     Loads randomly sampled STL-10 images.
 
     Args:
-        - num_samples (int): The number of images to randomly sample.
-        - root (str): The root directory where all datasets are stored.
-        - size (int): Size of image to resize to.
+        num_samples (int): The number of images to randomly sample.
+        root (str): The root directory where all datasets are stored.
+        size (int): Size of image to resize to.
 
     Returns:
-        - Batch of num_samples images in np array form.
+        Tensor: Batch of num_samples images in np array form.
     """
     dataset = data_utils.load_stl10_dataset(
         root=root,
@@ -193,11 +193,11 @@ def get_cifar10_images(num_samples, root="./datasets", **kwargs):
     Loads randomly sampled CIFAR-10 training images.
 
     Args:
-        - num_samples (int): The number of images to randomly sample.
-        - root (str): The root directory where all datasets are stored.
+        num_samples (int): The number of images to randomly sample.
+        root (str): The root directory where all datasets are stored.
 
     Returns:
-        - Batch of num_samples images in np array form.
+        Tensor: Batch of num_samples images in np array form.
     """
     dataset = data_utils.load_cifar10_dataset(root=root,
                                               transform_data=False,
@@ -213,11 +213,11 @@ def get_cifar100_images(num_samples, root="./datasets", **kwargs):
     Loads randomly sampled CIFAR-100 training images.
 
     Args:
-        - num_samples (int): The number of images to randomly sample.
-        - root (str): The root directory where all datasets are stored.
+        num_samples (int): The number of images to randomly sample.
+        root (str): The root directory where all datasets are stored.
 
     Returns:
-        - Batch of num_samples images in np array form.
+        Tensor: Batch of num_samples images in np array form.
     """
     dataset = data_utils.load_cifar100_dataset(root=root,
                                                split='train',
@@ -235,11 +235,11 @@ def get_dataset_images(dataset_name, num_samples=50000, **kwargs):
     Randomly sample num_samples images based on input dataset name.
 
     Args:
-        - dataset_name (str): Dataset name to load images from.
-        - num_samples (int): The number of images to randomly sample.
+        dataset_name (str): Dataset name to load images from.
+        num_samples (int): The number of images to randomly sample.
 
     Returns:
-        - Batch of num_samples images from the specific dataset in np array form.
+        Tensor: Batch of num_samples images from the specific dataset in np array form.
     """
     if dataset_name == "imagenet_32":
         images = get_imagenet_images(num_samples, size=32, **kwargs)
