@@ -33,14 +33,30 @@ import torch_mimicry as mmc
 from torch_mimicry.nets import sngan
 
 # Data handling objects
+device = torch.device('cuda:0' if torch.cuda.is_available() else "cpu")
 dataset = mmc.datasets.load_dataset(root='./datasets', name='cifar10')
-dataloader = torch.utils.data.DataLoader(dataset, batch_size=64, shuffle=True)
+dataloader = torch.utils.data.DataLoader(
+    dataset, batch_size=64, shuffle=True, num_workers=4)
 
 # Define models and optimizers
-netG = sngan.SNGANGenerator32()
-netD = sngan.SNGANDiscriminator32()
+netG = sngan.SNGANGenerator32().to(device)
+netD = sngan.SNGANDiscriminator32().to(device)
 optD = optim.Adam(netD.parameters(), 2e-4, betas=(0.0, 0.9))
 optG = optim.Adam(netG.parameters(), 2e-4, betas=(0.0, 0.9))
+
+# Start training
+trainer = mmc.training.Trainer(
+    netD=netD,
+    netG=netG,
+    optD=optD,
+    optG=optG,
+    n_dis=5,
+    num_steps=100000,
+    lr_decay='linear',
+    dataloader=dataloader,
+    log_dir='./log/example',
+    device=device)
+trainer.train()
 
 # Start training
 trainer = mmc.training.Trainer(
@@ -73,7 +89,7 @@ Tensorboard visualizations:
 ```
 tensorboard --logdir=./log/example
 ```
-See further details in [example script](https://github.com/kwotsin/mimicry/blob/master/examples/sngan_example.py). 
+See further details in [example script](https://github.com/kwotsin/mimicry/blob/master/examples/sngan_example.py).
 
 <div id="baselines"></div>
 
