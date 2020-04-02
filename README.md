@@ -57,20 +57,6 @@ trainer = mmc.training.Trainer(
     log_dir='./log/example',
     device=device)
 trainer.train()
-
-# Start training
-trainer = mmc.training.Trainer(
-    netD=netD,
-    netG=netG,
-    optD=optD,
-    optG=optG,
-    n_dis=5,
-    num_steps=100000,
-    lr_decay='linear',
-    dataloader=dataloader,
-    log_dir='./log/example')
-
-trainer.train()
 ```
 Example outputs:
 ```
