@@ -3,16 +3,23 @@ Introduction
 
 Installation
 ------------
-The library can be installed using `pip` directly:
+(Optional) We recommend you to create a new environment with :code:`conda` using Python 3.6 or 3.7 (Python 3.8 is currently not supported by TensorFlow):
 
 .. code-block:: none
 
-        $ pip install torch-mimicry
+    $ conda create -n mimicry python=3.6
 
+The library can be installed using :code:`pip` directly:
+
+.. code-block:: none
+
+    $ pip install torch-mimicry
+
+To install the GPU versions of TensorFlow and PyTorch see the official `PyTorch <https://pytorch.org/>`_  and `TensorFlow <https://www.tensorflow.org/install>`_ pages based on your system. The library is currently only compatible with :code:`TensorFlow 1.x` to accommodate the original implementations of the GAN metrics.
 
 Quick Start
 -----------
-We provide a sample training script for training the `Spectral Normalization GAN <https://arxiv.org/abs/1802.05957>`_ on the CIFAR-10 dataset.
+We provide a sample training script for training the `Spectral Normalization GAN <https://arxiv.org/abs/1802.05957>`_ on the CIFAR-10 dataset, with the same training hyperparameters that reproduce results in the paper.
 
 
 .. code-block:: python

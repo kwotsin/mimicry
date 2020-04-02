@@ -1,26 +1,26 @@
 from setuptools import setup, find_packages
 
-__version__ = '0.1.9'
+__version__ = '0.1.12'
 url = 'https://github.com/kwotsin/mimicry'
 
 install_requires = [
-    'numpy>=1.15.4',
-    'scipy>=1.0.1',
-    'requests>=2.22.0',
+    'numpy',
+    'scipy',
+    'requests',
     'torch',
-    'tensorflow-gpu==1.15.2',
+    'tensorflow<2.0',
     'torchvision',
-    'six>=1.12.0',
-    'matplotlib>=3.1.1',
-    'Pillow>=6.2.0',
-    'scikit-image>=0.15.0',
-    'pytest>=5.3.2',
-    'scikit-learn>=0.20.1',
-    'future>=0.17.1',
-    'pytest-cov>=2.8.1',
-    'pandas>=0.25.3',
-    'psutil>=5.7.0',
-    'yapf>=0.29.0',
+    'six',
+    'matplotlib',
+    'Pillow',
+    'scikit-image',
+    'pytest',
+    'scikit-learn',
+    'future',
+    'pytest-cov',
+    'pandas',
+    'psutil',
+    'yapf',
 ]
 
 setup_requires = ['pytest-runner']
