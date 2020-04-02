@@ -10,7 +10,7 @@
  [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 
 
-[Documentation](https://mimicry.readthedocs.io/en/latest/index.html) | [Paper]() | [Tutorial]() | [Gallery](https://github.com/kwotsin/mimicry/tree/master/docs/gallery/README.md)
+[Documentation](https://mimicry.readthedocs.io/en/latest/index.html) | [Paper]() | [Tutorial](https://kwotsin.github.io/post/mimicry-tutorial/) | [Gallery](https://github.com/kwotsin/mimicry/tree/master/docs/gallery/README.md)
 
 Mimicry is a lightweight PyTorch library aimed towards the reproducibility of GAN research.
 
@@ -75,7 +75,7 @@ Tensorboard visualizations:
 ```
 tensorboard --logdir=./log/example
 ```
-See further details in [example script](https://github.com/kwotsin/mimicry/blob/master/examples/sngan_example.py).
+See further details in [example script](https://github.com/kwotsin/mimicry/blob/master/examples/sngan_example.py), as well as a detailed tutorial on implementing a custom GAN from scratch [here](https://github.com/kwotsin/mimicry/blob/master/examples/ssgan_tutorial.py).
 
 <div id="baselines"></div>
 
