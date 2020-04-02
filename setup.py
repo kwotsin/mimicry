@@ -8,7 +8,7 @@ install_requires = [
     'scipy>=1.0.1',
     'requests>=2.22.0',
     'torch',
-    'tensorflow==1.15.2',
+    'tensorflow-gpu==1.15.2',
     'torchvision',
     'six>=1.12.0',
     'matplotlib>=3.1.1',
