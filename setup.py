@@ -1,30 +1,27 @@
 from setuptools import setup, find_packages
 
-__version__ = '0.1.8'
+__version__ = '0.1.9'
 url = 'https://github.com/kwotsin/mimicry'
 
-# install_requires = [
-#     'numpy>=1.15.4',
-#     'scipy>=1.0.1',
-#     'requests>=2.22.0',
-#     'tensorflow>=1.14.0,<2.0',
-#     'torchvision>=0.4.0',
-#     'six>=1.12.0',
-#     'matplotlib>=3.1.1',
-#     'torch>=1.2.0',
-#     'Pillow>=6.2.0',
-#     'scikit-image>=0.15.0',
-#     'pytest>=5.3.2',
-#     'scikit-learn>=0.20.1',
-#     'future>=0.17.1',
-#     'pytest-cov>=2.8.1',
-#     'pandas>=0.25.3',
-#     'psutil>=5.7.0',
-#     'yapf>=0.29.0',
-# ]
-
-with open('requirements.txt') as f:
-    install_requires = f.read().splitlines()
+install_requires = [
+    'numpy>=1.15.4',
+    'scipy>=1.0.1',
+    'requests>=2.22.0',
+    'torch',
+    'tensorflow==1.15.2',
+    'torchvision',
+    'six>=1.12.0',
+    'matplotlib>=3.1.1',
+    'Pillow>=6.2.0',
+    'scikit-image>=0.15.0',
+    'pytest>=5.3.2',
+    'scikit-learn>=0.20.1',
+    'future>=0.17.1',
+    'pytest-cov>=2.8.1',
+    'pandas>=0.25.3',
+    'psutil>=5.7.0',
+    'yapf>=0.29.0',
+]
 
 setup_requires = ['pytest-runner']
 tests_require = ['pytest', 'pytest-cov', 'mock']
