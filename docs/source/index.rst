@@ -14,6 +14,7 @@ Comparing GANs is often difficult - mild differences in implementations and eval
 
    guides/introduction
    guides/tutorial
+   guides/baselines
 
 .. toctree::
    :caption: API Reference
