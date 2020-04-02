@@ -4,16 +4,18 @@ torch_mimicry.nets
 .. contents:: Contents
     :local:
 
-Base Classes
-------------
+torch_mimicry.nets.basemodel
+----------------------------
 
-Base Model
-^^^^^^^^^^
 .. automodule:: torch_mimicry.nets.basemodel.basemodel
     :members:
 
+torch_mimicry.nets.gan
+----------------------
+
 Base Unconditional GAN
 ^^^^^^^^^^^^^^^^^^^^^^
+
 .. automodule:: torch_mimicry.nets.gan.gan
     :members:
 
@@ -23,9 +25,8 @@ Base Conditional GAN
     :members:
 
 
-Deep Convolutional GAN
-----------------------
-
+torch_mimicry.nets.dcgan
+------------------------
 DCGAN CIFAR
 ^^^^^^^^^^^
 .. automodule:: torch_mimicry.nets.dcgan.dcgan_cifar
@@ -57,8 +58,8 @@ DCGAN Base
 .. automodule:: torch_mimicry.nets.dcgan.dcgan_base
     :members:
 
-Wasserstein GAN with Gradient Penalty
--------------------------------------
+torch_mimicry.nets.wgan_gp
+--------------------------
 WGAN-GP 32
 ^^^^^^^^^^
 .. automodule:: torch_mimicry.nets.wgan_gp.wgan_gp_32
@@ -84,8 +85,8 @@ WGAN-GP Base
 .. automodule:: torch_mimicry.nets.wgan_gp.wgan_gp_base
     :members:
 
-Spectral Normalization GAN
---------------------------
+torch_mimicry.nets.sngan
+------------------------
 SNGAN 32
 ^^^^^^^^
 .. automodule:: torch_mimicry.nets.sngan.sngan_32
@@ -111,8 +112,8 @@ SNGAN Base
 .. automodule:: torch_mimicry.nets.sngan.sngan_base
     :members:
 
-Conditional GAN with Projection Discriminator
----------------------------------------------
+torch_mimicry.nets.cgan_pd
+--------------------------
 CGAN-PD 32
 ^^^^^^^^^^
 .. automodule:: torch_mimicry.nets.cgan_pd.cgan_pd_32
@@ -128,8 +129,8 @@ CGAN-PD Base
 .. automodule:: torch_mimicry.nets.cgan_pd.cgan_pd_base
     :members:
 
-Self-supervised GAN
--------------------
+torch_mimicry.nets.ssgan
+------------------------
 SSGAN 32
 ^^^^^^^^
 .. automodule:: torch_mimicry.nets.ssgan.ssgan_32
@@ -155,8 +156,8 @@ SSGAN Base
 .. automodule:: torch_mimicry.nets.ssgan.ssgan_base
     :members:
 
-InfoMax-GAN
------------
+torch_mimicry.nets.infomax_gan
+------------------------------
 InfoMax-GAN 32
 ^^^^^^^^^^^^^^
 .. automodule:: torch_mimicry.nets.infomax_gan.infomax_gan_32
