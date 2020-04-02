@@ -75,7 +75,7 @@ Tensorboard visualizations:
 ```
 tensorboard --logdir=./log/example
 ```
-See further details in [example script](https://github.com/kwotsin/mimicry/blob/master/examples/sngan_example.py), as well as a detailed tutorial on implementing a custom GAN from scratch [here](https://github.com/kwotsin/mimicry/blob/master/examples/ssgan_tutorial.py).
+See further details in [example script](https://github.com/kwotsin/mimicry/blob/master/examples/sngan_example.py), as well as a detailed tutorial on implementing a custom GAN from scratch [here](https://mimicry.readthedocs.io/en/latest/guides/tutorial.html).
 
 <div id="baselines"></div>
 
