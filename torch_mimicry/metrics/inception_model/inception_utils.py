@@ -134,7 +134,7 @@ def create_inception_graph(inception_path):
     model_file = _check_or_download_inception(inception_path)
 
     # Creates graph from saved graph_def.pb.
-    with tf.io.gfile.FastGFile(model_file, 'rb') as f:
+    with tf.gfile.GFile(model_file, 'rb') as f:
         graph_def = tf.GraphDef()
         graph_def.ParseFromString(f.read())
         _ = tf.import_graph_def(graph_def, name='inception_model')
