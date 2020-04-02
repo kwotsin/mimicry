@@ -40,7 +40,6 @@ class BaseModel(nn.Module, ABC):
         try:
             ckpt_dict = torch.load(ckpt_file)
         except RuntimeError:
-            cuda_available =
             ckpt_dict = torch.load(ckpt_file, map_location=lambda storage, loc: storage)
 
         # Restore model weights
