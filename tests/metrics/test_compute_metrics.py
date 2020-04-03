@@ -120,6 +120,16 @@ class TestMetrics:
                     evaluate_step=self.evaluate_step,
                     device=self.device)
 
+    def test_wrong_metric(self):
+        with pytest.raises(ValueError):
+            compute_metrics.evaluate(
+                metric='wrong_metric',
+                log_dir=self.log_dir,
+                netG=self.netG,
+                dataset_name=self.dataset_name,
+                evaluate_step=self.evaluate_step,
+                device=self.device)
+
     def teardown(self):
         del self.netG
         shutil.rmtree(self.log_dir)
@@ -129,6 +139,7 @@ if __name__ == "__main__":
     test = TestMetrics()
     test.setup()
     test.test_arguments()
+    test.test_wrong_metric()
     test.test_evaluate_fid()
     test.test_evaluate_kid()
     test.test_evaluate_is()

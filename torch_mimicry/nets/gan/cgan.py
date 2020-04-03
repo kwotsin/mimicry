@@ -61,6 +61,44 @@ class BaseConditionalGenerator(gan.BaseGenerator):
         noise = torch.randn((num_images, self.nz), device=device)
         fake_images = self.forward(noise, fake_class_labels)
 
+        return fake_images
+
+    def generate_images_with_labels(self, num_images, c=None, device=None):
+        r"""
+        Generate images with possibility for conditioning on a fixed class.
+        Additionally returns labels.
+
+        Args:
+            num_images (int): The number of images to generate.
+            c (int): The class of images to generate. If None, generates random images.
+            device (int): The device to send the generated images to.
+
+        Returns:
+            tuple: Batch of generated images and their corresponding labels.
+        """
+        if device is None:
+            device = self.device
+
+        if c is not None and c >= self.num_classes:
+            raise ValueError(
+                "Input class to generate must be in the range [0, {})".format(
+                    self.num_classes))
+
+        if c is None:
+            fake_class_labels = torch.randint(low=0,
+                                              high=self.num_classes,
+                                              size=(num_images, ),
+                                              device=device)
+
+        else:
+            fake_class_labels = torch.randint(low=c,
+                                              high=c + 1,
+                                              size=(num_images, ),
+                                              device=device)
+
+        noise = torch.randn((num_images, self.nz), device=device)
+        fake_images = self.forward(noise, fake_class_labels)
+
         return fake_images, fake_class_labels
 
     def train_step(self,
@@ -94,7 +132,7 @@ class BaseConditionalGenerator(gan.BaseGenerator):
         batch_size = real_batch[0].shape[0]
 
         # Produce fake images and labels
-        fake_images, fake_class_labels = self.generate_images(
+        fake_images, fake_class_labels = self.generate_images_with_labels(
             num_images=batch_size, device=device)
 
         # Compute output logit of D thinking image real
@@ -159,7 +197,7 @@ class BaseConditionalDiscriminator(gan.BaseDiscriminator):
         output_real = self.forward(real_images, real_class_labels)
 
         # Produce fake images and labels
-        fake_images, fake_class_labels = netG.generate_images(
+        fake_images, fake_class_labels = netG.generate_images_with_labels(
             num_images=batch_size, device=device)
         fake_images, fake_class_labels = fake_images.detach(
         ), fake_class_labels.detach()

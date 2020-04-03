@@ -46,7 +46,13 @@ class TestBaseGAN:
         self.output_real = torch.ones(self.N, 1)
 
     def test_generate_images(self):
-        images, labels = self.netG.generate_images(10)
+        images = self.netG.generate_images(10)
+
+        assert images.shape == (10, 3, 32, 32)
+        assert images.device == self.netG.device
+
+    def test_generate_images_with_labels(self):
+        images, labels = self.netG.generate_images_with_labels(10)
 
         assert images.shape == (10, 3, 32, 32)
         assert images.device == self.netG.device
@@ -78,5 +84,6 @@ if __name__ == "__main__":
     test = TestBaseGAN()
     test.setup()
     test.test_generate_images()
+    test.test_generate_images_with_labels()
     test.test_compute_GAN_loss()
     test.teardown()
