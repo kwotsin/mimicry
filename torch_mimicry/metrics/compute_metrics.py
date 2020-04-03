@@ -39,7 +39,22 @@ def evaluate(metric,
     Returns:
         None
     """
-    if metric not in ['inception_score', 'fid', 'kid']:
+    # Check arguments
+    if metric == 'kid':
+        if 'num_subsets' not in kwargs or 'subset_size' not in kwargs:
+            raise ValueError(
+                "num_subsets and subset_size must be provided for KID computation.")
+
+    elif metric == 'fid':
+        if 'num_real_samples' not in kwargs or 'num_fake_samples' not in kwargs:
+            raise ValueError(
+                "num_real_samples and num_fake_samples must be provided for FID computation.")
+
+    elif metric == 'inception_score':
+        if 'num_samples' not in kwargs:
+            raise ValueError("num_samples must be provided for IS computation.")
+
+    else:
         raise ValueError("Invalid metric {} selected.")
 
     if evaluate_range and evaluate_step or not (evaluate_step
