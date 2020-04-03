@@ -1,3 +1,6 @@
 sphinx
 sphinx_rtd_theme
+torch
+torchvision
+numpy
 -e git+https://github.com/kwotsin/mimicry.git#egg=torch_mimicry
