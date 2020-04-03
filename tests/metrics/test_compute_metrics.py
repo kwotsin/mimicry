@@ -109,6 +109,17 @@ class TestMetrics:
         assert type(scores) == list
         assert all(map(lambda x: type(x) == float, scores))
 
+    def test_arguments(self):
+        for metric in ['fid', 'kid', 'inception_score']:
+            with pytest.raises(ValueError):
+                compute_metrics.evaluate(
+                    metric=metric,
+                    log_dir=self.log_dir,
+                    netG=self.netG,
+                    dataset_name=self.dataset_name,
+                    evaluate_step=self.evaluate_step,
+                    device=self.device)
+
     def teardown(self):
         del self.netG
         shutil.rmtree(self.log_dir)
@@ -117,6 +128,7 @@ class TestMetrics:
 if __name__ == "__main__":
     test = TestMetrics()
     test.setup()
+    test.test_arguments()
     test.test_evaluate_fid()
     test.test_evaluate_kid()
     test.test_evaluate_is()
