@@ -100,7 +100,7 @@ state-of-the-art GANs. SSGAN similarly does this and follows the
 architecture in `Miyato et al <https://arxiv.org/abs/1802.05957>`__,
 where Spectral Normalization GAN (SNGAN) was introduced. which we
 similarly adopt. Figure 2 illustrates this particular set of backbone
-architectures, which we adopt. Specifically, we know from Figure 2 the
+architectures. Specifically, we know from Figure 2 the
 key variables are:
 
 -  ``nz=128``: The initial noise vector dimension is 128.
@@ -430,7 +430,7 @@ more information:
                   global_step=None,
                   **kwargs):
        """
-       Train step function for discirminator.
+       Train step function for discriminator.
        """
        self.zero_grad()
 
@@ -733,7 +733,7 @@ Figures 4 and 5 give some examples.
 
   **Figure 4:** Randomly generated images in TensorBoard for checking diversity.
 
-.. figure:: images/fake_vis.png
+.. figure:: images/fixed_fake_vis.png
   :width: 400
   :alt: Random images from fixed noise vectors
 
