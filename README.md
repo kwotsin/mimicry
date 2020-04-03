@@ -20,9 +20,11 @@ We provide a model zoo and set of [baselines](#baselines) to benchmark different
 
 -----
 ## Installation
+The library can be installed with:
 ```
 pip install torch-mimicry
 ```
+See also [setup information](https://mimicry.readthedocs.io/en/latest/guides/introduction.html) for more.
 
 ## Example Usage
 Training a popular GAN like [SNGAN](https://arxiv.org/abs/1802.05957) that *reproduces reported scores* can be done as simply as:
@@ -75,7 +77,7 @@ Tensorboard visualizations:
 ```
 tensorboard --logdir=./log/example
 ```
-See further details in [example script](https://github.com/kwotsin/mimicry/blob/master/examples/sngan_example.py), as well as a detailed tutorial on implementing a custom GAN from scratch [here](https://mimicry.readthedocs.io/en/latest/guides/tutorial.html).
+See further details in [example script](https://github.com/kwotsin/mimicry/blob/master/examples/sngan_example.py), as well as a detailed [tutorial](https://mimicry.readthedocs.io/en/latest/guides/tutorial.html) on implementing a custom GAN from scratch.
 
 <div id="baselines"></div>
 
