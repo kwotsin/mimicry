@@ -41,3 +41,23 @@ if __name__ == "__main__":
         num_fake_samples=50000,
         evaluate_step=100000,
         device=device)
+
+    # Evaluate kid
+    mmc.metrics.evaluate(
+        metric='kid',
+        log_dir='./log/example',
+        netG=netG,
+        dataset_name='cifar10',
+        num_subsets=50,
+        subset_size=1000,
+        evaluate_step=100000,        
+        device=device)
+
+    # Evaluate inception score
+    mmc.metrics.evaluate(
+        metric='inception_score',
+        log_dir='./log/example',
+        netG=netG,
+        num_samples=50000,
+        evaluate_step=100000,        
+        device=device)
