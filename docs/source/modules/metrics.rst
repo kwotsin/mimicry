@@ -17,7 +17,7 @@ KID
 
 Inception Score
 ---------------
-.. automodule:: torch_mimicry.metrics.compute_kid
+.. automodule:: torch_mimicry.metrics.compute_is
     :members:
 
 Metrics
