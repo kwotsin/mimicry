@@ -7,7 +7,7 @@ torch_mimicry.training
 
 Trainer
 -------
-.. automodule:: torch_mimicry.training.logger
+.. automodule:: torch_mimicry.training.trainer
     :members:
 
 
