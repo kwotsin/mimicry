@@ -24,6 +24,11 @@ The library can be installed with:
 ```
 pip install torch-mimicry
 ```
+To install the latest master version instead:
+```
+pip install git+https://github.com/kwotsin/mimicry.git
+```
+
 See also [setup information](https://mimicry.readthedocs.io/en/latest/guides/introduction.html) for more.
 
 ## Example Usage
