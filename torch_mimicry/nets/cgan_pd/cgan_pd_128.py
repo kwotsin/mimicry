@@ -139,9 +139,6 @@ class CGANPDDiscriminator128(cgan_pd_base.CGANPDBaseDiscriminator):
         Returns:
             Tensor: A batch of GAN logits of shape (N, 1).
         """
-        if y is None:
-            y = self.generate_labels(x.shape[0], device=x.device)
-
         h = x
         h = self.block1(h)
         h = self.block2(h)
