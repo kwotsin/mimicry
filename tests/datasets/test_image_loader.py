@@ -4,7 +4,7 @@ import shutil
 import numpy as np
 import pytest
 import torch
-from scipy.misc import imsave
+from skimage.io import imsave
 
 from torch_mimicry.datasets import image_loader
 
