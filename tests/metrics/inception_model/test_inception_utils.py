@@ -10,7 +10,7 @@ class TestInceptionUtils:
         inception_utils.create_inception_graph(inception_path)
 
         images = np.ones((4, 32, 32, 3))
-        with tf.Session() as sess:
+        with tf.compat.v1.Session() as sess:
             feat = inception_utils.get_activations(images=images, sess=sess)
 
             assert feat.shape == (4, 2048)

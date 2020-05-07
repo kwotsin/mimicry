@@ -58,10 +58,10 @@ class TestComputeKID:
                                         per_process_gpu_memory_fraction=0.15,
                                         visible_device_list=str(
                                             self.device.index))
-            config = tf.ConfigProto(gpu_options=gpu_options)
+            config = tf.compat.v1.ConfigProto(gpu_options=gpu_options)
 
         else:
-            config = tf.ConfigProto(device_count={'GPU': 0})
+            config = tf.compat.v1.ConfigProto(device_count={'GPU': 0})
 
         with tf.compat.v1.Session(config=config) as sess:
             sess.run(tf.compat.v1.global_variables_initializer())
@@ -84,10 +84,10 @@ class TestComputeKID:
                                         per_process_gpu_memory_fraction=0.15,
                                         visible_device_list=str(
                                             self.device.index))
-            config = tf.ConfigProto(gpu_options=gpu_options)
+            config = tf.compat.v1.ConfigProto(gpu_options=gpu_options)
 
         else:
-            config = tf.ConfigProto(device_count={'GPU': 0})
+            config = tf.compat.v1.ConfigProto(device_count={'GPU': 0})
 
         with tf.compat.v1.Session(config=config) as sess:
             sess.run(tf.compat.v1.global_variables_initializer())
@@ -117,7 +117,8 @@ class TestComputeKID:
         assert type(var) == float
 
     def teardown(self):
-        shutil.rmtree(self.log_dir)
+        if os.path.exists(self.log_dir):
+            shutil.rmtree(self.log_dir)
         del self.netG
 
 

@@ -28,10 +28,10 @@ def get_predictions(images, device=None, batch_size=50, print_every=20):
         gpu_options = tf.GPUOptions(allow_growth=True,
                                     per_process_gpu_memory_fraction=0.15,
                                     visible_device_list=str(device.index))
-        config = tf.ConfigProto(gpu_options=gpu_options)
+        config = tf.compat.v1.ConfigProto(gpu_options=gpu_options)
 
     else:
-        config = tf.ConfigProto(device_count={'GPU': 0})
+        config = tf.compat.v1.ConfigProto(device_count={'GPU': 0})
 
     # Inference variables
     batch_size = min(batch_size, images.shape[0])
@@ -39,7 +39,7 @@ def get_predictions(images, device=None, batch_size=50, print_every=20):
 
     # Get predictions
     preds = []
-    with tf.Session(config=config) as sess:
+    with tf.compat.v1.Session(config=config) as sess:
         # Batch input preparation
         inception_utils._get_inception_layer(sess)
 

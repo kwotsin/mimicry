@@ -213,13 +213,13 @@ def fid_score(num_real_samples,
         gpu_options = tf.GPUOptions(allow_growth=True,
                                     per_process_gpu_memory_fraction=0.15,
                                     visible_device_list=str(device.index))
-        config = tf.ConfigProto(gpu_options=gpu_options)
+        config = tf.compat.v1.ConfigProto(gpu_options=gpu_options)
 
     else:
-        config = tf.ConfigProto(device_count={'GPU': 0})
+        config = tf.compat.v1.ConfigProto(device_count={'GPU': 0})
 
-    with tf.Session(config=config) as sess:
-        sess.run(tf.global_variables_initializer())
+    with tf.compat.v1.Session(config=config) as sess:
+        sess.run(tf.compat.v1.global_variables_initializer())
 
         m_real, s_real = compute_real_dist_stats(num_samples=num_real_samples,
                                                  sess=sess,

@@ -62,8 +62,12 @@ def _get_inception_layer(sess):
     for op_idx, op in enumerate(ops):
         for o in op.outputs:
             shape = o.get_shape()
-            if shape._dims != []:
-                shape = [s.value for s in shape]
+            if len(shape._dims) > 0:
+                try:
+                    shape = [s.value for s in shape]
+                except AttributeError: # TF 2 uses None shape directly. No conversion needed.
+                    shape = shape
+
                 new_shape = []
                 for j, s in enumerate(shape):
                     if s == 1 and j == 0:
@@ -135,6 +139,6 @@ def create_inception_graph(inception_path):
 
     # Creates graph from saved graph_def.pb.
     with tf.io.gfile.GFile(model_file, 'rb') as f:
-        graph_def = tf.GraphDef()
+        graph_def = tf.compat.v1.GraphDef()
         graph_def.ParseFromString(f.read())
         _ = tf.import_graph_def(graph_def, name='inception_model')

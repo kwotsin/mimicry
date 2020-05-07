@@ -8,7 +8,7 @@ from torch_mimicry.metrics.inception_model import inception_utils
 class TestFID:
     def setup(self):
         self.images = np.ones((4, 32, 32, 3))
-        self.sess = tf.Session()
+        self.sess = tf.compat.v1.Session()
 
     def test_calculate_activation_statistics(self):
         inception_path = './metrics/inception_model'
