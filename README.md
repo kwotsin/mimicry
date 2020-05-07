@@ -10,7 +10,7 @@
  [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 
 
-[About](https://kwotsin.github.io/post/introducing-mimicry/) | [Documentation](https://mimicry.readthedocs.io/en/latest/index.html) | [Tutorial](https://mimicry.readthedocs.io/en/latest/guides/tutorial.html) | [Gallery](https://github.com/kwotsin/mimicry/tree/master/docs/gallery/README.md)
+[About](https://kwotsin.github.io/post/introducing-mimicry/) | [Documentation](https://mimicry.readthedocs.io/en/latest/index.html) | [Tutorial](https://mimicry.readthedocs.io/en/latest/guides/tutorial.html) | [Gallery](https://github.com/kwotsin/mimicry/tree/master/docs/gallery/README.md) | [Paper](https://arxiv.org/abs/2005.02494)
 
 Mimicry is a lightweight PyTorch library aimed towards the reproducibility of GAN research.
 
@@ -242,6 +242,17 @@ As FID produces highly biased estimates (where using larger samples lead to a lo
 
 
 *<sup>†</sup> Best FID was reported at 53K steps, but we find our score can improve till 100K steps to achieve 23.13 ± 0.13.*
+
+## Citation
+If you have found this work useful, please consider citing [our work](https://arxiv.org/abs/2005.02494):
+```
+@misc{lee2020mimicry,
+    title={Mimicry: Towards the Reproducibility of GAN Research},
+    author={Kwot Sin Lee and Christopher Town},
+    booktitle={CVPR Workshop on AI for Content Creation},
+    year={2020},
+}
+```
 
 ## References
 [[1] Spectral Normalization for Generative Adversarial Networks](https://arxiv.org/abs/1802.05957)
