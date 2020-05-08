@@ -246,7 +246,7 @@ As FID produces highly biased estimates (where using larger samples lead to a lo
 ## Citation
 If you have found this work useful, please consider citing [our work](https://arxiv.org/abs/2005.02494):
 ```
-@misc{lee2020mimicry,
+@article{lee2020mimicry,
     title={Mimicry: Towards the Reproducibility of GAN Research},
     author={Kwot Sin Lee and Christopher Town},
     booktitle={CVPR Workshop on AI for Content Creation},
