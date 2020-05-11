@@ -64,6 +64,17 @@ trainer = mmc.training.Trainer(
     log_dir='./log/example',
     device=device)
 trainer.train()
+
+# Evaluate fid
+mmc.metrics.evaluate(
+    metric='fid',
+    log_dir='./log/example',
+    netG=netG,
+    dataset_name='cifar10',
+    num_real_samples=50000,
+    num_fake_samples=50000,
+    evaluate_step=100000,
+    device=device)
 ```
 Example outputs:
 ```
