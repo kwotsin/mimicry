@@ -3,19 +3,35 @@ Introduction
 
 Installation
 ------------
-(Optional) We recommend you to create a new environment with :code:`conda` using Python 3.6 or 3.7 (Python 3.8 is currently not supported by TensorFlow):
+For best performance, we recommend you to install the GPU versions of both TensorFlow and PyTorch, which are used in this library. 
+
+First create a new environment with :code:`conda` using Python 3.6 or 3.7 (Python 3.8 is currently not supported by TensorFlow):
 
 .. code-block:: none
 
     $ conda create -n mimicry python=3.6
 
-The library can be installed using :code:`pip` directly:
+Install TensorFlow (GPU):
+
+.. code-block:: none
+
+    $ conda install -c anaconda tensorflow-gpu
+
+Install PyTorch (GPU):
+
+.. code-block:: none
+
+    $ conda install pytorch torchvision cudatoolkit=9.2 -c pytorch
+
+For installing the CUDA version matching your drivers, see the `official instructions <https://pytorch.org/>`_.
+
+Mimicry can be installed using :code:`pip` directly:
 
 .. code-block:: none
 
     $ pip install torch-mimicry
 
-To install the GPU versions of TensorFlow and PyTorch see the official `PyTorch <https://pytorch.org/>`_  and `TensorFlow <https://www.tensorflow.org/install>`_ pages based on your system. The library is currently only compatible with :code:`TensorFlow 1.x` to accommodate the original implementations of the GAN metrics.
+.. To install the GPU versions of TensorFlow and PyTorch see the official `PyTorch <https://pytorch.org/>`_  and `TensorFlow <https://www.tensorflow.org/install>`_ pages based on your system. The library is currently only compatible with :code:`TensorFlow 1.x` to accommodate the original implementations of the GAN metrics.
 
 Quick Start
 -----------
