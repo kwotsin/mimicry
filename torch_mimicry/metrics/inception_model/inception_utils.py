@@ -54,7 +54,9 @@ def _get_inception_layer(sess):
 
     """
     # Get the output node
-    layer_name = 'inception_model/pool_3:0'
+    # layer_name = 'inception_model/pool_3:0' # TODO: Remove when safe. TF2 syntax changes again.
+    layer_name = 'pool_3:0'
+
     pool3 = sess.graph.get_tensor_by_name(layer_name)
 
     # Reshape to be batch size agnostic
@@ -111,7 +113,9 @@ def get_activations(images, sess, batch_size=50, verbose=True):
         end = start + batch_size
         batch = images[start:end]
         pred = sess.run(inception_layer,
-                        {'inception_model/ExpandDims:0': batch})
+                        {'ExpandDims:0': batch})
+        # pred = sess.run(inception_layer,
+        #                 {'inception_model/ExpandDims:0': batch}) # TODO: Remove when safe. TF2 syntax changes again.
         pred_arr[start:end] = pred.reshape(batch_size, -1)
 
         if verbose:
