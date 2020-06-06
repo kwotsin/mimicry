@@ -27,12 +27,12 @@ class TestCGANPD32:
         self.netD = CGANPDDiscriminator32(num_classes=self.num_classes,
                                           ndf=self.ndf)
 
-    def test_ResNetGenerator32(self):
+    def test_CGANPDGenerator32(self):
         images = self.netG(self.noise, self.Y)
 
         assert images.shape == (self.N, self.C, self.H, self.W)
 
-    def test_ResNetDiscriminator32(self):
+    def test_CGANPDDiscriminator32(self):
         output = self.netD(self.images, self.Y)
 
         assert output.shape == (self.N, 1)
@@ -75,7 +75,7 @@ class TestCGANPD32:
 if __name__ == "__main__":
     test = TestCGANPD32()
     test.setup()
-    test.test_ResNetGenerator32()
-    test.test_ResNetDiscriminator32()
+    test.test_CGANPDGenerator32()
+    test.test_CGANPDDiscriminator32()
     test.test_train_steps()
     test.teardown()

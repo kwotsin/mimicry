@@ -19,13 +19,13 @@ class TestWGANGP32:
         self.netG = WGANGPGenerator32(ngf=self.ngf)
         self.netD = WGANGPDiscriminator32(ndf=self.ndf)
 
-    def test_ResNetGenerator32(self):
+    def test_WGANGPGenerator32(self):
         noise = torch.ones(self.N, self.nz)
         output = self.netG(noise)
 
         assert output.shape == (self.N, self.C, self.H, self.W)
 
-    def test_ResNetDiscriminator32(self):
+    def test_WGANGPDiscriminator32(self):
         images = torch.ones(self.N, self.C, self.H, self.W)
         output = self.netD(images)
 
@@ -67,7 +67,7 @@ class TestWGANGP32:
 if __name__ == "__main__":
     test = TestWGANGP32()
     test.setup()
-    test.test_ResNetGenerator32()
-    test.test_ResNetDiscriminator32()
+    test.test_WGANGPGenerator32()
+    test.test_WGANGPDiscriminator32()
     test.test_train_steps()
     test.teardown()

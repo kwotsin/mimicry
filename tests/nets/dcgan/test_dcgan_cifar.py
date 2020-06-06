@@ -19,13 +19,13 @@ class TestDCGAN32:
         self.netG = DCGANGeneratorCIFAR(ngf=self.ngf)
         self.netD = DCGANDiscriminatorCIFAR(ndf=self.ndf)
 
-    def test_ResNetGeneratorCIFAR(self):
+    def test_DCGANGeneratorCIFAR(self):
         noise = torch.ones(self.N, self.nz)
         output = self.netG(noise)
 
         assert output.shape == (self.N, self.C, self.H, self.W)
 
-    def test_ResNetDiscriminatorCIFAR(self):
+    def test_DCGANDiscriminatorCIFAR(self):
         images = torch.ones(self.N, self.C, self.H, self.W)
         output = self.netD(images)
 
@@ -66,7 +66,7 @@ class TestDCGAN32:
 if __name__ == "__main__":
     test = TestDCGAN32()
     test.setup()
-    test.test_ResNetGeneratorCIFAR()
-    test.test_ResNetDiscriminatorCIFAR()
+    test.test_DCGANGeneratorCIFAR()
+    test.test_DCGANDiscriminatorCIFAR()
     test.test_train_steps()
     test.teardown()

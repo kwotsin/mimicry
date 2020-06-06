@@ -19,13 +19,13 @@ class TestWGANGP64:
         self.netG = WGANGPGenerator64(ngf=self.ngf)
         self.netD = WGANGPDiscriminator64(ndf=self.ndf)
 
-    def test_ResNetGenerator64(self):
+    def test_WGANGPGenerator64(self):
         noise = torch.ones(self.N, self.nz)
         output = self.netG(noise)
 
         assert output.shape == (self.N, self.C, self.H, self.W)
 
-    def test_ResNetDiscriminator64(self):
+    def test_WGANGPDiscriminator64(self):
         images = torch.ones(self.N, self.C, self.H, self.W)
         output = self.netD(images)
 
@@ -67,7 +67,7 @@ class TestWGANGP64:
 if __name__ == "__main__":
     test = TestWGANGP64()
     test.setup()
-    test.test_ResNetGenerator64()
-    test.test_ResNetDiscriminator64()
+    test.test_WGANGPGenerator64()
+    test.test_WGANGPDiscriminator64()
     test.test_train_steps()
     test.teardown()

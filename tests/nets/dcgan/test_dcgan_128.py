@@ -20,13 +20,13 @@ class TestDCGAN128:
         self.netG = DCGANGenerator128(ngf=self.ngf)
         self.netD = DCGANDiscriminator128(ndf=self.ndf)
 
-    def test_ResNetGenerator128(self):
+    def test_DCGANGenerator128(self):
         noise = torch.ones(self.N, self.nz)
         output = self.netG(noise)
 
         assert output.shape == (self.N, self.C, self.H, self.W)
 
-    def test_ResNetDiscriminator128(self):
+    def test_DCGANDiscriminator128(self):
         images = torch.ones(self.N, self.C, self.H, self.W)
         output = self.netD(images)
 
@@ -67,7 +67,7 @@ class TestDCGAN128:
 if __name__ == "__main__":
     test = TestDCGAN128()
     test.setup()
-    test.test_ResNetGenerator128()
-    test.test_ResNetDiscriminator128()
+    test.test_DCGANGenerator128()
+    test.test_DCGANDiscriminator128()
     test.test_train_steps()
     test.teardown()

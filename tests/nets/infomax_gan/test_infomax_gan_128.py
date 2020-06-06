@@ -19,13 +19,13 @@ class TestInfoMaxGAN128:
         self.netG = InfoMaxGANGenerator128(ngf=self.ngf)
         self.netD = InfoMaxGANDiscriminator128(ndf=self.ndf)
 
-    def test_ResNetGenerator128(self):
+    def test_InfoMaxGANGenerator128(self):
         noise = torch.ones(self.N, self.nz)
         output = self.netG(noise)
 
         assert output.shape == (self.N, self.C, self.H, self.W)
 
-    def test_ResNetDiscriminator128(self):
+    def test_InfoMaxGANDiscriminator128(self):
         images = torch.ones(self.N, self.C, self.H, self.W)
         output, local_feat, global_feat = self.netD(images)
 
@@ -69,7 +69,7 @@ class TestInfoMaxGAN128:
 if __name__ == "__main__":
     test = TestInfoMaxGAN128()
     test.setup()
-    test.test_ResNetGenerator128()
-    test.test_ResNetDiscriminator128()
+    test.test_InfoMaxGANGenerator128()
+    test.test_InfoMaxGANDiscriminator128()
     test.test_train_steps()
     test.teardown()

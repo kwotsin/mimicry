@@ -19,13 +19,13 @@ class TestInfoMaxGAN64:
         self.netG = InfoMaxGANGenerator64(ngf=self.ngf)
         self.netD = InfoMaxGANDiscriminator64(ndf=self.ndf)
 
-    def test_ResNetGenerator64(self):
+    def test_InfoMaxGANGenerator64(self):
         noise = torch.ones(self.N, self.nz)
         output = self.netG(noise)
 
         assert output.shape == (self.N, self.C, self.H, self.W)
 
-    def test_ResNetDiscriminator64(self):
+    def test_InfoMaxGANDiscriminator64(self):
         images = torch.ones(self.N, self.C, self.H, self.W)
         output, local_feat, global_feat = self.netD(images)
 
@@ -69,7 +69,7 @@ class TestInfoMaxGAN64:
 if __name__ == "__main__":
     test = TestInfoMaxGAN64()
     test.setup()
-    test.test_ResNetGenerator64()
-    test.test_ResNetDiscriminator64()
+    test.test_InfoMaxGANGenerator64()
+    test.test_InfoMaxGANDiscriminator64()
     test.test_train_steps()
     test.teardown()

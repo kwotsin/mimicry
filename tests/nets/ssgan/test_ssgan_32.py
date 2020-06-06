@@ -19,13 +19,13 @@ class TestSSGAN32:
         self.netG = SSGANGenerator32(ngf=self.ngf)
         self.netD = SSGANDiscriminator32(ndf=self.ndf)
 
-    def test_ResNetGenerator32(self):
+    def test_SSGANGenerator32(self):
         noise = torch.ones(self.N, self.nz)
         output = self.netG(noise)
 
         assert output.shape == (self.N, self.C, self.H, self.W)
 
-    def test_ResNetDiscriminator32(self):
+    def test_SSGANDiscriminator32(self):
         images = torch.ones(self.N, self.C, self.H, self.W)
         output, labels = self.netD(images)
 
@@ -67,7 +67,7 @@ class TestSSGAN32:
 if __name__ == "__main__":
     test = TestSSGAN32()
     test.setup()
-    test.test_ResNetGenerator32()
-    test.test_ResNetDiscriminator32()
+    test.test_SSGANGenerator32()
+    test.test_SSGANDiscriminator32()
     test.test_train_steps()
     test.teardown()
