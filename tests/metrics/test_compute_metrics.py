@@ -112,23 +112,21 @@ class TestMetrics:
     def test_arguments(self):
         for metric in ['fid', 'kid', 'inception_score']:
             with pytest.raises(ValueError):
-                compute_metrics.evaluate(
-                    metric=metric,
-                    log_dir=self.log_dir,
-                    netG=self.netG,
-                    dataset_name=self.dataset_name,
-                    evaluate_step=self.evaluate_step,
-                    device=self.device)
+                compute_metrics.evaluate(metric=metric,
+                                         log_dir=self.log_dir,
+                                         netG=self.netG,
+                                         dataset_name=self.dataset_name,
+                                         evaluate_step=self.evaluate_step,
+                                         device=self.device)
 
     def test_wrong_metric(self):
         with pytest.raises(ValueError):
-            compute_metrics.evaluate(
-                metric='wrong_metric',
-                log_dir=self.log_dir,
-                netG=self.netG,
-                dataset_name=self.dataset_name,
-                evaluate_step=self.evaluate_step,
-                device=self.device)
+            compute_metrics.evaluate(metric='wrong_metric',
+                                     log_dir=self.log_dir,
+                                     netG=self.netG,
+                                     dataset_name=self.dataset_name,
+                                     evaluate_step=self.evaluate_step,
+                                     device=self.device)
 
     def teardown(self):
         del self.netG

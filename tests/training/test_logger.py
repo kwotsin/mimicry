@@ -91,9 +91,9 @@ class TestLogger:
                                         time_taken=10)
 
         assert printed == (
-            'INFO: [Epoch 1/1][Global Step: 10/100] '
-            + '\n| D(G(z)): 1.0\n| D(x): 1.0\n| errD: 1.0\n| errG: 1.0'
-            + '\n| lr_D: 1.0\n| lr_G: 1.0\n| (10.0000 sec/idx)')
+            'INFO: [Epoch 1/1][Global Step: 10/100] ' +
+            '\n| D(G(z)): 1.0\n| D(x): 1.0\n| errD: 1.0\n| errG: 1.0' +
+            '\n| lr_D: 1.0\n| lr_G: 1.0\n| (10.0000 sec/idx)')
 
     def test_vis_images(self):
         netG = ExampleGen()

@@ -90,7 +90,7 @@ class DBlock(resblocks.DBlock):
     def residual(self, x):
         r"""
         Helper function for feedforwarding through main layers.
-        """        
+        """
         if self.norm1 is None:
             self.norm1 = nn.LayerNorm(
                 [self.in_channels, x.shape[2], x.shape[3]])

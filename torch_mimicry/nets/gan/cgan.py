@@ -169,7 +169,7 @@ class BaseConditionalDiscriminator(gan.BaseDiscriminator):
                    netG,
                    optD,
                    log_data,
-                   device=None,         
+                   device=None,
                    global_step=None,
                    **kwargs):
         r"""

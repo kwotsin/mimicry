@@ -36,10 +36,10 @@ def compute_real_dist_feat(num_samples,
 
     Returns:
         ndarray: Inception features of real images.
-    """    
+    """
     # Create custom feat file name
     if feat_file is None:
-        feat_dir = os.path.join(log_dir, 'metrics', 'kid', 'features')      
+        feat_dir = os.path.join(log_dir, 'metrics', 'kid', 'features')
         if not os.path.exists(feat_dir):
             os.makedirs(feat_dir)
 

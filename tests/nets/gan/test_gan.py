@@ -70,6 +70,7 @@ class TestBaseGAN:
         del self.output_real
         del self.output_fake
 
+
 if __name__ == "__main__":
     test = TestBaseGAN()
     test.setup()
