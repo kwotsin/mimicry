@@ -21,6 +21,7 @@ install_requires = [
     'pandas',
     'psutil',
     'yapf',
+    'lmdb',
 ]
 
 setup_requires = ['pytest-runner']

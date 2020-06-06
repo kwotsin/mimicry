@@ -19,13 +19,13 @@ class TestSNGAN48:
         self.netG = SNGANGenerator48(ngf=self.ngf)
         self.netD = SNGANDiscriminator48(ndf=self.ndf)
 
-    def test_ResNetGenerator48(self):
+    def test_SNGANGenerator48(self):
         noise = torch.ones(self.N, self.nz)
         output = self.netG(noise)
 
         assert output.shape == (self.N, self.C, self.H, self.W)
 
-    def test_ResNetDiscriminator48(self):
+    def test_SNGANDiscriminator48(self):
         images = torch.ones(self.N, self.C, self.H, self.W)
         output = self.netD(images)
 
@@ -66,7 +66,7 @@ class TestSNGAN48:
 if __name__ == "__main__":
     test = TestSNGAN48()
     test.setup()
-    test.test_ResNetGenerator48()
-    test.test_ResNetDiscriminator48()
+    test.test_SNGANGenerator48()
+    test.test_SNGANDiscriminator48()
     test.test_train_steps()
     test.teardown()

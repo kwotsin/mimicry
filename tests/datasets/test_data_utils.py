@@ -80,17 +80,6 @@ class TestDataUtils:
         with pytest.raises(ValueError):
             data_utils.load_dataset('random', 'wrong_dataset')
 
-    @pytest.mark.skipif(
-        not os.path.exists('./datasets/lsun/bedroom_train_lmdb'),
-        reason='Requires download.')
-    def test_load_lsun_bedroom_dataset(self):
-        dataset = data_utils.load_lsun_bedroom_dataset(root=self.dataset_dir,
-                                                       size=128)
-
-        img = dataset[0][0]
-
-        assert img.shape == (3, 128, 128)
-
     @pytest.mark.skipif(not os.path.exists('./datasets/celeba/celeba'),
                         reason='Requires download.')
     def test_load_celeba_dataset(self):
@@ -122,9 +111,6 @@ class TestDataUtils:
     @pytest.mark.skipif(not os.path.exists('./datasets/cifar10'),
                         reason='Requires download.')
     def test_load_cifar10_dataset(self):
-        # if not os.path.exists('./datasets/cifar10'):
-        #     return
-
         dataset = data_utils.load_cifar10_dataset(root=self.dataset_dir)
 
         img = dataset[0][0]
@@ -134,14 +120,22 @@ class TestDataUtils:
     @pytest.mark.skipif(not os.path.exists('./datasets/cifar100'),
                         reason='Requires download.')
     def test_load_cifar100_dataset(self):
-        # if not os.path.exists('./datasets/cifar100'):
-        #     return
-
         dataset = data_utils.load_cifar100_dataset(root=self.dataset_dir)
 
         img = dataset[0][0]
 
         assert img.shape == (3, 32, 32)
+
+    @pytest.mark.skipif(
+        not os.path.exists('./datasets/lsun/bedroom_train_lmdb'),
+        reason='Requires download.')
+    def test_load_lsun_bedroom_dataset(self):
+        dataset = data_utils.load_lsun_bedroom_dataset(root=self.dataset_dir,
+                                                       size=128)
+
+        img = dataset[0][0]
+
+        assert img.shape == (3, 128, 128)
 
     def teardown(self):
         shutil.rmtree(self.test_dir)

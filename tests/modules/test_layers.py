@@ -6,7 +6,7 @@ from torch_mimicry.modules import layers
 
 class TestLayers:
     def setup(self):
-        self.N, self.C, self.H, self.W = (16, 3, 32, 32)
+        self.N, self.C, self.H, self.W = (4, 3, 32, 32)
         self.n_out = 8
 
     def test_ConditionalBatchNorm2d(self):
@@ -23,10 +23,18 @@ class TestLayers:
         output = bn(X, y)
         output = conv(output)
 
-        assert output.shape == (16, 8, 32, 32)
+        assert output.shape == (self.N, 8, self.H, self.W)
+
+    def test_SelfAttention(self):
+        ngf = 16
+        X = torch.ones(self.N, ngf, 16, 16)
+        sa_layer = layers.SelfAttention(ngf)
+
+        assert sa_layer(X).shape == (self.N, ngf, 16, 16)
 
 
 if __name__ == "__main__":
     test = TestLayers()
     test.setup()
     test.test_ConditionalBatchNorm2d()
+    test.test_SelfAttention()

@@ -1,9 +1,101 @@
 """
 Script for building specific layers needed by GAN architecture.
 """
+import torch
 import torch.nn as nn
+import torch.nn.functional as F
 
 from torch_mimicry.modules import spectral_norm
+
+
+class SelfAttention(nn.Module):
+    """
+    Self-attention layer based on version used in BigGAN code:
+    https://github.com/ajbrock/BigGAN-PyTorch/blob/master/layers.py
+    """
+    def __init__(self, num_feat, spectral_norm=True):
+        super().__init__()
+        self.num_feat = num_feat
+
+        if spectral_norm:
+            self.f = SNConv2d(self.num_feat,
+                              self.num_feat >> 3,
+                              1,
+                              1,
+                              padding=0,
+                              bias=False)
+            self.g = SNConv2d(self.num_feat,
+                              self.num_feat >> 3,
+                              1,
+                              1,
+                              padding=0,
+                              bias=False)
+            self.h = SNConv2d(self.num_feat,
+                              self.num_feat >> 1,
+                              1,
+                              1,
+                              padding=0,
+                              bias=False)
+            self.o = SNConv2d(self.num_feat >> 1,
+                              self.num_feat,
+                              1,
+                              1,
+                              padding=0,
+                              bias=False)
+
+        else:
+            self.f = nn.Conv2d(self.num_feat,
+                               self.num_feat >> 3,
+                               1,
+                               1,
+                               padding=0,
+                               bias=False)
+            self.g = nn.Conv2d(self.num_feat,
+                               self.num_feat >> 3,
+                               1,
+                               1,
+                               padding=0,
+                               bias=False)
+            self.h = nn.Conv2d(self.num_feat,
+                               self.num_feat >> 1,
+                               1,
+                               1,
+                               padding=0,
+                               bias=False)
+            self.o = nn.Conv2d(self.num_feat >> 1,
+                               self.num_feat,
+                               1,
+                               1,
+                               padding=0,
+                               bias=False)
+
+        self.gamma = nn.Parameter(torch.tensor(0.), requires_grad=True)
+
+    def forward(self, x):
+        """
+        Feedforward function. Implementation differs from actual SAGAN paper,
+        see note from BigGAN:
+        https://github.com/ajbrock/BigGAN-PyTorch/blob/master/layers.py#L142
+        """
+        # 1x1 convs to project input feature map
+        f = self.f(x)
+        g = F.max_pool2d(self.g(x), [2, 2])
+        h = F.max_pool2d(self.h(x), [2, 2])
+
+        # Reshape layers
+        f = f.view(-1, self.num_feat >> 3, x.shape[2] * x.shape[3])
+        g = g.view(-1, self.num_feat >> 3, x.shape[2] * x.shape[3] >> 2)
+        h = h.view(-1, self.num_feat >> 1, x.shape[2] * x.shape[3] >> 2)
+
+        # Compute attention map probabiltiies
+        beta = F.softmax(torch.bmm(f.transpose(1, 2), g), -1)
+
+        # Weigh output features by attention map
+        o = self.o(
+            torch.bmm(h, beta.transpose(1, 2)).view(-1, self.num_feat >> 1,
+                                                    x.shape[2], x.shape[3]))
+
+        return self.gamma * o + x
 
 
 def SNConv2d(*args, **kwargs):
