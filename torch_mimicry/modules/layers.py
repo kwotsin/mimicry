@@ -13,57 +13,57 @@ class SelfAttention(nn.Module):
     Self-attention layer based on version used in BigGAN code:
     https://github.com/ajbrock/BigGAN-PyTorch/blob/master/layers.py
     """
-    def __init__(self, ngf, spectral_norm=True):
+    def __init__(self, num_feat, spectral_norm=True):
         super().__init__()
-        self.ngf = ngf
+        self.num_feat = num_feat
 
         if spectral_norm:
-            self.f = SNConv2d(self.ngf,
-                              self.ngf >> 3,
+            self.f = SNConv2d(self.num_feat,
+                              self.num_feat >> 3,
                               1,
                               1,
                               padding=0,
                               bias=False)
-            self.g = SNConv2d(self.ngf,
-                              self.ngf >> 3,
+            self.g = SNConv2d(self.num_feat,
+                              self.num_feat >> 3,
                               1,
                               1,
                               padding=0,
                               bias=False)
-            self.h = SNConv2d(self.ngf,
-                              self.ngf >> 1,
+            self.h = SNConv2d(self.num_feat,
+                              self.num_feat >> 1,
                               1,
                               1,
                               padding=0,
                               bias=False)
-            self.o = SNConv2d(self.ngf >> 1,
-                              self.ngf,
+            self.o = SNConv2d(self.num_feat >> 1,
+                              self.num_feat,
                               1,
                               1,
                               padding=0,
                               bias=False)
 
         else:
-            self.f = nn.Conv2d(self.ngf,
-                               self.ngf >> 3,
+            self.f = nn.Conv2d(self.num_feat,
+                               self.num_feat >> 3,
                                1,
                                1,
                                padding=0,
                                bias=False)
-            self.g = nn.Conv2d(self.ngf,
-                               self.ngf >> 3,
+            self.g = nn.Conv2d(self.num_feat,
+                               self.num_feat >> 3,
                                1,
                                1,
                                padding=0,
                                bias=False)
-            self.h = nn.Conv2d(self.ngf,
-                               self.ngf >> 1,
+            self.h = nn.Conv2d(self.num_feat,
+                               self.num_feat >> 1,
                                1,
                                1,
                                padding=0,
                                bias=False)
-            self.o = nn.Conv2d(self.ngf >> 1,
-                               self.ngf,
+            self.o = nn.Conv2d(self.num_feat >> 1,
+                               self.num_feat,
                                1,
                                1,
                                padding=0,
@@ -83,16 +83,16 @@ class SelfAttention(nn.Module):
         h = F.max_pool2d(self.h(x), [2, 2])
 
         # Reshape layers
-        f = f.view(-1, self.ngf >> 3, x.shape[2] * x.shape[3])
-        g = g.view(-1, self.ngf >> 3, x.shape[2] * x.shape[3] >> 2)
-        h = h.view(-1, self.ngf >> 1, x.shape[2] * x.shape[3] >> 2)
+        f = f.view(-1, self.num_feat >> 3, x.shape[2] * x.shape[3])
+        g = g.view(-1, self.num_feat >> 3, x.shape[2] * x.shape[3] >> 2)
+        h = h.view(-1, self.num_feat >> 1, x.shape[2] * x.shape[3] >> 2)
 
         # Compute attention map probabiltiies
         beta = F.softmax(torch.bmm(f.transpose(1, 2), g), -1)
 
         # Weigh output features by attention map
         o = self.o(
-            torch.bmm(h, beta.transpose(1, 2)).view(-1, self.ngf >> 1,
+            torch.bmm(h, beta.transpose(1, 2)).view(-1, self.num_feat >> 1,
                                                     x.shape[2], x.shape[3]))
 
         return self.gamma * o + x
