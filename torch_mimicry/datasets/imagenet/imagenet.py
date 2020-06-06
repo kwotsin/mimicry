@@ -40,13 +40,12 @@ class ImageNet(ImageFolder):
         - imgs (list): List of (image path, class_index) tuples
         - targets (list): The class_index value for each image in the dataset
     """
-    def __init__(
-        self,
-        root,
-        token='',
-        split='train',
-        download=False,
-        **kwargs):
+    def __init__(self,
+                 root,
+                 token='',
+                 split='train',
+                 download=False,
+                 **kwargs):
         root = self.root = os.path.expanduser(root)
         self.split = verify_str_arg(split, "split", ("train", "val"))
 
@@ -77,7 +76,8 @@ class ImageNet(ImageFolder):
         if download:
             if len(token) == 0:
                 raise ValueError(
-                    "ImageNet token is empty. Please obtain permission token from the official website.")
+                    "ImageNet token is empty. Please obtain permission token from the official website."
+                )
 
             self.download()
         wnid_to_classes = self._load_meta_file()[0]

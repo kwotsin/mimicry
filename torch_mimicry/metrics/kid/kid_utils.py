@@ -72,11 +72,7 @@ def _sqn(arr):
     return flat.dot(flat)
 
 
-def _compute_mmd2(K_XX,
-                 K_XY,
-                 K_YY,
-                 unit_diagonal=False,
-                 mmd_est='unbiased'):
+def _compute_mmd2(K_XX, K_XY, K_YY, unit_diagonal=False, mmd_est='unbiased'):
     """
     Based on https://github.com/dougalsutherland/opt-mmd/blob/master/two_sample/mmd.py
     but changed to not compute the full kernel matrix at once.

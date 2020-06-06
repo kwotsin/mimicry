@@ -67,7 +67,7 @@ def _get_inception_layer(sess):
             if len(shape._dims) > 0:
                 try:
                     shape = [s.value for s in shape]
-                except AttributeError: # TF 2 uses None shape directly. No conversion needed.
+                except AttributeError:  # TF 2 uses None shape directly. No conversion needed.
                     shape = shape
 
                 new_shape = []
@@ -112,8 +112,7 @@ def get_activations(images, sess, batch_size=50, verbose=True):
         start = i * batch_size
         end = start + batch_size
         batch = images[start:end]
-        pred = sess.run(inception_layer,
-                        {'ExpandDims:0': batch})
+        pred = sess.run(inception_layer, {'ExpandDims:0': batch})
         # pred = sess.run(inception_layer,
         #                 {'inception_model/ExpandDims:0': batch}) # TODO: Remove when safe. TF2 syntax changes again.
         pred_arr[start:end] = pred.reshape(batch_size, -1)

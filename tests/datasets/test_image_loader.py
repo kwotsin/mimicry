@@ -51,9 +51,10 @@ class TestImageLoader:
 
     def test_lsun_bedroom_load_error(self):
         with pytest.raises(ValueError):
-            image_loader.get_lsun_bedroom_images(
-                num_samples=1,
-                root=os.path.join(self.test_dir, 'does_not_exist'))
+            image_loader.get_lsun_bedroom_images(num_samples=1,
+                                                 root=os.path.join(
+                                                     self.test_dir,
+                                                     'does_not_exist'))
 
     def test_imagenet_small_sample_error(self):
         with pytest.raises(ValueError):
