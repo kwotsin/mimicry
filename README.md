@@ -181,6 +181,7 @@ For a fair comparison, we train all models under the same training conditions fo
 #### Results
 | Resolution | Model | IS | FID | KID | Checkpoint | Code |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| 48 x 48 | WGAN-GP | 8.55 ± 0.02 | 43.01 ± 0.19 | 0.0440 ± 0.0003 | [netG.pth](https://drive.google.com/file/d/1-Fw_xzl_D7P05wL7HmSPGtPPiH3zTeG7/view?usp=sharing) | [wgan_gp_48.py](torch_mimicry/nets/wgan_gp/wgan_gp_48.py) |
 | 48 x 48 | SNGAN | 8.04 ± 0.07 | 39.56 ± 0.10 | 0.0369 ± 0.0002 | [netG.pth](https://drive.google.com/open?id=1tVRXDHgUTpBwfGh0RJvdjw2EUOGu-m-A) | [sngan_48.py](torch_mimicry/nets/sngan/sngan_48.py) |
 | 48 x 48 | SSGAN | 8.25 ± 0.06 | 37.06 ± 0.19 | 0.0332 ± 0.0004| [netG.pth](https://drive.google.com/open?id=1TBeAhxvxJr3ykKwu4Wgw715D2fAslM-9) | [ssgan_48.py](torch_mimicry/nets/ssgan/ssgan_48.py) |
 | 48 x 48 | InfoMax-GAN | 8.54 ± 0.12 | 35.52 ± 0.10 | 0.0326 ± 0.0002 | [netG.pth](https://drive.google.com/open?id=1QHwyvaCqAKyXbkYYzHGNEsDWpBPn05oS) | [infomax_gan_48.py](torch_mimicry/nets/infomax_gan/infomax_gan_48.py) |
@@ -212,6 +213,7 @@ For a fair comparison, we train all models under the same training conditions fo
 #### Results
 | Resolution | Model | IS | FID | KID | Checkpoint | Code |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| 32 x 32 | WGAN-GP | 7.33 ± 0.02 | 22.29 ± 0.06 | 0.0204± 0.0004 | [netG.pth](https://drive.google.com/file/d/1KL9uDpSZ1Fwzt-4Mke1o88w8ftX01OxR/view?usp=sharing) | [wgan_gp_32.py](torch_mimicry/nets/wgan_gp/wgan_gp_32.py) |
 | 32 x 32 | SNGAN | 7.97 ± 0.06 | 16.77 ± 0.04 | 0.0125 ± 0.0001 | [netG.pth](https://drive.google.com/open?id=16TxezS7VBTiuPdQdjDUM0-_rHXqyPrvr) | [sngan_32.py](torch_mimicry/nets/sngan/sngan_32.py) |
 | 32 x 32 | cGAN-PD | 8.25 ± 0.13 | 10.84 ± 0.03 | 0.0070 ± 0.0001 | [netG.pth](https://drive.google.com/open?id=12nGJZjJyi-RJQFj98MlrSqhA_uST2_1n) | [cgan_pd_32.py](torch_mimicry/nets/cgan_pd/cgan_pd_32.py) |
 | 32 x 32 | SSGAN | 8.17 ± 0.06 | 14.65 ± 0.04 |  0.0101 ± 0.0002 | [netG.pth](https://drive.google.com/open?id=1sceT1tUPw2wRVqLcpg1EkWpz8Qa5j_fE) | [ssgan_32.py](torch_mimicry/nets/ssgan/ssgan_32.py) |
