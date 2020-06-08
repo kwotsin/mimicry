@@ -16,21 +16,22 @@ class SelfAttention(nn.Module):
     def __init__(self, num_feat, spectral_norm=True):
         super().__init__()
         self.num_feat = num_feat
+        self.spectral_norm = spectral_norm
 
-        if spectral_norm:
-            self.f = SNConv2d(self.num_feat,
+        if self.spectral_norm:
+            self.theta = SNConv2d(self.num_feat,
+                              self.num_feat >> 3,
+                              1,
+                              1,
+                              padding=0,
+                              bias=False)
+            self.phi = SNConv2d(self.num_feat,
                               self.num_feat >> 3,
                               1,
                               1,
                               padding=0,
                               bias=False)
             self.g = SNConv2d(self.num_feat,
-                              self.num_feat >> 3,
-                              1,
-                              1,
-                              padding=0,
-                              bias=False)
-            self.h = SNConv2d(self.num_feat,
                               self.num_feat >> 1,
                               1,
                               1,
@@ -44,19 +45,19 @@ class SelfAttention(nn.Module):
                               bias=False)
 
         else:
-            self.f = nn.Conv2d(self.num_feat,
+            self.theta = nn.Conv2d(self.num_feat,
+                               self.num_feat >> 3,
+                               1,
+                               1,
+                               padding=0,
+                               bias=False)
+            self.phi = nn.Conv2d(self.num_feat,
                                self.num_feat >> 3,
                                1,
                                1,
                                padding=0,
                                bias=False)
             self.g = nn.Conv2d(self.num_feat,
-                               self.num_feat >> 3,
-                               1,
-                               1,
-                               padding=0,
-                               bias=False)
-            self.h = nn.Conv2d(self.num_feat,
                                self.num_feat >> 1,
                                1,
                                1,
@@ -76,26 +77,50 @@ class SelfAttention(nn.Module):
         Feedforward function. Implementation differs from actual SAGAN paper,
         see note from BigGAN:
         https://github.com/ajbrock/BigGAN-PyTorch/blob/master/layers.py#L142
+
+        See official TF Implementation:
+        https://github.com/brain-research/self-attention-gan/blob/master/non_local.py
+
+        Args:
+            x (Tensor): Input feature map.
+
+        Returns:
+            Tensor: Feature map weighed with attention map.
         """
-        # 1x1 convs to project input feature map
-        f = self.f(x)
-        g = F.max_pool2d(self.g(x), [2, 2])
-        h = F.max_pool2d(self.h(x), [2, 2])
+        N, C, H, W = x.shape
+        location_num = H * W
+        downsampled_num = location_num >> 2
 
-        # Reshape layers
-        f = f.view(-1, self.num_feat >> 3, x.shape[2] * x.shape[3])
-        g = g.view(-1, self.num_feat >> 3, x.shape[2] * x.shape[3] >> 2)
-        h = h.view(-1, self.num_feat >> 1, x.shape[2] * x.shape[3] >> 2)
+        # Theta path
+        theta = self.theta(x)
+        theta = theta.view(N, C >> 3, location_num) # (N, C>>3, H*W)
 
-        # Compute attention map probabiltiies
-        beta = F.softmax(torch.bmm(f.transpose(1, 2), g), -1)
+        # Phi path
+        phi = self.phi(x)
+        phi = F.max_pool2d(phi, [2, 2], stride=2)
+        phi = phi.view(N, C >> 3, downsampled_num) # (N, C>>3, H*W>>2)
 
-        # Weigh output features by attention map
-        o = self.o(
-            torch.bmm(h, beta.transpose(1, 2)).view(-1, self.num_feat >> 1,
-                                                    x.shape[2], x.shape[3]))
+        # Attention map
+        attn = torch.bmm(theta.transpose(1, 2), phi)
+        attn = F.softmax(attn, -1) # (N, H*W, H*W>>2)
+        # print(torch.sum(attn, axis=2)) # (N, H*W)
 
-        return self.gamma * o + x
+        # Conv value
+        g = self.g(x)
+        g = F.max_pool2d(g, [2, 2], stride=2)
+        g = g.view(N, C >> 1, downsampled_num) # (N, C>>1, H*W>>2)
+
+        # Apply attention
+        attn_g = torch.bmm(g, attn.transpose(1, 2)) # (N, C>>1, H*W)
+        attn_g = attn_g.view(N, C >> 1, H, W) # (N, C>>1, H, W)
+
+        # Project back feature size
+        attn_g = self.o(attn_g)
+
+        # Weigh attention map
+        output = x + self.gamma * attn_g
+
+        return output
 
 
 def SNConv2d(*args, **kwargs):
