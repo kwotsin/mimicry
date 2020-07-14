@@ -251,7 +251,7 @@ As FID produces highly biased estimates (where using larger samples lead to a lo
 | FID                 | SNGAN       | 23.90 ± 0.20    | 21.7 ± 0.21 [1]| 10K | 5K | [netG.pth](https://drive.google.com/open?id=1aLbds1EGFoWZZF2y1l8mvPCvnb7AGHh7) | [sngan_32.py](torch_mimicry/nets/sngan/sngan_32.py)
 | FID                 | cGAN-PD     | 17.84 ± 0.17    | 17.5 [2]      | 10K | 5K | [netG.pth](https://drive.google.com/open?id=1v26E7mIk8PqIg5ldE-iQNMQ2AYQ36iGM) | [cgan_pd_32.py](torch_mimicry/nets/cgan_pd/cgan_pd_32.py)
 | FID                 | SSGAN       |  17.61 ± 0.14  | 17.88 ± 0.64 [3]     | 10K | 10K | [netG.pth](https://drive.google.com/open?id=1lgOk4lC0-p4PoXvju9m5p0lOGoZDWELe) | [ssgan_32.py](torch_mimicry/nets/ssgan/ssgan_32.py)
-| FID                 | InfoMax-GAN | 17.14 ± 0.20    | 17.39 ± 0.08 [5]   | 50K | 10K | [netG.pth](https://drive.google.com/open?id=1hgoN6Nx59j_JuaCup2rBPC4koih9qZ1y) | [infomax_gan_32.py](torch_mimicry/nets/infomax_gan/infomax_gan_32.py)
+| FID                 | InfoMax-GAN | 17.14 ± 0.20    | 17.14 ± 0.20 [5]   | 50K | 10K | [netG.pth](https://drive.google.com/open?id=1hgoN6Nx59j_JuaCup2rBPC4koih9qZ1y) | [infomax_gan_32.py](torch_mimicry/nets/infomax_gan/infomax_gan_32.py)
 
 
 *<sup>†</sup> Best FID was reported at 53K steps, but we find our score can improve till 100K steps to achieve 23.13 ± 0.13.*
@@ -276,6 +276,6 @@ If you have found this work useful, please consider citing [our work](https://ar
 
 [[4] A Large-Scale Study on Regularization and Normalization in GANs](https://arxiv.org/abs/1807.04720)
 
-[[5] InfoMax-GAN: Improving Adversarial Image Generation via Mutual Information Maximization and Contrastive Learning]()
+[[5] InfoMax-GAN: Improving Adversarial Image Generation via Mutual Information Maximization and Contrastive Learning](https://arxiv.org/abs/2007.04589)
 
 [[6] GANs Trained by a Two Time-Scale Update Rule Converge to a Local Nash Equilibrium](https://arxiv.org/abs/1706.08500)
