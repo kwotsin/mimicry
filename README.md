@@ -276,6 +276,6 @@ If you have found this work useful, please consider citing [our work](https://ar
 
 [[4] A Large-Scale Study on Regularization and Normalization in GANs](https://arxiv.org/abs/1807.04720)
 
-[[5] InfoMax-GAN: Improving Adversarial Image Generation via Mutual Information Maximization and Contrastive Learning](https://arxiv.org/abs/2007.04589)
+[[5] InfoMax-GAN: Improved Adversarial Image Generation via Mutual Information Maximization and Contrastive Learning](https://arxiv.org/abs/2007.04589)
 
 [[6] GANs Trained by a Two Time-Scale Update Rule Converge to a Local Nash Equilibrium](https://arxiv.org/abs/1706.08500)
