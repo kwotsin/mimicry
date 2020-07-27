@@ -27,7 +27,7 @@ class TestLayers:
 
     def test_SelfAttention(self):
         ngf = 16
-        X = torch.ones(self.N, ngf, 16, 16)
+        X = torch.randn(self.N, ngf, 16, 16)
         sa_layer = layers.SelfAttention(ngf)
 
         assert sa_layer(X).shape == (self.N, ngf, 16, 16)
