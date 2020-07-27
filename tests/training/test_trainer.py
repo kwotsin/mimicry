@@ -98,24 +98,19 @@ class TestTrainer:
                                save_steps=1,
                                log_steps=1,
                                vis_steps=1,
-                               lr_decay='linear',
-                               save_when_end=True)
+                               lr_decay='linear')
 
     def test_attributes(self):
         # Check parameters
         default_params = {
+            'log_dir': self.log_dir,
             'n_dis': 1,
             'num_steps': 2,
             'batch_size': 50,
             'lr_decay': 'linear',
             'optD': self.optD.__repr__(),
             'optG': self.optG.__repr__(),
-            'print_steps': 1,
-            'vis_steps': 1,
-            'flush_secs': 30,
-            'log_steps': 1,
             'save_steps': 1,
-            'save_when_end': True,
         }
         for name, param in default_params.items():
             print(name, self.trainer.params[name], param)
@@ -139,8 +134,7 @@ class TestTrainer:
                                 save_steps=float('inf'),
                                 log_steps=float('inf'),
                                 vis_steps=float('inf'),
-                                lr_decay='linear',
-                                save_when_end=False)
+                                lr_decay='linear')
 
         assert extra_trainer.netG_ckpt_file == netG_ckpt_file
         assert extra_trainer.netG_ckpt_file == netG_ckpt_file
@@ -246,7 +240,6 @@ class TestTrainer:
             'flush_secs': 30,
             'log_steps': 50,
             'save_steps': 5000,
-            'save_when_end': True,
         }
 
         with pytest.raises(ValueError):
