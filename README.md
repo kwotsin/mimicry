@@ -3,6 +3,7 @@
 
 
 
+
 ![alt text](https://github.com/kwotsin/mimicry/blob/master/docs/images/mimicry_logo.png)
 
 -----
@@ -193,10 +194,14 @@ For a fair comparison, we train all models under the same training conditions fo
 | Resolution | Batch Size | Learning Rate | β<sub>1</sub> | β<sub>2</sub> | Decay Policy | n<sub>dis</sub> | n<sub>iter</sub> |
 |:----------:|:----------:|:-------------:|:-------------:|:-------------:|:------------:|:---------------:|------------------|
 | 32 x 32 | 64 | 2e-4 | 0.0 | 0.9 | Linear | 5 | 100K |
+| 128 x 128 | 64 | 2e-4 | 0.0 | 0.9 | None | 5 | 450k |
 
 #### Results
 | Resolution | Model | IS | FID | KID | Checkpoint | Code |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| 128 x 128 | SNGAN | 13.05 ± 0.05 |  65.74 ± 0.31  |  0.0663 ± 0.0004  | [netG.pth](https://drive.google.com/file/d/1ZmjV9iMFgmthCgOKpMp8vKCIVQh_XPiR/view?usp=sharing) | [sngan_128.py](torch_mimicry/nets/sngan/sngan_128.py) |
+| 128 x 128 | SSGAN | 13.30 ± 0.03 | 62.48 ± 0.31 | 0.0616 ± 0.0004 | [netG.pth](https://drive.google.com/file/d/1LIqtrlRd2jOcrwLpzD_ztf7Dc2GZwH8g/view?usp=sharing) | [ssgan_128.py](torch_mimicry/nets/ssgan/ssgan_128.py) |
+| 128 x 128 | InfoMax-GAN | 13.68 ± 0.06 | 58.91 ± 0.14 | 0.0579 ± 0.0004 | [netG.pth](https://drive.google.com/file/d/1kKfMddYe3gP0Y3xOhq0KD3GNjBwe_k9S/view?usp=sharing) | [infomax_gan_128.py](torch_mimicry/nets/infomax_gan/infomax_gan_128.py) |
 | 32 x 32 | SNGAN | 8.97 ± 0.12 | 23.04 ± 0.06  | 0.0157 ± 0.0002 | [netG.pth](https://drive.google.com/open?id=1LF-tNfbVmHHw8onneOz3V5b-j2ff-Kh2) | [sngan_32.py](torch_mimicry/nets/sngan/sngan_32.py) |
 | 32 x 32 | cGAN-PD | 9.08 ± 0.17 | 21.17 ± 0.05 | 0.0145 ± 0.0002 | [netG.pth](https://drive.google.com/open?id=1gHduZDIP9QOr-YgkB3_4p4vU-gjCPnRH) | [cgan_pd_32.py](torch_mimicry/nets/cgan_pd/cgan_pd_32.py) |
 | 32 x 32 | SSGAN | 9.11 ± 0.12 | 21.79 ± 0.09 | 0.0152 ± 0.0002 | [netG.pth](https://drive.google.com/open?id=1PzdCYzwg4lZ9r9tPf6I7XItoIu5lHhwy) | [ssgan_32.py](torch_mimicry/nets/ssgan/ssgan_32.py) |
