@@ -133,6 +133,7 @@ For a fair comparison, we train all models under the same training conditions fo
 | CelebA | All | 64 x 64 |
 | CelebA | All | 128 x 128 |
 | LSUN-Bedroom | Train | 128 x 128 |
+| ImageNet | Train | 128 x 128 |
 
 ------
 
