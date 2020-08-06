@@ -2,8 +2,10 @@
 Loads randomly sampled images from datasets for computing metrics.
 """
 import os
+import random
 
 import numpy as np
+import torch
 import torchvision.transforms as transforms
 from PIL import Image
 
@@ -230,49 +232,92 @@ def get_cifar100_images(num_samples, root="./datasets", **kwargs):
     return images
 
 
-def get_dataset_images(dataset_name, num_samples=50000, **kwargs):
+def sample_dataset_images(dataset, num_samples):
+    """
+    Randomly samples the dataset for images.
+
+    Args:
+        dataset (Dataset): Torch dataset object to sample images from.
+        num_samples (int): The number of images to randomly sample.
+
+    Returns:
+        ndarray: Numpy array of images with first dim as batch size.
+    """
+    # Check if sufficient images
+    if len(dataset) < num_samples:
+        raise ValueError(
+            "Given dataset has less than num_samples images: {} given but requires at least {}.".format(
+                len(dataset), num_samples))
+
+    choices = random.sample(range(len(dataset)), num_samples)
+    images = []
+    for i in choices:
+        data = dataset[i]
+        
+        # Case of iterable, assumes first arg is data.
+        if isinstance(data, tuple) or isinstance(data, list):
+            img = data[0]
+        else:
+            img = data
+
+        img = torch.unsqueeze(img, 0)
+        images.append(img)
+
+    images = np.concatenate(images, axis=0)
+
+    return images
+
+
+def get_dataset_images(dataset, num_samples=50000, **kwargs):
     """
     Randomly sample num_samples images based on input dataset name.
 
     Args:
-        dataset_name (str): Dataset name to load images from.
+        dataset (str/Dataset): Dataset to load images from.
         num_samples (int): The number of images to randomly sample.
 
     Returns:
         Tensor: Batch of num_samples images from the specific dataset in np array form.
     """
-    if dataset_name == "imagenet_32":
-        images = get_imagenet_images(num_samples, size=32, **kwargs)
+    if isinstance(dataset, str):
+        if dataset == "imagenet_32":
+            images = get_imagenet_images(num_samples, size=32, **kwargs)
 
-    elif dataset_name == "imagenet_128":
-        images = get_imagenet_images(num_samples, size=128, **kwargs)
+        elif dataset == "imagenet_128":
+            images = get_imagenet_images(num_samples, size=128, **kwargs)
 
-    elif dataset_name == "celeba_64":
-        images = get_celeba_images(num_samples, size=64, **kwargs)
+        elif dataset == "celeba_64":
+            images = get_celeba_images(num_samples, size=64, **kwargs)
 
-    elif dataset_name == "celeba_128":
-        images = get_celeba_images(num_samples, size=128, **kwargs)
+        elif dataset == "celeba_128":
+            images = get_celeba_images(num_samples, size=128, **kwargs)
 
-    elif dataset_name == "stl10_48":
-        images = get_stl10_images(num_samples, **kwargs)
+        elif dataset == "stl10_48":
+            images = get_stl10_images(num_samples, **kwargs)
 
-    elif dataset_name == "cifar10":
-        images = get_cifar10_images(num_samples, **kwargs)
+        elif dataset == "cifar10":
+            images = get_cifar10_images(num_samples, **kwargs)
 
-    elif dataset_name == "cifar10_test":
-        images = get_cifar10_images(num_samples, split='test', **kwargs)
+        elif dataset == "cifar10_test":
+            images = get_cifar10_images(num_samples, split='test', **kwargs)
 
-    elif dataset_name == "cifar100":
-        images = get_cifar100_images(num_samples, **kwargs)
+        elif dataset == "cifar100":
+            images = get_cifar100_images(num_samples, **kwargs)
 
-    elif dataset_name == "lsun_bedroom_128":
-        images = get_lsun_bedroom_images(num_samples, size=128, **kwargs)
+        elif dataset == "lsun_bedroom_128":
+            images = get_lsun_bedroom_images(num_samples, size=128, **kwargs)
 
-    elif dataset_name == "fake_data":
-        images = get_fake_data_images(num_samples, size=32, **kwargs)
+        elif dataset == "fake_data":
+            images = get_fake_data_images(num_samples, size=32, **kwargs)
+
+        else:
+            raise ValueError("Invalid dataset name {}.".format(dataset))
+
+    elif issubclass(dataset, torch.utils.data.Dataset):
+        images = sample_dataset_images(dataset, num_samples)
 
     else:
-        raise ValueError("Invalid dataset name {}.".format(dataset_name))
+        raise ValueError("dataset must be of type str or a Dataset object.")
 
     # Check shape and permute if needed
     if images.shape[1] == 3:
