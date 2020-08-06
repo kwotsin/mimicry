@@ -246,14 +246,14 @@ def sample_dataset_images(dataset, num_samples):
     # Check if sufficient images
     if len(dataset) < num_samples:
         raise ValueError(
-            "Given dataset has less than num_samples images: {} given but requires at least {}.".format(
-                len(dataset), num_samples))
+            "Given dataset has less than num_samples images: {} given but requires at least {}."
+            .format(len(dataset), num_samples))
 
     choices = random.sample(range(len(dataset)), num_samples)
     images = []
     for i in choices:
         data = dataset[i]
-        
+
         # Case of iterable, assumes first arg is data.
         if isinstance(data, tuple) or isinstance(data, list):
             img = data[0]
@@ -298,9 +298,6 @@ def get_dataset_images(dataset, num_samples=50000, **kwargs):
         elif dataset == "cifar10":
             images = get_cifar10_images(num_samples, **kwargs)
 
-        elif dataset == "cifar10_test":
-            images = get_cifar10_images(num_samples, split='test', **kwargs)
-
         elif dataset == "cifar100":
             images = get_cifar100_images(num_samples, **kwargs)
 
@@ -313,7 +310,7 @@ def get_dataset_images(dataset, num_samples=50000, **kwargs):
         else:
             raise ValueError("Invalid dataset name {}.".format(dataset))
 
-    elif issubclass(dataset, torch.utils.data.Dataset):
+    elif issubclass(type(dataset), torch.utils.data.Dataset):
         images = sample_dataset_images(dataset, num_samples)
 
     else:
