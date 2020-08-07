@@ -67,11 +67,14 @@ class TestImageLoader:
                 os.makedirs(class_dir)
 
             for j in range(num_images):
-                # Randomly choose 1, 3 or 4 channels
-                C = int(np.random.choice([1, 3, 4]))
                 img_name = os.path.join(class_dir, '{}_{}'.format(class_id, j))
 
-                self.create_test_image(H, W, C, img_name)
+                if os.path.exists(img_name):
+                    continue
+                else:
+                    # Randomly choose 1, 3 or 4 channels
+                    C = int(np.random.choice([1, 3, 4]))
+                    self.create_test_image(H, W, C, img_name)
 
     def test_lsun_bedroom_load_error(self):
         with pytest.raises(ValueError):
@@ -193,6 +196,7 @@ class TestImageLoader:
         for ds in datasets:
             try:
                 if 'imagenet' in ds:
+                    self.create_imagenet_images()
                     images = image_loader.get_dataset_images(ds, num_samples=1000)
 
                 else:
