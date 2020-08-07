@@ -61,26 +61,28 @@ class TestDataUtils:
         sizes = [32, 128]
         for size in sizes:
             for transform_data in [True, False]:
-                dataset = data_utils.load_imagenet_dataset(size=size,
-                                                           root=self.test_dir,
-                                                           download=False,
-                                                           transform_data=transform_data)
+                dataset = data_utils.load_imagenet_dataset(
+                    size=size,
+                    root=self.test_dir,
+                    download=False,
+                    transform_data=transform_data)
                 img = dataset[0][0]
 
                 if transform_data:
                     assert img.shape == (3, size, size)
                 else:
                     img = np.asarray(img)
-                    assert img.shape == (32, 32, 3) # no resizing done, default 32x32.
-
+                    assert img.shape == (32, 32, 3
+                                         )  # no resizing done, default 32x32.
 
     def test_load_fake_dataset(self):
         H, W, C = 32, 32, 3
 
         for transform_data in [True, False]:
-            dataset = data_utils.load_fake_dataset(root=self.dataset_dir,
-                                                   image_size=(C, H, W),
-                                                   transform_data=transform_data)
+            dataset = data_utils.load_fake_dataset(
+                root=self.dataset_dir,
+                image_size=(C, H, W),
+                transform_data=transform_data)
 
             img = dataset[0][0]
 
@@ -88,7 +90,8 @@ class TestDataUtils:
                 assert img.shape == (C, H, W)
             else:
                 img = np.asarray(img)
-                assert img.shape == (32, 32, 3) # no resizing done, default 32x32.
+                assert img.shape == (32, 32, 3
+                                     )  # no resizing done, default 32x32.
 
     def test_load_wrong_dataset(self):
         with pytest.raises(ValueError):
