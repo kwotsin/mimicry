@@ -21,7 +21,7 @@ def get_random_images(dataset, num_samples):
         num_samples (int): The number of images to randomly sample.
 
     Returns:
-        Tensor: Batch of num_samples images in np array form.
+        ndarray: Batch of num_samples images in np array form.
     """
     choices = np.random.choice(range(len(dataset)),
                                size=num_samples,
@@ -48,7 +48,7 @@ def get_imagenet_images(num_samples, root='./datasets', size=32):
         size (int): Size of image to resize to.
 
     Returns:
-        Tensor: Batch of num_samples images in np array form.
+        ndarray: Batch of num_samples images in np array form.
     """
     if num_samples < 1000:
         raise ValueError(
@@ -101,7 +101,7 @@ def get_fake_data_images(num_samples, root='./datasets', size=32, **kwargs):
         size (int): Size of image to resize to.
 
     Returns:
-        Tensor: Batch of num_samples images in np array form.
+        ndarray: Batch of num_samples images in np array form.
     """
     dataset = data_utils.load_fake_dataset(
         root=root,
@@ -128,7 +128,7 @@ def get_lsun_bedroom_images(num_samples,
         size (int): Size of image to resize to.
 
     Returns:
-        Tensor: Batch of num_samples images in np array form.
+        ndarray: Batch of num_samples images in np array form.
     """
     dataset = data_utils.load_lsun_bedroom_dataset(
         root=root,
@@ -152,7 +152,7 @@ def get_celeba_images(num_samples, root='./datasets', size=128, **kwargs):
         size (int): Size of image to resize to.
 
     Returns:
-        Tensor: Batch of num_samples images in np array form.
+        ndarray: Batch of num_samples images in np array form.
     """
     dataset = data_utils.load_celeba_dataset(
         root=root,
@@ -176,7 +176,7 @@ def get_stl10_images(num_samples, root='./datasets', size=48, **kwargs):
         size (int): Size of image to resize to.
 
     Returns:
-        Tensor: Batch of num_samples images in np array form.
+        ndarray: Batch of num_samples images in np array form.
     """
     dataset = data_utils.load_stl10_dataset(
         root=root,
@@ -199,7 +199,7 @@ def get_cifar10_images(num_samples, root="./datasets", **kwargs):
         root (str): The root directory where all datasets are stored.
 
     Returns:
-        Tensor: Batch of num_samples images in np array form.
+        ndarray: Batch of num_samples images in np array form.
     """
     dataset = data_utils.load_cifar10_dataset(root=root,
                                               transform_data=False,
@@ -219,7 +219,7 @@ def get_cifar100_images(num_samples, root="./datasets", **kwargs):
         root (str): The root directory where all datasets are stored.
 
     Returns:
-        Tensor: Batch of num_samples images in np array form.
+        ndarray: Batch of num_samples images in np array form.
     """
     dataset = data_utils.load_cifar100_dataset(root=root,
                                                split='train',
@@ -277,7 +277,8 @@ def get_dataset_images(dataset, num_samples=50000, **kwargs):
         num_samples (int): The number of images to randomly sample.
 
     Returns:
-        Tensor: Batch of num_samples images from the specific dataset in np array form.
+        ndarray: Batch of num_samples images from a dataset in np array form.
+            The final format is of (N, H, W, 3) shape for TF inference.
     """
     if isinstance(dataset, str):
         if dataset == "imagenet_32":
@@ -323,7 +324,7 @@ def get_dataset_images(dataset, num_samples=50000, **kwargs):
     # Ensure the values lie within the correct range, otherwise there might be some
     # preprocessing error from the library causing ill-valued scores.
     if np.min(images) < 0 or np.max(images) > 255:
-        raise ValueError(
-            'Image pixel values must lie between 0 to 255 inclusive.')
+        print("INFO: Some pixel values lie outside of [0, 255]. Clipping values..")
+        images = np.clip(images, 0, 255)
 
     return images
