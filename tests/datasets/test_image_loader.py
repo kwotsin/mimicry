@@ -226,12 +226,16 @@ class TestImageLoader:
                 continue  # No dataset download.
 
         # Check for bad formats
-        bad_format_dataset = CustomDataset(nchw=False)
+        bad_format_dataset = CustomDataset(nchw=True)
         bad_format_dataset.data *= 256
         images = image_loader.get_dataset_images(bad_format_dataset, 10)
 
         assert images.shape == (10, 32, 32, 3)
         assert np.min(images) >= 0 and np.max(images) <= 255
+
+        wrong_dataset = None
+        with pytest.raises(ValueError):
+            image_loader.get_dataset_images(wrong_dataset, 10)
 
     def teardown(self):
         shutil.rmtree(self.test_dir)

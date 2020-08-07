@@ -324,7 +324,9 @@ def get_dataset_images(dataset, num_samples=50000, **kwargs):
     # Ensure the values lie within the correct range, otherwise there might be some
     # preprocessing error from the library causing ill-valued scores.
     if np.min(images) < 0 or np.max(images) > 255:
-        print("INFO: Some pixel values lie outside of [0, 255]. Clipping values..")
+        print(
+            "INFO: Some pixel values lie outside of [0, 255]. Clipping values.."
+        )
         images = np.clip(images, 0, 255)
 
     return images
