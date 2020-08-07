@@ -201,13 +201,18 @@ class TestImageLoader:
                         ds, num_samples=1000, root=self.test_dir)
 
                 else:
-                    images = image_loader.get_dataset_images(
-                        ds, num_samples=10, root=self.dataset_dir)
+                    try:
+                        images = image_loader.get_dataset_images(
+                            ds, num_samples=10, root=self.dataset_dir, download=False)
+
+                    except TypeError:
+                        continue # Download false option not available.
 
                 assert isinstance(images, np.ndarray)
                 assert images.shape[3] == 3 # 3 channels for all default datasets.
+
             except RuntimeError:
-                continue
+                continue # No dataset download.
 
         # Check for bad formats
         bad_format_dataset = CustomDataset(nchw=False)
