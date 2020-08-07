@@ -189,8 +189,15 @@ class TestImageLoader:
     def test_get_dataset_images(self):
         # Check if can return properly formatted np array.
         datasets = [
-            'imagenet_32', 'imagenet_128', 'celeba_64', 'celeba_128', 'stl10_48',
-            'cifar10', 'cifar100', 'lsun_bedroom_128', 'fake_data',
+            'imagenet_32',
+            'imagenet_128',
+            'celeba_64',
+            'celeba_128',
+            'stl10_48',
+            'cifar10',
+            'cifar100',
+            'lsun_bedroom_128',
+            'fake_data',
         ]
 
         for ds in datasets:
@@ -203,16 +210,20 @@ class TestImageLoader:
                 else:
                     try:
                         images = image_loader.get_dataset_images(
-                            ds, num_samples=10, root=self.dataset_dir, download=False)
+                            ds,
+                            num_samples=10,
+                            root=self.dataset_dir,
+                            download=False)
 
-                    except TypeError:
-                        continue # Download false option not available.
+                    except (TypeError, ValueError):
+                        continue  # Download false option not available.
 
                 assert isinstance(images, np.ndarray)
-                assert images.shape[3] == 3 # 3 channels for all default datasets.
+                assert images.shape[
+                    3] == 3  # 3 channels for all default datasets.
 
             except RuntimeError:
-                continue # No dataset download.
+                continue  # No dataset download.
 
         # Check for bad formats
         bad_format_dataset = CustomDataset(nchw=False)
