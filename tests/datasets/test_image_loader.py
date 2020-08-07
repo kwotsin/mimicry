@@ -197,10 +197,12 @@ class TestImageLoader:
             try:
                 if 'imagenet' in ds:
                     self.create_imagenet_images()
-                    images = image_loader.get_dataset_images(ds, num_samples=1000)
+                    images = image_loader.get_dataset_images(
+                        ds, num_samples=1000, root=self.test_dir)
 
                 else:
-                    images = image_loader.get_dataset_images(ds, num_samples=10)
+                    images = image_loader.get_dataset_images(
+                        ds, num_samples=10, root=self.dataset_dir)
 
                 assert isinstance(images, np.ndarray)
                 assert images.shape[3] == 3 # 3 channels for all default datasets.
