@@ -8,16 +8,21 @@ from skimage.io import imsave
 
 from torch_mimicry.datasets import image_loader, data_utils
 
-class ExampleDataset(torch.utils.data.Dataset):
-    def __init__(self):
+
+class CustomDataset(torch.utils.data.Dataset):
+    def __init__(self, nchw=True):
         super().__init__()
-        self.data = torch.ones(30, 3, 32, 32)
+        if nchw:
+            self.data = torch.ones(30, 3, 32, 32)
+        else:
+            self.data = torch.ones(30, 32, 32, 3)
 
     def __len__(self):
         return self.data.shape[0]
 
     def __getitem__(self, idx):
         return self.data[idx]
+
 
 class TestImageLoader:
     def setup(self):
@@ -28,8 +33,10 @@ class TestImageLoader:
         if not os.path.exists(os.path.join(self.test_dir)):
             os.makedirs(self.test_dir)
 
+        self.custom_dataset = CustomDataset()
+
     def create_test_image(self, H, W, C, img_name):
-        if C== 1 or C == 3:
+        if C == 1 or C == 3:
             img = np.random.randn(H, W, C)
             img_name += '.JPEG'
 
@@ -62,11 +69,9 @@ class TestImageLoader:
             for j in range(num_images):
                 # Randomly choose 1, 3 or 4 channels
                 C = int(np.random.choice([1, 3, 4]))
-                img_name = os.path.join(class_dir,
-                        '{}_{}'.format(class_id, j))
+                img_name = os.path.join(class_dir, '{}_{}'.format(class_id, j))
 
                 self.create_test_image(H, W, C, img_name)
-                
 
     def test_lsun_bedroom_load_error(self):
         with pytest.raises(ValueError):
@@ -166,19 +171,45 @@ class TestImageLoader:
 
     def test_sample_dataset_images(self):
         # Test typical dataset
-        test_dataset = data_utils.load_fake_dataset(
-            root=self.test_dir,
-            size=30,
-            image_size=(3, 32, 32))
+        test_dataset = data_utils.load_fake_dataset(root=self.test_dir,
+                                                    size=30,
+                                                    image_size=(3, 32, 32))
         images = image_loader.sample_dataset_images(test_dataset, 10)
 
         assert images.shape == (10, 3, 32, 32)
 
         # If indexing dataset returns non iterable
-        noniter_test_dataset = ExampleDataset()
-        images = image_loader.sample_dataset_images(noniter_test_dataset, 10)
+        images = image_loader.sample_dataset_images(self.custom_dataset, 10)
 
         assert images.shape == (10, 3, 32, 32)
+
+    def test_get_dataset_images(self):
+        # Check if can return properly formatted np array.
+        datasets = [
+            'imagenet_32', 'imagenet_128', 'celeba_64', 'celeba_128', 'stl10_48',
+            'cifar10', 'cifar100', 'lsun_bedroom_128', 'fake_data',
+        ]
+
+        for ds in datasets:
+            try:
+                if 'imagenet' in ds:
+                    images = image_loader.get_dataset_images(ds, num_samples=1000)
+
+                else:
+                    images = image_loader.get_dataset_images(ds, num_samples=10)
+
+                assert isinstance(images, np.ndarray)
+                assert images.shape[3] == 3 # 3 channels for all default datasets.
+            except RuntimeError:
+                continue
+
+        # Check for bad formats
+        bad_format_dataset = CustomDataset(nchw=False)
+        bad_format_dataset.data *= 256
+        images = image_loader.get_dataset_images(bad_format_dataset, 10)
+
+        assert images.shape == (10, 32, 32, 3)
+        assert np.min(images) >= 0 and np.max(images) <= 255
 
     def teardown(self):
         shutil.rmtree(self.test_dir)
@@ -197,4 +228,5 @@ if __name__ == "__main__":
     test.test_imagenet_small_sample_error()
     test.test_lsun_bedroom_load_error()
     test.test_sample_dataset_images()
+    test.test_get_dataset_images()
     test.teardown()
