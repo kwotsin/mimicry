@@ -54,10 +54,10 @@ class TestComputeFID:
     def test_compute_gen_dist_stats(self):
         if self.device.index is not None:
             # Avoid unbounded memory usage
-            gpu_options = tf.GPUOptions(allow_growth=True,
-                                        per_process_gpu_memory_fraction=0.15,
-                                        visible_device_list=str(
-                                            self.device.index))
+            gpu_options = tf.compat.v1.GPUOptions(
+                allow_growth=True,
+                per_process_gpu_memory_fraction=0.15,
+                visible_device_list=str(self.device.index))
             config = tf.compat.v1.ConfigProto(gpu_options=gpu_options)
 
         else:
@@ -96,7 +96,7 @@ class TestComputeFID:
             m_real, s_real = compute_fid.compute_real_dist_stats(
                 num_samples=self.num_real_samples,
                 sess=sess,
-                dataset_name='fake_data',
+                dataset='fake_data',
                 batch_size=self.batch_size,
                 stats_file=None,
                 log_dir=self.log_dir,
@@ -113,7 +113,7 @@ class TestComputeFID:
                                       device=self.device,
                                       seed=99,
                                       batch_size=self.batch_size,
-                                      dataset_name='fake_data',
+                                      dataset='fake_data',
                                       log_dir=self.log_dir)
 
         assert type(score) == float
