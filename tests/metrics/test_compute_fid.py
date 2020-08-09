@@ -69,7 +69,7 @@ class TestComputeFID:
             os.makedirs(self.log_dir)
 
     def _create_cached_file(self):
-        m, s = np.ones((128,)), np.ones((128, 128))
+        m, s = np.ones((128, )), np.ones((128, 128))
         cached_file = os.path.join(self.log_dir, 'cached.npz')
         np.savez(cached_file, mu=m, sigma=s)
 
@@ -191,18 +191,17 @@ class TestComputeFID:
                                       log_dir=self.log_dir)
         assert type(score) == float
 
-        custom_score = compute_fid.fid_score(num_real_samples=self.num_real_samples,
-                                             num_fake_samples=self.num_fake_samples,
-                                             netG=self.netG,
-                                             device=None,
-                                             seed=99,
-                                             batch_size=self.batch_size,
-                                             dataset=custom_dataset,
-                                             stats_file=os.path.join(self.log_dir, 'stats_file'),
-                                             log_dir=self.log_dir)
+        custom_score = compute_fid.fid_score(
+            num_real_samples=self.num_real_samples,
+            num_fake_samples=self.num_fake_samples,
+            netG=self.netG,
+            device=None,
+            seed=99,
+            batch_size=self.batch_size,
+            dataset=custom_dataset,
+            stats_file=os.path.join(self.log_dir, 'stats_file'),
+            log_dir=self.log_dir)
         assert type(custom_score) == float
-
-        
 
     def teardown(self):
         if os.path.exists(self.log_dir):

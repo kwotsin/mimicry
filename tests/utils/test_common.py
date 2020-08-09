@@ -28,7 +28,7 @@ class TestCommon:
         image, label = common.load_images(n=1)
 
         image = torch.squeeze(image, dim=0)
-        output_file = os.path.join(self.log_dir, 'test_img.png')
+        output_file = os.path.join(self.log_dir, 'images', 'test_img.png')
         common.save_tensor_image(image, output_file=output_file)
 
         check = np.array(Image.open(output_file))

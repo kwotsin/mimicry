@@ -23,9 +23,9 @@ class TestSAGAN32:
         self.ndf = 64
 
         self.netG = SAGANGenerator32(num_classes=self.num_classes,
-                                      ngf=self.ngf)
+                                     ngf=self.ngf)
         self.netD = SAGANDiscriminator32(num_classes=self.num_classes,
-                                          ndf=self.ndf)
+                                         ndf=self.ndf)
 
     def test_SAGANGenerator32(self):
         images = self.netG(self.noise, self.Y)

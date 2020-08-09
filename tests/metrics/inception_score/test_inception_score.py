@@ -14,7 +14,8 @@ class TestInceptionScore:
         preds = inception_score_utils.get_predictions(images)
         assert preds.shape == (4, 1008)
 
-        preds = inception_score_utils.get_predictions(images, device=torch.device('cpu'))
+        preds = inception_score_utils.get_predictions(
+            images, device=torch.device('cpu'))
         assert preds.shape == (4, 1008)
 
     def test_get_inception_score(self):

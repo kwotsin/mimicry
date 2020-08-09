@@ -154,7 +154,6 @@ class TestComputeKID:
                                   dataset=None,
                                   log_dir=self.log_dir)
 
-
         # Test outputs
         score, var = compute_kid.kid_score(num_samples=self.num_samples,
                                            netG=self.netG,

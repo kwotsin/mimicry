@@ -53,8 +53,8 @@ class TestMetrics:
                                   global_step=self.evaluate_step,
                                   optimizer=None)
 
-    # @pytest.mark.skipif(True, reason='Docker OOM.'
-    #                     )  # TODO: Restore when CI plan is good.
+    @pytest.mark.skipif(True, reason='Docker OOM.'
+                        )  # TODO: Restore when CI plan is good.
     def test_evaluate_fid(self):
         kwargs = {
             'metric': 'fid',
@@ -72,8 +72,8 @@ class TestMetrics:
         assert type(scores) == list
         assert all(map(lambda x: type(x) == float, scores))
 
-    # @pytest.mark.skipif(True, reason='Docker OOM.'
-    #                     )  # TODO: Restore when CI plan is good.
+    @pytest.mark.skipif(True, reason='Docker OOM.'
+                        )  # TODO: Restore when CI plan is good.
     def test_evaluate_kid(self):
         kwargs = {
             'metric': 'kid',
@@ -91,8 +91,8 @@ class TestMetrics:
         assert type(scores) == list
         assert all(map(lambda x: type(x) == float, scores))
 
-    # @pytest.mark.skipif(True, reason='Docker OOM.'
-    #                     )  # TODO: Restore when CI plan is good.
+    @pytest.mark.skipif(True, reason='Docker OOM.'
+                        )  # TODO: Restore when CI plan is good.
     def test_evaluate_is(self):
         kwargs = {
             'metric': 'inception_score',
@@ -162,7 +162,6 @@ class TestMetrics:
                                      dataset=self.dataset,
                                      evaluate_step=self.evaluate_step,
                                      device=self.device)
-
 
     def test_wrong_metric(self):
         with pytest.raises(ValueError):
