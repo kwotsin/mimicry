@@ -38,7 +38,7 @@ class TestMetrics:
         self.device = torch.device('cpu')
         self.start_seed = 0
         self.evaluate_step = 100000
-        self.dataset_name = 'fake_data'
+        self.dataset = 'fake_data'
 
         # Test directory
         self.log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)),
@@ -60,7 +60,7 @@ class TestMetrics:
             'metric': 'fid',
             'log_dir': self.log_dir,
             'netG': self.netG,
-            'dataset_name': self.dataset_name,
+            'dataset': self.dataset,
             'num_real_samples': 10,
             'num_fake_samples': 10,
             'evaluate_step': self.evaluate_step,
@@ -80,11 +80,11 @@ class TestMetrics:
             'log_dir': self.log_dir,
             'evaluate_step': self.evaluate_step,
             'num_subsets': 10,
-            'subset_size': 10,
+            'num_samples': 100,
             'netG': self.netG,
             'device': self.device,
             'start_seed': self.start_seed,
-            'dataset_name': self.dataset_name
+            'dataset': self.dataset
         }
 
         scores = compute_metrics.evaluate(**kwargs)[self.evaluate_step]
@@ -115,16 +115,60 @@ class TestMetrics:
                 compute_metrics.evaluate(metric=metric,
                                          log_dir=self.log_dir,
                                          netG=self.netG,
-                                         dataset_name=self.dataset_name,
+                                         dataset=self.dataset,
                                          evaluate_step=self.evaluate_step,
                                          device=self.device)
+
+        # Both evaluate step and evaluate range defined
+        with pytest.raises(ValueError):
+            compute_metrics.evaluate(metric=metric,
+                                     log_dir=self.log_dir,
+                                     netG=self.netG,
+                                     dataset=self.dataset,
+                                     evaluate_range=(1000, 100000, 1000),
+                                     evaluate_step=self.evaluate_step,
+                                     device=self.device)
+
+        # Faulty evaluate range
+        with pytest.raises(ValueError):
+            compute_metrics.evaluate(metric=metric,
+                                     log_dir=self.log_dir,
+                                     netG=self.netG,
+                                     dataset=self.dataset,
+                                     evaluate_range=(1000),
+                                     device=self.device)
+
+        with pytest.raises(ValueError):
+            compute_metrics.evaluate(metric=metric,
+                                     log_dir=self.log_dir,
+                                     netG=self.netG,
+                                     dataset=self.dataset,
+                                     evaluate_range=('a', 'b', 'c'),
+                                     device=self.device)
+
+        with pytest.raises(ValueError):
+            compute_metrics.evaluate(metric=metric,
+                                     log_dir=self.log_dir,
+                                     netG=self.netG,
+                                     dataset=self.dataset,
+                                     evaluate_range=None,
+                                     device=self.device)
+
+        # Invalid ckpt dir
+        with pytest.raises(ValueError):
+            compute_metrics.evaluate(metric=metric,
+                                     log_dir='does_not_exist',
+                                     netG=self.netG,
+                                     dataset=self.dataset,
+                                     evaluate_step=self.evaluate_step,
+                                     device=self.device)
 
     def test_wrong_metric(self):
         with pytest.raises(ValueError):
             compute_metrics.evaluate(metric='wrong_metric',
                                      log_dir=self.log_dir,
                                      netG=self.netG,
-                                     dataset_name=self.dataset_name,
+                                     dataset=self.dataset,
                                      evaluate_step=self.evaluate_step,
                                      device=self.device)
 

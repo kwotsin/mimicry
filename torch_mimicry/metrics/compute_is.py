@@ -39,9 +39,9 @@ def _normalize_images(images):
     return images
 
 
-def inception_score(netG,
-                    device,
-                    num_samples,
+def inception_score(num_samples,
+                    netG,
+                    device=None,
                     batch_size=50,
                     splits=10,
                     log_dir='./log',
@@ -52,7 +52,7 @@ def inception_score(netG,
 
     Args:
         netG (Module): The generator model to use for generating images.
-        device (Device): Torch device object to send model and data to.
+        device (str/torch.device): Device identifier to use for computation.
         num_samples (int): The number of samples to generate.
         batch_size (int): Batch size per feedforward step for inception model.
         splits (int): The number of splits to use for computing IS.
@@ -62,6 +62,11 @@ def inception_score(netG,
         Mean and standard deviation of the inception score computed from using
         num_samples generated images.
     """
+    start_time = time.time()
+
+    if device is None:
+        device = torch.device('cuda:0' if torch.cuda.is_available() else "cpu")
+
     # Make sure the random seeds are fixed
     torch.manual_seed(seed)
     random.seed(seed)
@@ -100,6 +105,12 @@ def inception_score(netG,
 
     images = np.concatenate(images, axis=0)
 
-    return tf_inception_score.get_inception_score(images,
-                                                  splits=splits,
-                                                  device=device)
+    is_mean, is_std = tf_inception_score.get_inception_score(images,
+                                                             splits=splits,
+                                                             device=device)
+
+    print("INFO: Inception Score: {:.4f} ± {:.4f} [Time Taken: {:.4f} secs]".
+          format(is_mean, is_std,
+                 time.time() - start_time))
+
+    return is_mean, is_std

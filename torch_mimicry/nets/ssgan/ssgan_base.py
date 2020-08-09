@@ -118,7 +118,7 @@ class SSGANBaseDiscriminator(gan.BaseDiscriminator):
             return image
 
         else:
-            raise NotImplementedError(
+            raise ValueError(
                 "Function only supports 90,180,270,0 degree rotation.")
 
     def _rotate_batch(self, images):

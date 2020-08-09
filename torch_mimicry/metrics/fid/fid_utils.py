@@ -1,6 +1,6 @@
 """
 Helper functions for calculating FID as adopted from the official FID code:
-https://github.com/kwotsin/dissertation/blob/master/eval/TTUR/fid.py
+https://github.com/bioinf-jku/TTUR/blob/master/fid.py
 """
 import numpy as np
 from scipy import linalg

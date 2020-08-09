@@ -1,3 +1,4 @@
+import pytest
 import torch
 import torch.nn as nn
 
@@ -63,6 +64,15 @@ class TestBaseGAN:
 
             assert type(errG.item()) == float
             assert type(errD.item()) == float
+
+        with pytest.raises(ValueError):
+            self.netG.loss_type = 'invalid'
+            self.netG.compute_gan_loss(output=self.output_fake)
+
+        with pytest.raises(ValueError):
+            self.netD.loss_type = 'invalid'
+            self.netD.compute_gan_loss(output_real=self.output_real,
+                                       output_fake=self.output_fake)
 
     def teardown(self):
         del self.netG

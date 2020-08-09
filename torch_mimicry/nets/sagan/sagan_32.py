@@ -116,7 +116,7 @@ class SAGANDiscriminator32(sagan_base.SAGANBaseDiscriminator):
                                embedding_dim=self.ndf)
 
         # SA block
-        self.attn_block = SelfAttention(self.ndf, spectral_norm=True)        
+        self.attn_block = SelfAttention(self.ndf, spectral_norm=True)
 
         # Initialise the weights
         nn.init.xavier_uniform_(self.l5.weight.data, 1.0)

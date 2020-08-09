@@ -20,17 +20,17 @@ class SelfAttention(nn.Module):
 
         if self.spectral_norm:
             self.theta = SNConv2d(self.num_feat,
-                              self.num_feat >> 3,
-                              1,
-                              1,
-                              padding=0,
-                              bias=False)
+                                  self.num_feat >> 3,
+                                  1,
+                                  1,
+                                  padding=0,
+                                  bias=False)
             self.phi = SNConv2d(self.num_feat,
-                              self.num_feat >> 3,
-                              1,
-                              1,
-                              padding=0,
-                              bias=False)
+                                self.num_feat >> 3,
+                                1,
+                                1,
+                                padding=0,
+                                bias=False)
             self.g = SNConv2d(self.num_feat,
                               self.num_feat >> 1,
                               1,
@@ -46,17 +46,17 @@ class SelfAttention(nn.Module):
 
         else:
             self.theta = nn.Conv2d(self.num_feat,
-                               self.num_feat >> 3,
-                               1,
-                               1,
-                               padding=0,
-                               bias=False)
+                                   self.num_feat >> 3,
+                                   1,
+                                   1,
+                                   padding=0,
+                                   bias=False)
             self.phi = nn.Conv2d(self.num_feat,
-                               self.num_feat >> 3,
-                               1,
-                               1,
-                               padding=0,
-                               bias=False)
+                                 self.num_feat >> 3,
+                                 1,
+                                 1,
+                                 padding=0,
+                                 bias=False)
             self.g = nn.Conv2d(self.num_feat,
                                self.num_feat >> 1,
                                1,
@@ -93,26 +93,26 @@ class SelfAttention(nn.Module):
 
         # Theta path
         theta = self.theta(x)
-        theta = theta.view(N, C >> 3, location_num) # (N, C>>3, H*W)
+        theta = theta.view(N, C >> 3, location_num)  # (N, C>>3, H*W)
 
         # Phi path
         phi = self.phi(x)
         phi = F.max_pool2d(phi, [2, 2], stride=2)
-        phi = phi.view(N, C >> 3, downsampled_num) # (N, C>>3, H*W>>2)
+        phi = phi.view(N, C >> 3, downsampled_num)  # (N, C>>3, H*W>>2)
 
         # Attention map
         attn = torch.bmm(theta.transpose(1, 2), phi)
-        attn = F.softmax(attn, -1) # (N, H*W, H*W>>2)
+        attn = F.softmax(attn, -1)  # (N, H*W, H*W>>2)
         # print(torch.sum(attn, axis=2)) # (N, H*W)
 
         # Conv value
         g = self.g(x)
         g = F.max_pool2d(g, [2, 2], stride=2)
-        g = g.view(N, C >> 1, downsampled_num) # (N, C>>1, H*W>>2)
+        g = g.view(N, C >> 1, downsampled_num)  # (N, C>>1, H*W>>2)
 
         # Apply attention
-        attn_g = torch.bmm(g, attn.transpose(1, 2)) # (N, C>>1, H*W)
-        attn_g = attn_g.view(N, C >> 1, H, W) # (N, C>>1, H, W)
+        attn_g = torch.bmm(g, attn.transpose(1, 2))  # (N, C>>1, H*W)
+        attn_g = attn_g.view(N, C >> 1, H, W)  # (N, C>>1, H, W)
 
         # Project back feature size
         attn_g = self.o(attn_g)
@@ -123,33 +123,33 @@ class SelfAttention(nn.Module):
         return output
 
 
-def SNConv2d(*args, **kwargs):
+def SNConv2d(*args, default=True, **kwargs):
     r"""
     Wrapper for applying spectral norm on conv2d layer.
     """
-    if kwargs.get('default', True):
+    if default:
         return nn.utils.spectral_norm(nn.Conv2d(*args, **kwargs))
 
     else:
         return spectral_norm.SNConv2d(*args, **kwargs)
 
 
-def SNLinear(*args, **kwargs):
+def SNLinear(*args, default=True, **kwargs):
     r"""
     Wrapper for applying spectral norm on linear layer.
     """
-    if kwargs.get('default', True):
+    if default:
         return nn.utils.spectral_norm(nn.Linear(*args, **kwargs))
 
     else:
         return spectral_norm.SNLinear(*args, **kwargs)
 
 
-def SNEmbedding(*args, **kwargs):
+def SNEmbedding(*args, default=True, **kwargs):
     r"""
     Wrapper for applying spectral norm on embedding layer.
     """
-    if kwargs.get('default', True):
+    if default:
         return nn.utils.spectral_norm(nn.Embedding(*args, **kwargs))
 
     else:

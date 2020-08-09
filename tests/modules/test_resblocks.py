@@ -38,8 +38,15 @@ class TestResBlocks:
                                          num_classes=num_classes,
                                          spectral_norm=spectral_norm)
 
+            gen_block_no_sc = resblocks.GBlock(in_channels=in_channels,
+                                               out_channels=in_channels,
+                                               upsample=False,
+                                               num_classes=num_classes,
+                                               spectral_norm=spectral_norm)
+
             assert gen_block_up(self.images, y).shape == (4, 8, 32, 32)
             assert gen_block(self.images, y).shape == (4, 8, 16, 16)
+            assert gen_block_no_sc(self.images, y).shape == (4, 3, 16, 16)
 
     def test_DBlocks(self):
         in_channels = 3

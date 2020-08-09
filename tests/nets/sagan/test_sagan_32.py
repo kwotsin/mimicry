@@ -23,18 +23,19 @@ class TestSAGAN32:
         self.ndf = 64
 
         self.netG = SAGANGenerator32(num_classes=self.num_classes,
-                                      ngf=self.ngf)
+                                     ngf=self.ngf)
         self.netD = SAGANDiscriminator32(num_classes=self.num_classes,
-                                          ndf=self.ndf)
+                                         ndf=self.ndf)
 
     def test_SAGANGenerator32(self):
         images = self.netG(self.noise, self.Y)
+        assert images.shape == (self.N, self.C, self.H, self.W)
 
+        images = self.netG(self.noise, None)
         assert images.shape == (self.N, self.C, self.H, self.W)
 
     def test_SAGANDiscriminator32(self):
         output = self.netD(self.images, self.Y)
-
         assert output.shape == (self.N, 1)
 
     def test_train_steps(self):

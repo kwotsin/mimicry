@@ -1,3 +1,4 @@
+import pytest
 import numpy as np
 import tensorflow as tf
 
@@ -30,6 +31,14 @@ class TestFID:
                                                      sigma2=sigma2)
 
         assert type(score) == np.float64
+
+        # Inputs check
+        bad_mu2, bad_sigma2 = np.ones((15, 15)), np.ones((15, 15))
+        with pytest.raises(ValueError):
+            fid_utils.calculate_frechet_distance(mu1=mu1,
+                                                 mu2=bad_mu2,
+                                                 sigma1=sigma1,
+                                                 sigma2=bad_sigma2)
 
     def teardown(self):
         del self.images

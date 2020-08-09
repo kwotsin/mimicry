@@ -16,8 +16,8 @@ from torch_mimicry.metrics.inception_model import inception_utils
 
 def compute_real_dist_stats(num_samples,
                             sess,
-                            dataset_name,
                             batch_size,
+                            dataset=None,
                             stats_file=None,
                             seed=0,
                             verbose=True,
@@ -29,7 +29,7 @@ def compute_real_dist_stats(num_samples,
     Args:
         num_samples (int): Number of real images to compute statistics.
         sess (Session): TensorFlow session to use.
-        dataset_name (str): The name of the dataset to load.
+        dataset (str/Dataset): Dataset to load.
         batch_size (int): The batch size to feedforward for inference.
         stats_file (str): The statistics file to load from if there is already one.
         verbose (bool): If True, prints progress of computation.
@@ -47,8 +47,8 @@ def compute_real_dist_stats(num_samples,
 
         stats_file = os.path.join(
             stats_dir,
-            "fid_stats_{}_{}k_run_{}.npz".format(dataset_name,
-                                                 num_samples // 1000, seed))
+            "fid_stats_{}_{}k_run_{}.npz".format(dataset, num_samples // 1000,
+                                                 seed))
 
     if stats_file and os.path.exists(stats_file):
         print("INFO: Loading existing statistics for real images...")
@@ -59,7 +59,7 @@ def compute_real_dist_stats(num_samples,
     else:
         # Obtain the numpy format data
         print("INFO: Obtaining images...")
-        images = get_dataset_images(dataset_name, num_samples=num_samples)
+        images = get_dataset_images(dataset, num_samples=num_samples)
 
         # Compute the mean and cov
         print("INFO: Computing statistics for real images...")
@@ -167,9 +167,9 @@ def compute_gen_dist_stats(netG,
 def fid_score(num_real_samples,
               num_fake_samples,
               netG,
-              device,
-              seed,
-              dataset_name,
+              dataset,
+              seed=0,
+              device=None,
               batch_size=50,
               verbose=True,
               stats_file=None,
@@ -183,9 +183,9 @@ def fid_score(num_real_samples,
         num_real_samples (int): The number of real images to use for FID.
         num_fake_samples (int): The number of fake images to use for FID.
         netG (Module): Torch Module object representing the generator model.
-        device (str): Device identifier to use for computation.
+        device (str/torch.device): Device identifier to use for computation.
         seed (int): The random seed to use.
-        dataset_name (str): The name of the dataset to load.
+        dataset (str/Dataset): The name of the dataset to load if known, or a custom Dataset object
         batch_size (int): The batch size to feedforward for inference.
         verbose (bool): If True, prints progress.
         stats_file (str): The statistics file to load from if there is already one.
@@ -195,6 +195,38 @@ def fid_score(num_real_samples,
         float: Scalar FID score.
     """
     start_time = time.time()
+
+    # Check inputs
+    if device is None:
+        device = torch.device('cuda:0' if torch.cuda.is_available() else "cpu")
+
+    if isinstance(dataset, str):
+        default_datasets = {
+            'cifar10',
+            'cifar100',
+            'stl10_48',
+            'imagenet_32',
+            'imagenet_128',
+            'celeba_64',
+            'celeba_128',
+            'lsun_bedroom',
+            'fake_data',
+        }
+        if dataset not in default_datasets:
+            raise ValueError('For default datasets, must be one of {}'.format(
+                default_datasets))
+
+    elif issubclass(type(dataset), torch.utils.data.Dataset):
+        if stats_file is None:
+            raise ValueError(
+                "stats_file cannot be empty if using a custom dataset.")
+
+        if not stats_file.endswith('.npz'):
+            stats_file = stats_file + '.npz'
+
+    else:
+        raise ValueError(
+            'dataset must be either a Dataset object or a string.')
 
     # Make sure the random seeds are fixed
     torch.manual_seed(seed)
@@ -208,22 +240,26 @@ def fid_score(num_real_samples,
     inception_utils.create_inception_graph(inception_path)
 
     # Start producing statistics for real and fake images
-    if device and device.index is not None:
-        # Avoid unbounded memory usage
-        gpu_options = tf.GPUOptions(allow_growth=True,
-                                    per_process_gpu_memory_fraction=0.15,
-                                    visible_device_list=str(device.index))
-        config = tf.compat.v1.ConfigProto(gpu_options=gpu_options)
+    # if device and device.index is not None:
+    #     # Avoid unbounded memory usage
+    #     gpu_options = tf.compat.v1.GPUOptions(allow_growth=True,
+    #                                 per_process_gpu_memory_fraction=0.15,
+    #                                 visible_device_list=str(device.index))
+    #     config = tf.compat.v1.ConfigProto(gpu_options=gpu_options)
 
-    else:
-        config = tf.compat.v1.ConfigProto(device_count={'GPU': 0})
+    # else:
+    #     config = tf.compat.v1.ConfigProto(device_count={'GPU': 0})
+
+    config = tf.compat.v1.ConfigProto()
+    config.gpu_options.per_process_gpu_memory_fraction = 0.2
+    config.gpu_options.allow_growth = True
 
     with tf.compat.v1.Session(config=config) as sess:
         sess.run(tf.compat.v1.global_variables_initializer())
 
         m_real, s_real = compute_real_dist_stats(num_samples=num_real_samples,
                                                  sess=sess,
-                                                 dataset_name=dataset_name,
+                                                 dataset=dataset,
                                                  batch_size=batch_size,
                                                  verbose=verbose,
                                                  stats_file=stats_file,
@@ -243,7 +279,7 @@ def fid_score(num_real_samples,
                                                          mu2=m_fake,
                                                          sigma2=s_fake)
 
-        print("INFO: FID Score: {} [Time Taken: {:.4f} secs]".format(
+        print("INFO: FID: {} [Time Taken: {:.4f} secs]".format(
             FID_score,
             time.time() - start_time))
 

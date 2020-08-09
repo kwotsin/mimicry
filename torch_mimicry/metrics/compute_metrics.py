@@ -39,28 +39,7 @@ def evaluate(metric,
     Returns:
         None
     """
-    if metric == 'kid':
-        if 'num_subsets' not in kwargs or 'subset_size' not in kwargs:
-            raise ValueError(
-                "num_subsets and subset_size must be provided for KID computation."
-            )
-
-    elif metric == 'fid':
-        if 'num_real_samples' not in kwargs or 'num_fake_samples' not in kwargs:
-            raise ValueError(
-                "num_real_samples and num_fake_samples must be provided for FID computation."
-            )
-
-    elif metric == 'inception_score':
-        if 'num_samples' not in kwargs:
-            raise ValueError(
-                "num_samples must be provided for IS computation.")
-
-    else:
-        choices = ['fid', 'kid', 'inception_score']
-        raise ValueError("Invalid metric {} selected. Choose from {}.".format(
-            metric, choices))
-
+    # Check evaluation range/steps
     if evaluate_range and evaluate_step or not (evaluate_step
                                                 or evaluate_range):
         raise ValueError(
@@ -68,19 +47,63 @@ def evaluate(metric,
 
     if evaluate_range:
         if (type(evaluate_range) != tuple
-                or not all(map(lambda x: type(x) == int, evaluate_range))):
+                or not all(map(lambda x: type(x) == int, evaluate_range))
+                or not len(x) == 3):
             raise ValueError(
                 "evaluate_range must be a tuple of ints (start, end, step).")
 
-    ckpt_dir = os.path.join(log_dir, 'checkpoints', 'netG')
+    # Check metric arguments
+    if metric == 'kid':
+        if 'num_samples' not in kwargs:
+            raise ValueError(
+                "num_samples must be provided for KID computation.")
 
+        output_file = os.path.join(
+            log_dir, 'kid_{}k.json'.format(kwargs['num_samples'] // 1000))
+
+    elif metric == 'fid':
+        if 'num_real_samples' not in kwargs or 'num_fake_samples' not in kwargs:
+            raise ValueError(
+                "num_real_samples and num_fake_samples must be provided for FID computation."
+            )
+
+        output_file = os.path.join(
+            log_dir,
+            'fid_{}k_{}k.json'.format(kwargs['num_real_samples'] // 1000,
+                                      kwargs['num_fake_samples'] // 1000))
+
+    elif metric == 'inception_score':
+        if 'num_samples' not in kwargs:
+            raise ValueError(
+                "num_samples must be provided for IS computation.")
+
+        output_file = os.path.join(
+            log_dir,
+            'inception_score_{}k.json'.format(kwargs['num_samples'] // 1000))
+
+    else:
+        choices = ['fid', 'kid', 'inception_score']
+        raise ValueError("Invalid metric {} selected. Choose from {}.".format(
+            metric, choices))
+
+    # Check checkpoint dir
+    ckpt_dir = os.path.join(log_dir, 'checkpoints', 'netG')
     if not os.path.exists(ckpt_dir):
         raise ValueError(
             "Checkpoint directory {} cannot be found in log_dir.".format(
                 ckpt_dir))
 
+    # Check device
     if device is None:
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
+    # Setup output file
+    if os.path.exists(output_file):
+        scores_dict = common.load_from_json(output_file)
+        scores_dict = dict([(int(k), v) for k, v in scores_dict.items()])
+
+    else:
+        scores_dict = {}
 
     # Decide naming convention
     names_dict = {
@@ -89,30 +112,29 @@ def evaluate(metric,
         'kid': 'KID',
     }
 
-    # Set output file and restore if available.
-    if metric == 'fid':
-        output_file = os.path.join(
-            log_dir,
-            'fid_{}k_{}k.json'.format(kwargs['num_real_samples'] // 1000,
-                                      kwargs['num_fake_samples'] // 1000))
+    # # Set output file and restore if available.
+    # if metric == 'fid':
+    #     output_file = os.path.join(
+    #         log_dir,
+    #         'fid_{}k_{}k.json'.format(kwargs['num_real_samples'] // 1000,
+    #                                   kwargs['num_fake_samples'] // 1000))
 
-    elif metric == 'inception_score':
-        output_file = os.path.join(
-            log_dir,
-            'inception_score_{}k.json'.format(kwargs['num_samples'] // 1000))
+    # elif metric == 'inception_score':
+    #     output_file = os.path.join(
+    #         log_dir,
+    #         'inception_score_{}k.json'.format(kwargs['num_samples'] // 1000))
 
-    elif metric == 'kid':
-        output_file = os.path.join(
-            log_dir, 'kid_{}k_{}_subsets.json'.format(
-                kwargs['num_subsets'] * kwargs['subset_size'] // 1000,
-                kwargs['num_subsets']))
+    # elif metric == 'kid':
+    #     output_file = os.path.join(
+    #         log_dir, 'kid_{}k.json'.format(
+    #             kwargs['num_samples'] // 1000))
 
-    if os.path.exists(output_file):
-        scores_dict = common.load_from_json(output_file)
-        scores_dict = dict([(int(k), v) for k, v in scores_dict.items()])
+    # if os.path.exists(output_file):
+    #     scores_dict = common.load_from_json(output_file)
+    #     scores_dict = dict([(int(k), v) for k, v in scores_dict.items()])
 
-    else:
-        scores_dict = {}
+    # else:
+    #     scores_dict = {}
 
     # Evaluate across a range
     start, end, interval = evaluate_range or (evaluate_step, evaluate_step,
@@ -164,6 +186,10 @@ def evaluate(metric,
                 names_dict[metric], step, seed, score))
 
         scores_dict[step] = scores
+
+        # Save scores every step
+        if write_to_json:
+            common.write_to_json(scores_dict, output_file)
 
     # Print the scores in order
     for step in range(start, end + 1, interval):

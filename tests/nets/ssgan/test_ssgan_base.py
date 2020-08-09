@@ -1,7 +1,7 @@
 """
 Test for SSGAN specific functions at the discriminator.
 """
-
+import pytest
 import torch
 
 from torch_mimicry.nets.ssgan.ssgan_base import SSGANBaseDiscriminator
@@ -47,6 +47,9 @@ class TestSSGANBase:
                 check[i] = self.netD._rot_tensor(check[i], degrees[labels[i]])
 
         assert torch.sum((images - check)**2) < 1e-5
+
+        with pytest.raises(ValueError):
+            self.netD._rot_tensor(check[i], 9999)
 
     def teardown(self):
         del self.netD

@@ -23,14 +23,42 @@ class TestLayers:
         output = bn(X, y)
         output = conv(output)
 
-        assert output.shape == (self.N, 8, self.H, self.W)
+        assert output.shape == (self.N, self.n_out, self.H, self.W)
 
     def test_SelfAttention(self):
         ngf = 16
         X = torch.randn(self.N, ngf, 16, 16)
-        sa_layer = layers.SelfAttention(ngf)
+        for spectral_norm in [True, False]:
+            sa_layer = layers.SelfAttention(ngf, spectral_norm=spectral_norm)
 
-        assert sa_layer(X).shape == (self.N, ngf, 16, 16)
+            assert sa_layer(X).shape == (self.N, ngf, 16, 16)
+
+    def test_SNConv2d(self):
+        X = torch.ones(self.N, self.C, self.H, self.W)
+        for default in [True, False]:
+            layer = layers.SNConv2d(self.C,
+                                    self.n_out,
+                                    1,
+                                    1,
+                                    0,
+                                    default=default)
+
+            assert layer(X).shape == (self.N, self.n_out, self.H, self.W)
+
+    def test_SNLinear(self):
+        X = torch.ones(self.N, self.C)
+        for default in [True, False]:
+            layer = layers.SNLinear(self.C, self.n_out, default=default)
+
+            assert layer(X).shape == (self.N, self.n_out)
+
+    def test_SNEmbedding(self):
+        num_classes = 10
+        X = torch.ones(self.N, num_classes)
+        for default in [True, False]:
+            layer = layers.SNLinear(num_classes, self.n_out, default=default)
+
+            assert layer(X).shape == (self.N, self.n_out)
 
 
 if __name__ == "__main__":
@@ -38,3 +66,6 @@ if __name__ == "__main__":
     test.setup()
     test.test_ConditionalBatchNorm2d()
     test.test_SelfAttention()
+    test.test_SNConv2d()
+    test.test_SNLinear()
+    test.test_SNEmbedding()

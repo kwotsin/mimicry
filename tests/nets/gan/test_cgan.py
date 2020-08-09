@@ -1,3 +1,4 @@
+import pytest
 import torch
 import torch.nn as nn
 
@@ -46,14 +47,29 @@ class TestBaseGAN:
         self.output_real = torch.ones(self.N, 1)
 
     def test_generate_images(self):
-        images = self.netG.generate_images(10)
+        with pytest.raises(ValueError):
+            images = self.netG.generate_images(10, c=self.num_classes + 1)
 
+        images = self.netG.generate_images(10)
+        assert images.shape == (10, 3, 32, 32)
+        assert images.device == self.netG.device
+
+        images = self.netG.generate_images(10, c=0)
         assert images.shape == (10, 3, 32, 32)
         assert images.device == self.netG.device
 
     def test_generate_images_with_labels(self):
-        images, labels = self.netG.generate_images_with_labels(10)
+        with pytest.raises(ValueError):
+            images, labels = self.netG.generate_images_with_labels(
+                10, c=self.num_classes + 1)
 
+        images, labels = self.netG.generate_images_with_labels(10)
+        assert images.shape == (10, 3, 32, 32)
+        assert images.device == self.netG.device
+        assert labels.shape == (10, )
+        assert labels.device == self.netG.device
+
+        images, labels = self.netG.generate_images_with_labels(10, c=0)
         assert images.shape == (10, 3, 32, 32)
         assert images.device == self.netG.device
         assert labels.shape == (10, )
