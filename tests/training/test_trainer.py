@@ -141,6 +141,22 @@ class TestTrainer:
         assert extra_trainer.device == torch.device(
             'cuda:0' if torch.cuda.is_available() else "cpu")
 
+        with pytest.raises(ValueError):
+            bad_trainer = Trainer(netD=self.netD,
+                              netG=self.netG,
+                              optD=self.optD,
+                              optG=self.optG,
+                              netG_ckpt_file=netG_ckpt_file,
+                              netD_ckpt_file=netD_ckpt_file,
+                              log_dir=os.path.join(self.log_dir, 'extra'),
+                              dataloader=self.dataloader,
+                              num_steps=-1000,
+                              device=device,
+                              save_steps=float('inf'),
+                              log_steps=float('inf'),
+                              vis_steps=float('inf'),
+                              lr_decay='linear')
+
     def test_get_latest_checkpoint(self):
         ckpt_files = [
             'netG_1000_steps.pth', 'netG_10000_steps.pth', 'netG_*.pth',
