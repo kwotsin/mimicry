@@ -55,6 +55,7 @@ def load_dataset(root, name, **kwargs):
 def load_fake_dataset(root,
                       transform_data=True,
                       convert_tensor=True,
+                      image_size=(3, 32, 32),
                       **kwargs):
     """
     Loads fake dataset for testing.
@@ -85,7 +86,7 @@ def load_fake_dataset(root,
     else:
         transform = None
 
-    dataset = torchvision.datasets.FakeData(transform=transform, **kwargs)
+    dataset = torchvision.datasets.FakeData(transform=transform, image_size=image_size, **kwargs)
 
     return dataset
 

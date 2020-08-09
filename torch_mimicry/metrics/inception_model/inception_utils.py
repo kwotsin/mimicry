@@ -26,8 +26,6 @@ def _check_or_download_inception(inception_path):
     """
     # Build file path of model
     inception_url = 'http://download.tensorflow.org/models/image/imagenet/inception-2015-12-05.tgz'
-    if inception_path is None:
-        inception_path = '/tmp'
     inception_path = pathlib.Path(inception_path)
     model_file = inception_path / 'classify_image_graph_def.pb'
 
@@ -134,6 +132,9 @@ def create_inception_graph(inception_path):
     Returns:
         None
     """
+    if inception_path is None:
+        inception_path = '/tmp'
+
     if not os.path.exists(inception_path):
         os.makedirs(inception_path)
 

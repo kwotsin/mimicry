@@ -23,15 +23,19 @@ def get_predictions(images, device=None, batch_size=50, print_every=20):
     Returns:
         ndarray: Batch of probabilities of equal size as number of images input.
     """
-    if device and device.index is not None:
-        # Avoid unbounded memory usage
-        gpu_options = tf.GPUOptions(allow_growth=True,
-                                    per_process_gpu_memory_fraction=0.15,
-                                    visible_device_list=str(device.index))
-        config = tf.compat.v1.ConfigProto(gpu_options=gpu_options)
+    # if device and device.index is not None:
+    #     # Avoid unbounded memory usage
+    #     gpu_options = tf.compat.v1.GPUOptions(allow_growth=True,
+    #                                 per_process_gpu_memory_fraction=0.15,
+    #                                 visible_device_list=str(device.index))
+    #     config = tf.compat.v1.ConfigProto(gpu_options=gpu_options)
 
-    else:
-        config = tf.compat.v1.ConfigProto(device_count={'GPU': 0})
+    # else:
+    #     config = tf.compat.v1.ConfigProto(device_count={'GPU': 0})
+
+    config = tf.compat.v1.ConfigProto()
+    config.gpu_options.per_process_gpu_memory_fraction = 0.2
+    config.gpu_options.allow_growth = True
 
     # Inference variables
     batch_size = min(batch_size, images.shape[0])

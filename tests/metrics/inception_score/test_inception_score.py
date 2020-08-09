@@ -1,4 +1,6 @@
+import pytest
 import numpy as np
+import torch
 
 from torch_mimicry.metrics.inception_model import inception_utils
 from torch_mimicry.metrics.inception_score import inception_score_utils
@@ -10,7 +12,9 @@ class TestInceptionScore:
 
         images = np.ones((4, 32, 32, 3))
         preds = inception_score_utils.get_predictions(images)
+        assert preds.shape == (4, 1008)
 
+        preds = inception_score_utils.get_predictions(images, device=torch.device('cpu'))
         assert preds.shape == (4, 1008)
 
     def test_get_inception_score(self):
@@ -19,6 +23,10 @@ class TestInceptionScore:
 
         assert type(mean) == float
         assert type(std) == float
+
+        with pytest.raises(ValueError):
+            images *= -1
+            inception_score_utils.get_inception_score(images)
 
 
 if __name__ == "__main__":
