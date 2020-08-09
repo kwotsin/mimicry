@@ -1,9 +1,8 @@
 """
 Test for SSGAN specific functions at the discriminator.
 """
-
+import pytest
 import math
-
 import torch
 
 from torch_mimicry.nets.infomax_gan.infomax_gan_base import BaseDiscriminator
@@ -36,6 +35,13 @@ class TestInfoMaxGANBase:
         # 1/4 probability
         assert abs(prob - 0.25) < 1e-2
 
+    def test_compute_infomax_loss(self):
+        with pytest.raises(ValueError):
+            local_feat = torch.ones(self.N, self.ndf, 4, 4)
+            global_feat = torch.ones(self.N, self.nrkhs)
+            scale = 0.2
+            self.netD.compute_infomax_loss(local_feat, global_feat, scale)
+
     def teardown(self):
         del self.netD
 
@@ -44,4 +50,5 @@ if __name__ == "__main__":
     test = TestInfoMaxGANBase()
     test.setup()
     test.test_infonce_loss()
+    test.test_compute_infomax_loss()
     test.teardown()

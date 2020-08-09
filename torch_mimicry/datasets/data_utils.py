@@ -86,7 +86,9 @@ def load_fake_dataset(root,
     else:
         transform = None
 
-    dataset = torchvision.datasets.FakeData(transform=transform, image_size=image_size, **kwargs)
+    dataset = torchvision.datasets.FakeData(transform=transform,
+                                            image_size=image_size,
+                                            **kwargs)
 
     return dataset
 

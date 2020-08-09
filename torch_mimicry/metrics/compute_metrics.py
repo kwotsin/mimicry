@@ -56,12 +56,10 @@ def evaluate(metric,
     if metric == 'kid':
         if 'num_samples' not in kwargs:
             raise ValueError(
-                "num_samples must be provided for KID computation."
-            )
+                "num_samples must be provided for KID computation.")
 
         output_file = os.path.join(
-            log_dir, 'kid_{}k.json'.format(
-                kwargs['num_samples'] // 1000))
+            log_dir, 'kid_{}k.json'.format(kwargs['num_samples'] // 1000))
 
     elif metric == 'fid':
         if 'num_real_samples' not in kwargs or 'num_fake_samples' not in kwargs:

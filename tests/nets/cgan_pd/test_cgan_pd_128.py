@@ -29,7 +29,9 @@ class TestCGANPD128:
 
     def test_CGANPDGenerator128(self):
         images = self.netG(self.noise, self.Y)
+        assert images.shape == (self.N, self.C, self.H, self.W)
 
+        images = self.netG(self.noise, None)
         assert images.shape == (self.N, self.C, self.H, self.W)
 
     def test_CGANPDDiscriminator128(self):

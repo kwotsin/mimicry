@@ -29,12 +29,13 @@ class TestSAGAN32:
 
     def test_SAGANGenerator32(self):
         images = self.netG(self.noise, self.Y)
+        assert images.shape == (self.N, self.C, self.H, self.W)
 
+        images = self.netG(self.noise, None)
         assert images.shape == (self.N, self.C, self.H, self.W)
 
     def test_SAGANDiscriminator32(self):
         output = self.netD(self.images, self.Y)
-
         assert output.shape == (self.N, 1)
 
     def test_train_steps(self):

@@ -36,8 +36,12 @@ class TestLayers:
     def test_SNConv2d(self):
         X = torch.ones(self.N, self.C, self.H, self.W)
         for default in [True, False]:
-            layer = layers.SNConv2d(
-                self.C, self.n_out, 1, 1, 0, default=default)
+            layer = layers.SNConv2d(self.C,
+                                    self.n_out,
+                                    1,
+                                    1,
+                                    0,
+                                    default=default)
 
             assert layer(X).shape == (self.N, self.n_out, self.H, self.W)
 
@@ -55,6 +59,7 @@ class TestLayers:
             layer = layers.SNLinear(num_classes, self.n_out, default=default)
 
             assert layer(X).shape == (self.N, self.n_out)
+
 
 if __name__ == "__main__":
     test = TestLayers()
