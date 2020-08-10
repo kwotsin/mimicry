@@ -87,30 +87,32 @@ class DBlock(resblocks.DBlock):
         self.norm1 = None
         self.norm2 = None
 
-    def residual(self, x):
-        r"""
-        Helper function for feedforwarding through main layers.
-        """
-        if self.norm1 is None:
-            self.norm1 = nn.LayerNorm(
-                [self.in_channels, x.shape[2], x.shape[3]])
+    # TODO: Verify again. Interestingly, LN has no effect on FID. Not using LN
+    # has almost no difference in FID score. 
+    # def residual(self, x):
+    #     r"""
+    #     Helper function for feedforwarding through main layers.
+    #     """
+    #     if self.norm1 is None:
+    #         self.norm1 = nn.LayerNorm(
+    #             [self.in_channels, x.shape[2], x.shape[3]])
 
-        h = x
-        h = self.norm1(h)
-        h = self.activation(h)
-        h = self.c1(h)
+    #     h = x
+    #     h = self.norm1(h)
+    #     h = self.activation(h)
+    #     h = self.c1(h)
 
-        if self.norm2 is None:
-            self.norm2 = nn.LayerNorm(
-                [self.hidden_channels, h.shape[2], h.shape[3]])
+    #     if self.norm2 is None:
+    #         self.norm2 = nn.LayerNorm(
+    #             [self.hidden_channels, h.shape[2], h.shape[3]])
 
-        h = self.norm2(h)
-        h = self.activation(h)
-        h = self.c2(h)
-        if self.downsample:
-            h = F.avg_pool2d(h, 2)
+    #     h = self.norm2(h)
+    #     h = self.activation(h)
+    #     h = self.c2(h)
+    #     if self.downsample:
+    #         h = F.avg_pool2d(h, 2)
 
-        return h
+    #     return h
 
 
 class DBlockOptimized(resblocks.DBlockOptimized):
