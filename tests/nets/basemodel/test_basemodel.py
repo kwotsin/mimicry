@@ -1,5 +1,6 @@
 import os
 import shutil
+import pytest
 
 import torch
 import torch.nn as nn
@@ -47,6 +48,10 @@ class TestBaseModel:
         # Check weights are preserved
         assert all(
             (restored_model.linear.weight == self.model.linear.weight) == 1)
+
+        with pytest.raises(ValueError):
+            restored_model.restore_checkpoint(ckpt_file=None,
+                                              optimizer=self.opt)
 
         # Check optimizers have same state dict
         assert self.opt.state_dict() == restored_opt.state_dict()
