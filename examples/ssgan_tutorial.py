@@ -13,6 +13,7 @@ from torch_mimicry.nets import gan
 from torch_mimicry.modules import SNLinear
 from torch_mimicry.modules import GBlock, DBlock, DBlockOptimized
 
+
 #######################
 #        Models
 #######################
@@ -118,8 +119,6 @@ class SSGANDiscriminator(gan.BaseDiscriminator):
         self.l_y = SNLinear(self.ndf, self.num_classes)
         nn.init.xavier_uniform_(self.l_y.weight.data, 1.0)
 
-        
-
     def forward(self, x):
         """
         Feedforwards a batch of real/fake images and produces a batch of GAN logits,
@@ -140,7 +139,6 @@ class SSGANDiscriminator(gan.BaseDiscriminator):
         output_classes = self.l_y(h)
 
         return output, output_classes
-
 
     def _rot_tensor(self, image, deg):
         """
@@ -216,7 +214,7 @@ class SSGANDiscriminator(gan.BaseDiscriminator):
                    netG,
                    optD,
                    log_data,
-                   device=None,                   
+                   device=None,
                    global_step=None,
                    **kwargs):
         """
@@ -272,8 +270,10 @@ log_dir = './log/ssgan'
 # Data handling objects
 device = torch.device('cuda:0' if torch.cuda.is_available() else "cpu")
 dataset = mmc.datasets.load_dataset(root='./datasets', name='cifar10')
-dataloader = torch.utils.data.DataLoader(
-    dataset, batch_size=64, shuffle=True, num_workers=4)
+dataloader = torch.utils.data.DataLoader(dataset,
+                                         batch_size=64,
+                                         shuffle=True,
+                                         num_workers=4)
 
 # Define models and optimizers
 netG = SSGANGenerator().to(device)
@@ -282,28 +282,26 @@ optD = optim.Adam(netD.parameters(), 2e-4, betas=(0.0, 0.9))
 optG = optim.Adam(netG.parameters(), 2e-4, betas=(0.0, 0.9))
 
 # Start training
-trainer = mmc.training.Trainer(
-    netD=netD,
-    netG=netG,
-    optD=optD,
-    optG=optG,
-    n_dis=2,
-    num_steps=100000,
-    dataloader=dataloader,
-    log_dir=log_dir,
-    device=device)
+trainer = mmc.training.Trainer(netD=netD,
+                               netG=netG,
+                               optD=optD,
+                               optG=optG,
+                               n_dis=2,
+                               num_steps=100000,
+                               dataloader=dataloader,
+                               log_dir=log_dir,
+                               device=device)
 trainer.train()
 
 ##########################
 #       Evaluation
 ##########################
 # Evaluate fid
-mmc.metrics.evaluate(
-    metric='fid',
-    log_dir=log_dir,
-    netG=netG,
-    dataset_name='cifar10',
-    num_real_samples=10000,
-    num_fake_samples=10000,
-    evaluate_step=100000,
-    device=device)
+mmc.metrics.evaluate(metric='fid',
+                     log_dir=log_dir,
+                     netG=netG,
+                     dataset_name='cifar10',
+                     num_real_samples=10000,
+                     num_fake_samples=10000,
+                     evaluate_step=100000,
+                     device=device)
