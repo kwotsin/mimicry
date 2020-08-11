@@ -56,7 +56,9 @@ class TestLayers:
         num_classes = 10
         X = torch.ones(self.N, dtype=torch.int64)
         for default in [True, False]:
-            layer = layers.SNEmbedding(num_classes, self.n_out, default=default)
+            layer = layers.SNEmbedding(num_classes,
+                                       self.n_out,
+                                       default=default)
 
             assert layer(X).shape == (self.N, self.n_out)
 

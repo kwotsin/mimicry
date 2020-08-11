@@ -19,7 +19,13 @@ class LRScheduler:
         lr_D (float): The initial learning rate of optD.
         lr_G (float): The initial learning rate of optG.
     """
-    def __init__(self, lr_decay, optD, optG, num_steps, start_step=0, **kwargs):
+    def __init__(self,
+                 lr_decay,
+                 optD,
+                 optG,
+                 num_steps,
+                 start_step=0,
+                 **kwargs):
         if lr_decay not in [None, 'None', 'linear']:
             raise NotImplementedError(
                 "lr_decay {} is not currently supported.")
@@ -90,12 +96,14 @@ class LRScheduler:
             lr_D = self.linear_decay(optimizer=self.optD,
                                      global_step=global_step,
                                      lr_value_range=(self.lr_D, 0.0),
-                                     lr_step_range=(self.start_step, self.num_steps))
+                                     lr_step_range=(self.start_step,
+                                                    self.num_steps))
 
             lr_G = self.linear_decay(optimizer=self.optG,
                                      global_step=global_step,
                                      lr_value_range=(self.lr_G, 0.0),
-                                     lr_step_range=(self.start_step, self.num_steps))
+                                     lr_step_range=(self.start_step,
+                                                    self.num_steps))
 
         elif self.lr_decay in [None, "None"]:
             lr_D = self.lr_D

@@ -36,11 +36,12 @@ class TestLRScheduler:
                 assert abs(2e-4 - self.get_lr(optG)) < 1e-5
 
             else:
-                curr_lr = ((1 - (max(0, step - lr_scheduler.start_step) / (self.num_steps-lr_scheduler.start_step))) * self.lr_D)
+                curr_lr = ((1 - (max(0, step - lr_scheduler.start_step) /
+                                 (self.num_steps - lr_scheduler.start_step))) *
+                           self.lr_D)
 
                 assert abs(curr_lr - self.get_lr(optD)) < 1e-5
                 assert abs(curr_lr - self.get_lr(optG)) < 1e-5
-
 
     def test_no_decay(self):
         optD = optim.Adam(self.netD.parameters(), self.lr_D, betas=(0.0, 0.9))
@@ -60,8 +61,12 @@ class TestLRScheduler:
 
     def test_arguments(self):
         with pytest.raises(NotImplementedError):
-            optD = optim.Adam(self.netD.parameters(), self.lr_D, betas=(0.0, 0.9))
-            optG = optim.Adam(self.netG.parameters(), self.lr_G, betas=(0.0, 0.9))
+            optD = optim.Adam(self.netD.parameters(),
+                              self.lr_D,
+                              betas=(0.0, 0.9))
+            optG = optim.Adam(self.netG.parameters(),
+                              self.lr_G,
+                              betas=(0.0, 0.9))
             scheduler.LRScheduler(lr_decay='does_not_exist',
                                   optD=optD,
                                   optG=optG,

@@ -88,7 +88,7 @@ class DBlock(resblocks.DBlock):
         self.norm2 = None
 
     # TODO: Verify again. Interestingly, LN has no effect on FID. Not using LN
-    # has almost no difference in FID score. 
+    # has almost no difference in FID score.
     # def residual(self, x):
     #     r"""
     #     Helper function for feedforwarding through main layers.
