@@ -6,7 +6,7 @@ import torch_mimicry as mmc
 from torch_mimicry.nets import sngan
 
 ######################################################
-#		 Computing Metrics with Default Datasets
+#       Computing Metrics with Default Datasets
 ######################################################
 
 # Download cifar10 checkpoint: https://drive.google.com/uc?id=1Gn4ouslRAHq3D7AP_V-T2x8Wi1S1hTXJ&export=download
@@ -45,13 +45,14 @@ mmc.metrics.inception_score(num_samples=50000,
                             device=device)
 
 ######################################################
-#		 Computing Metrics with Custom Datasets
+#       Computing Metrics with Custom Datasets
 ######################################################
 """
 Simply define a custom dataset as below to compute FID/KID, and define
 a stats_file/feat_file to save the cached statistics since we don't know what
 name to give your file.
 """
+
 
 class CustomDataset(torch.utils.data.Dataset):
     def __init__(self):
