@@ -48,7 +48,7 @@ def evaluate(metric,
     if evaluate_range:
         if (type(evaluate_range) != tuple
                 or not all(map(lambda x: type(x) == int, evaluate_range))
-                or not len(x) == 3):
+                or not len(evaluate_range) == 3):
             raise ValueError(
                 "evaluate_range must be a tuple of ints (start, end, step).")
 
