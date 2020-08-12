@@ -151,6 +151,14 @@ class TestMetrics:
                                      log_dir=self.log_dir,
                                      netG=self.netG,
                                      dataset=self.dataset,
+                                     evaluate_range=(100, 100, 100, 100),
+                                     device=self.device)
+
+        with pytest.raises(ValueError):
+            compute_metrics.evaluate(metric=metric,
+                                     log_dir=self.log_dir,
+                                     netG=self.netG,
+                                     dataset=self.dataset,
                                      evaluate_range=None,
                                      device=self.device)
 
