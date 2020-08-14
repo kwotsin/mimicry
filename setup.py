@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-__version__ = '0.1.14'
+__version__ = '0.1.16'
 url = 'https://github.com/kwotsin/mimicry'
 
 install_requires = [
