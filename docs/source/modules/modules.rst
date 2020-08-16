@@ -1,5 +1,5 @@
 torch_mimicry.modules
-==================
+=====================
 
 .. contents:: Contents
     :local:

@@ -1,3 +1,7 @@
+"""
+Typical usage example.
+"""
+
 import torch
 import torch.optim as optim
 import torch_mimicry as mmc
@@ -24,7 +28,7 @@ if __name__ == "__main__":
                                    optD=optD,
                                    optG=optG,
                                    n_dis=5,
-                                   num_steps=100000,
+                                   num_steps=30,
                                    lr_decay='linear',
                                    dataloader=dataloader,
                                    log_dir='./log/example',
@@ -35,20 +39,19 @@ if __name__ == "__main__":
     mmc.metrics.evaluate(metric='fid',
                          log_dir='./log/example',
                          netG=netG,
-                         dataset_name='cifar10',
+                         dataset='cifar10',
                          num_real_samples=50000,
                          num_fake_samples=50000,
-                         evaluate_step=100000,
+                         evaluate_step=30,
                          device=device)
 
     # Evaluate kid
     mmc.metrics.evaluate(metric='kid',
                          log_dir='./log/example',
                          netG=netG,
-                         dataset_name='cifar10',
-                         num_subsets=50,
-                         subset_size=1000,
-                         evaluate_step=100000,
+                         dataset='cifar10',
+                         num_samples=50000,
+                         evaluate_step=30,
                          device=device)
 
     # Evaluate inception score
@@ -56,5 +59,5 @@ if __name__ == "__main__":
                          log_dir='./log/example',
                          netG=netG,
                          num_samples=50000,
-                         evaluate_step=100000,
+                         evaluate_step=30,
                          device=device)
