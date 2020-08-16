@@ -96,6 +96,11 @@ tensorboard --logdir=./log/example
 ```
 See further details in [example script](https://github.com/kwotsin/mimicry/blob/master/examples/sngan_example.py), as well as a detailed [tutorial](https://mimicry.readthedocs.io/en/latest/guides/tutorial.html) on implementing a custom GAN from scratch.
 
+### Further Guides
+- [Evaluating a pre-trained generator model](https://github.com/kwotsin/mimicry/blob/master/examples/eval_pretrained.py)
+- [Evaluation using custom datasets](https://github.com/kwotsin/mimicry/blob/master/examples/eval_pretrained.py)
+- [Implementing, training and evaluating a custom GAN](https://mimicry.readthedocs.io/en/latest/guides/tutorial.html)
+
 <div id="baselines"></div>
 
 ## Baselines | Model Zoo
