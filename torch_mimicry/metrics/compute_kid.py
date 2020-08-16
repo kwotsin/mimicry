@@ -219,7 +219,7 @@ def kid_score(num_samples,
     elif issubclass(type(dataset), torch.utils.data.Dataset):
         if feat_file is None:
             raise ValueError(
-                "feat_file cannot be empty if using a custom dataset.")
+                "feat_file to save/load from cannot be empty if using a custom dataset.")
 
         if not feat_file.endswith('.npz'):
             feat_file = feat_file + '.npz'

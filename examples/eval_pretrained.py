@@ -85,3 +85,15 @@ mmc.metrics.kid_score(num_samples=1000,
                       log_dir=log_dir,
                       device=device,
                       feat_file='./examples/example_log/kid_stats.npz')
+
+# Using the evaluate API, which assumes a more fixed directory.
+netG = sngan.SNGANGenerator32().to(device)
+mmc.metrics.evaluate(metric='fid',
+                     log_dir='./log/sngan_example/',
+                     netG=netG,
+                     dataset=custom_dataset,
+                     num_real_samples=1000,
+                     num_fake_samples=1000,
+                     evaluate_step=100000,
+                     stats_file='./examples/example_log/fid_stats.npz',
+                     device=device)

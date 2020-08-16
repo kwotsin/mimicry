@@ -784,7 +784,7 @@ Doing so, we can simply perform evaluate our FID using
        metric='fid',
        log_dir=log_dir,
        netG=netG,
-       dataset_name='cifar10',
+       dataset='cifar10',
        num_real_samples=10000,
        num_fake_samples=10000,
        evaluate_step=100000,

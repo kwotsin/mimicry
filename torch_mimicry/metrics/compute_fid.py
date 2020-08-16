@@ -219,7 +219,7 @@ def fid_score(num_real_samples,
     elif issubclass(type(dataset), torch.utils.data.Dataset):
         if stats_file is None:
             raise ValueError(
-                "stats_file cannot be empty if using a custom dataset.")
+                "stats_file to save/load from cannot be empty if using a custom dataset.")
 
         if not stats_file.endswith('.npz'):
             stats_file = stats_file + '.npz'
