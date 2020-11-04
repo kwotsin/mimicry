@@ -277,6 +277,15 @@ If you have found this work useful, please consider citing [our work](https://ar
     year={2020},
 }
 ```
+For citing [InfoMax-GAN](https://arxiv.org/abs/2007.04589):
+```
+@InProceedings{lee2020infomaxgan,
+      title={InfoMax-GAN: Improved Adversarial Image Generation via Information Maximization and Contrastive Learning}, 
+      author={Kwot Sin Lee and Ngoc-Trung Tran and Ngai-Man Cheung},
+      booktitle = {Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)}
+      year={2021},
+}
+```
 
 ## References
 [[1] Spectral Normalization for Generative Adversarial Networks](https://arxiv.org/abs/1802.05957)
