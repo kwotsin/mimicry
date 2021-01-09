@@ -279,11 +279,13 @@ If you have found this work useful, please consider citing [our work](https://ar
 ```
 For citing [InfoMax-GAN](https://arxiv.org/abs/2007.04589):
 ```
-@InProceedings{lee2020infomaxgan,
-      title={InfoMax-GAN: Improved Adversarial Image Generation via Information Maximization and Contrastive Learning}, 
-      author={Kwot Sin Lee and Ngoc-Trung Tran and Ngai-Man Cheung},
-      booktitle = {Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)}
-      year={2021},
+@InProceedings{Lee_2021_WACV,
+    author    = {Lee, Kwot Sin and Tran, Ngoc-Trung and Cheung, Ngai-Man},
+    title     = {InfoMax-GAN: Improved Adversarial Image Generation via Information Maximization and Contrastive Learning},
+    booktitle = {Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)},
+    month     = {January},
+    year      = {2021},
+    pages     = {3942-3952}
 }
 ```
 
