@@ -11,7 +11,7 @@ import tempfile
 import torch
 from torchvision.datasets import ImageFolder
 
-from .imagenet_utils import check_integrity, download_and_extract_archive, extract_archive, \
+from torchvision.datasets.utils import check_integrity, download_and_extract_archive, extract_archive, \
     verify_str_arg
 
 

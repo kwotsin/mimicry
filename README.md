@@ -23,10 +23,6 @@ We provide a model zoo and set of [baselines](#baselines) to benchmark different
 ## Installation
 The library can be installed with:
 ```
-pip install torch-mimicry
-```
-To install the latest master version instead:
-```
 pip install git+https://github.com/kwotsin/mimicry.git
 ```
 
