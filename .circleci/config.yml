@@ -19,6 +19,7 @@ jobs:
 
     working_directory: ~/repo
     parallelism: 4
+    resource_class: large
 
     steps:
       - checkout
