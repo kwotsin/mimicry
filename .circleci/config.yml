@@ -34,7 +34,7 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            pip install pip==19.2.3 && pip install -r requirements.txt
+            pip install pip==22.1.2 && pip install -r requirements.txt
 
       - save_cache:
           paths:
