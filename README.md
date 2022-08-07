@@ -67,7 +67,7 @@ mmc.metrics.evaluate(
     metric='fid',
     log_dir='./log/example',
     netG=netG,
-    dataset_name='cifar10',
+    dataset='cifar10',
     num_real_samples=50000,
     num_fake_samples=50000,
     evaluate_step=100000,
