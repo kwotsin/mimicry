@@ -18,6 +18,7 @@ jobs:
       # - image: circleci/postgres:9.4
 
     working_directory: ~/repo
+    parallelism: 4
 
     steps:
       - checkout
